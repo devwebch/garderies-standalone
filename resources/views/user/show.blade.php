@@ -17,12 +17,22 @@
             <p><strong>Garderie :</strong> {{$user->nursery->name ?? '-'}}</p>
 
             <h3>Availabilities</h3>
-            <ul>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Hours</th>
+                </tr>
+                </thead>
                 @foreach($availabilities as $slot)
-                    <li>{{$slot->start}} - {{$slot->end}}</li>
+                    <tr>
+                        <td>{{$slot->start}}</td>
+                        <td>{{$slot->end}}</td>
+                        <td>{{$slot->hours}}h</td>
+                    </tr>
                 @endforeach
-            </ul>
-
+            </table>
 
             <p><a href="{{route('users.availabilities', $user->id)}}" class="btn btn-info"><i class="fas fa-calendar"></i> Availabilities</a></p>
         </div>

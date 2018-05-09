@@ -19,6 +19,7 @@ class CreateAvailabilitiesTable extends Migration
             $table->dateTime('start');
             $table->dateTime('end');
             $table->integer('reccurence_type')->default(0);
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

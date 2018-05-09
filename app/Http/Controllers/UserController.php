@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Nursery;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -47,7 +48,18 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $availabilities = $user->availabilities;
+        // TODO: Fuck scopes
+        global $availabilities;
+        $availabilities = [];
+
+        $user->availabilities()->orderBy('start')->each(function ($data){
+            global $availabilities;
+            $availabilities[] = (object)[
+                'start' => $data->start,
+                'end'   => $data->end,
+                'hours' => Carbon::parse($data->start)->diffInHours(Carbon::parse($data->end))
+            ];
+        });
 
         return view('user.show', ['user' => $user, 'availabilities' => $availabilities]);
     }
