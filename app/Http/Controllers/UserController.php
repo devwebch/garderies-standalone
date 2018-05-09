@@ -59,7 +59,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         // TODO: restrict to the user data
-        $nurseries = Nursery::all();
+        $nurseries = Nursery::orderBy('name', 'asc')->get();
 
         return view('user.edit', [
             'user'      => $user,
