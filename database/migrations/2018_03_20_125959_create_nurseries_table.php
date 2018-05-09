@@ -16,6 +16,7 @@ class CreateNurseriesTable extends Migration
         Schema::create('nurseries', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('owner_id')->nullable();
             $table->timestamps();
         });
     }
