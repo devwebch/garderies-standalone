@@ -16,6 +16,14 @@
             <p><strong>Téléphone :</strong> {{$user->phone}}</p>
             <p><strong>Garderie :</strong> {{$user->nursery->name ?? '-'}}</p>
 
+            <h3>Availabilities</h3>
+            <ul>
+                @foreach($availabilities as $slot)
+                    <li>{{$slot->start}} - {{$slot->end}}</li>
+                @endforeach
+            </ul>
+
+
             <p><a href="{{route('users.availabilities', $user->id)}}" class="btn btn-info"><i class="fas fa-calendar"></i> Availabilities</a></p>
         </div>
     </div>

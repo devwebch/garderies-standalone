@@ -19,11 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/nurseries', function(Request $request) {
-    return NurseryResource::collection(App\Nursery::all());
-});
-
-Route::get('/users', function(Request $request) {
-    return UserResource::collection(App\User::all());
-});
-
+Route::resource('nurseries', 'API\NurseryController');
+Route::resource('users', 'API\UserController');
