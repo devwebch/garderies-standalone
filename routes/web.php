@@ -16,4 +16,6 @@ Route::view('blog', 'blog');
 Route::view('account', 'account');
 
 Route::resource('nurseries', 'NurseryController');
+
 Route::resource('users', 'UserController');
+Route::get('users/{user}/availabilities', 'UserController@availabilities')->name('users.availabilities');

@@ -95,4 +95,9 @@ class UserController extends Controller
 
         return redirect()->route('users.index');
     }
+
+    public function availabilities(User $user)
+    {
+        return view('user.availabilities', ['user' => $user]);
+    }
 }

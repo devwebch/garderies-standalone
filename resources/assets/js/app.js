@@ -8,6 +8,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+window.fullcalendar = require('fullcalendar');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -19,6 +20,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('home', require('./components/HomeComponent'));
 Vue.component('nurseries', require('./components/NurseriesComponent'));
 Vue.component('users', require('./components/UsersComponent'));
+Vue.component('user-availabilities', require('./components/UserAvailabilitiesComponent'));
 
 
 const app = new Vue({
