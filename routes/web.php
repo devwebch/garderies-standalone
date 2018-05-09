@@ -13,6 +13,7 @@
 
 Route::view('/', 'home');
 Route::view('blog', 'blog');
+Route::view('account', 'account');
 
 Route::resource('nurseries', 'NurseryController');
 Route::resource('users', 'UserController');

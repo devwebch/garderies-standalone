@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.two-columns')
 
 @section('title', 'Home')
 
@@ -25,4 +25,8 @@
             @endif
         </div>
     </div>
+@endsection
+
+@section('nav-lateral')
+    @include('nursery.nav')
 @endsection

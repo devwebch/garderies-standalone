@@ -1,15 +1,12 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
-@include('common.head')
+    @include('common.head')
     <body>
         @include('common.header')
         <div class="main" id="app">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3">
-                        @include('common.nav-lateral')
-                    </div>
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         @yield('content')
                     </div>
                 </div>

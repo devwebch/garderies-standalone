@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col p-4">
+                <div class="col p-5 text-center">
                     <img src="{{asset('img/graphs.jpg')}}" alt="">
                 </div>
             </div>

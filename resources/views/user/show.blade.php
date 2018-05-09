@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.two-columns')
 
 @section('title', 'Home')
 
@@ -17,4 +17,8 @@
             <p><strong>Garderie :</strong> {{optional($user->nursery)->name}}</p>
         </div>
     </div>
+@endsection
+
+@section('nav-lateral')
+    @include('user.nav')
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.two-columns')
 
 @section('title', 'Edit')
 
@@ -18,4 +18,8 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('nav-lateral')
+    @include('nursery.nav')
 @endsection

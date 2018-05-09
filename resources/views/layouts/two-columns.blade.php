@@ -3,14 +3,14 @@
     @include('common.head')
     <body>
         @include('common.header')
-        <div class="main">
+        <div class="main" id="app">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8">
-                        @yield('content')
+                    <div class="col-md-3">
+                        @yield('nav-lateral')
                     </div>
-                    <div class="col-md-4">
-                        @yield('sidebar')
+                    <div class="col-md-9">
+                        @yield('content')
                     </div>
                 </div>
             </div>
