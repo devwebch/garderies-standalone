@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Resources\NurseryResource;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\Nursery;
+use App\Http\Resources\User;
 
 /*
 |--------------------------------------------------------------------------

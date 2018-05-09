@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Resources\NurseryResource;
+use App\Http\Resources\Nursery as NurseryResource;
 use App\Nursery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
