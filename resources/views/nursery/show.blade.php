@@ -7,7 +7,14 @@
         <div class="card-header">{{$nursery->name}}
             <div class="actions float-right">
                 <a href="{{route('nurseries.edit', [$nursery->id])}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-edit"></i> Edit</a>
-                <a href="{{route('nurseries.edit', [$nursery->id])}}" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Delete</a>
+
+                <div class="float-right">
+                    <form action="{{route('nurseries.destroy', $nursery->id)}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Delete</button>
+                    </form>
+                </div>
             </div>
         </div>
 

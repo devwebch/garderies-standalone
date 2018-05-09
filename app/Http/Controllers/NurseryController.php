@@ -87,6 +87,24 @@ class NurseryController extends Controller
      */
     public function destroy(Nursery $nursery)
     {
-        //
+        // If there are no users bound to this nursersy, proceed
+        if ($nursery->users->count() == 0) {
+            // Delete nursery
+            $nursery->delete();
+        } else {
+            // Retrieve the associated users
+            $users = $nursery->users;
+
+            // Loop through it
+            foreach($users as $user) {
+                $user->nursery_id = 0;
+                $user->save();
+            }
+
+            // Delete nursery
+            $nursery->delete();
+        }
+
+        return redirect()->route('nurseries.index');
     }
 }
