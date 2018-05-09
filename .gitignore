@@ -2,3 +2,7 @@
 node_modules
 vendor
 .env
+/public/css/
+/public/fonts/
+/public/img/
+/public/js/
