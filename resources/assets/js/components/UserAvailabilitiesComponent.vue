@@ -27,6 +27,11 @@
                         url: '/api/availabilities/user/' + this.user,
                         color: 'blue',
                         textColor: 'white'
+                    },
+                    {
+                        url: '/api/bookings/user/' + this.user,
+                        color: 'red',
+                        textColor: 'white'
                     }
                 ]
             });

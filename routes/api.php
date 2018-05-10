@@ -24,3 +24,7 @@ Route::resource('users', 'API\UserController');
 
 Route::resource('availabilities', 'API\AvailabilityController');
 Route::get('availabilities/user/{user}', 'API\AvailabilityController@showForUser')->name('availabilities.showforuser');
+
+Route::resource('bookings', 'API\BookingController');
+Route::get('bookings/user/{user}', 'API\BookingController@showForUser')->name('bookings.showforuser');
+
