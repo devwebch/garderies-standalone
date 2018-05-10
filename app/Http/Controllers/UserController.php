@@ -48,20 +48,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        // TODO: Fuck scopes
-        global $availabilities;
-        $availabilities = [];
-
-        $user->availabilities()->orderBy('start')->each(function ($data){
-            global $availabilities;
-            $availabilities[] = (object)[
-                'start' => $data->start,
-                'end'   => $data->end,
-                'hours' => Carbon::parse($data->start)->diffInHours(Carbon::parse($data->end))
-            ];
-        });
-
-        return view('user.show', ['user' => $user, 'availabilities' => $availabilities]);
+        return view('user.show', ['user' => $user]);
     }
 
     /**
@@ -112,6 +99,41 @@ class UserController extends Controller
 
     public function availabilities(User $user)
     {
-        return view('user.availabilities', ['user' => $user]);
+        // TODO: Fuck scopes
+        global $availabilities, $bookings;
+        $availabilities = [];
+        $bookings       = [];
+
+        $user->availabilities()->orderBy('start')->each(function ($data){
+            global $availabilities;
+
+            $start  = Carbon::parse($data->start);
+            $end    = Carbon::parse($data->end);
+
+            $availabilities[] = (object)[
+                'start' => $start->format('d.m.Y H\hi'),
+                'end'   => $end->format('d.m.Y H\hi'),
+                'hours' => $start->diffInHours($end)
+            ];
+        });
+
+        $user->bookings()->orderBy('start')->each(function ($data){
+            global $bookings;
+
+            $start  = Carbon::parse($data->start);
+            $end    = Carbon::parse($data->end);
+
+            $bookings[] = (object)[
+                'start' => $start->format('d.m.Y H\hi'),
+                'end'   => $end->format('d.m.Y H\hi'),
+                'hours' => $start->diffInHours($end)
+            ];
+        });
+
+        return view('user.availabilities', [
+            'user'              => $user,
+            'availabilities'    => $availabilities,
+            'bookings'          => $bookings
+        ]);
     }
 }

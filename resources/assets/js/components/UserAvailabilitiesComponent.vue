@@ -21,7 +21,10 @@
                 weekends: false,
                 allDaySlot: false,
                 columnHeaderFormat: 'ddd DD.MM',
+                timeFormat: 'HH:mm',
                 slotLabelFormat: 'HH:mm',
+                minTime: '06:00:00',
+                maxTime: '19:00:00',
                 eventSources: [
                     {
                         url: '/api/availabilities/user/' + this.user,

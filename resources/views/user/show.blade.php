@@ -16,24 +16,6 @@
             <p><strong>Téléphone :</strong> {{$user->phone}}</p>
             <p><strong>Garderie :</strong> {{$user->nursery->name ?? '-'}}</p>
 
-            <h3>Availabilities</h3>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Hours</th>
-                </tr>
-                </thead>
-                @foreach($availabilities as $slot)
-                    <tr>
-                        <td>{{$slot->start}}</td>
-                        <td>{{$slot->end}}</td>
-                        <td>{{$slot->hours}}h</td>
-                    </tr>
-                @endforeach
-            </table>
-
             <p><a href="{{route('users.availabilities', $user->id)}}" class="btn btn-info"><i class="fas fa-calendar"></i> Availabilities</a></p>
         </div>
     </div>
