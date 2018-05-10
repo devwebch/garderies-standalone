@@ -6,7 +6,7 @@
     <div class="card card-default">
         <div class="card-header">{{$user->id}} - {{$user->name}}</div>
         <div class="card-body">
-            <user-availabilities></user-availabilities>
+            <user-availabilities user="{{$user->id}}"></user-availabilities>
         </div>
     </div>
 @endsection

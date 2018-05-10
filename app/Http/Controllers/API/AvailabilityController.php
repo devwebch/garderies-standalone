@@ -15,7 +15,9 @@ class AvailabilityController extends Controller
      */
     public function index()
     {
-        //
+        $availabilities = Availability::all();
+
+        return $availabilities;
     }
 
     /**
@@ -61,5 +63,38 @@ class AvailabilityController extends Controller
     public function destroy(Availability $availability)
     {
         //
+    }
+
+    /**
+     * Show availabilities for a specific user
+     *
+     * @param \App\User $user
+     * @param Request $request
+     * @return array
+     */
+    public function showForUser(\App\User $user, Request $request)
+    {
+        // Retrieve user availabilities, constrains to start and end paramaters passed from fullcalendar
+        $availabilities = $user->availabilities()
+            ->where('start', '>=', $request->start)
+            ->where('end', '<=', $request->end)
+            ->get();
+
+        // New array for formatted data
+        $availabilities_formatted = [];
+
+        // Loop through each object
+        foreach ($availabilities as $availability) {
+
+            // See fullcalendar doc for format
+            $availabilities_formatted[] = [
+                'id'        => $availability->id,
+                'title'     => 'Disponible',
+                'start'     => $availability->start,
+                'end'       => $availability->end
+            ];
+        }
+
+        return $availabilities_formatted;
     }
 }

@@ -19,7 +19,7 @@ class NurserySeeder extends Seeder
             "La Chenoille",
             "Le Chap'rond rouge",
             "L'arlequin",
-            "Les Mousaillons",
+            "Les Moussaillons",
             "Les Funambules",
             "Croquétoile",
             "Les Laurelles",

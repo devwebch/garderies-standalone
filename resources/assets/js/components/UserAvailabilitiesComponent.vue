@@ -5,7 +5,11 @@
 </template>
 
 <script>
+    let data = {};
+
     export default {
+        data() { return data; },
+        props: ['user'],
         mounted() {
             $('#calendar').fullCalendar({
                 themeSystem: 'bootstrap4',
@@ -17,8 +21,16 @@
                 weekends: false,
                 allDaySlot: false,
                 columnHeaderFormat: 'ddd DD.MM',
-                slotLabelFormat: 'HH:mm'
+                slotLabelFormat: 'HH:mm',
+                eventSources: [
+                    {
+                        url: '/api/availabilities/user/' + this.user,
+                        color: 'blue',
+                        textColor: 'white'
+                    }
+                ]
             });
+
         }
     }
 </script>

@@ -21,3 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('nurseries', 'API\NurseryController');
 Route::resource('users', 'API\UserController');
+
+Route::resource('availabilities', 'API\AvailabilityController');
+Route::get('availabilities/user/{user}', 'API\AvailabilityController@showForUser')->name('availabilities.showforuser');
