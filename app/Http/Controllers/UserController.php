@@ -136,4 +136,9 @@ class UserController extends Controller
             'bookings'          => $bookings
         ]);
     }
+
+    public function search()
+    {
+        return view('user.search');
+    }
 }

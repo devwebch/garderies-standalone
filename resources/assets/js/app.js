@@ -21,6 +21,7 @@ Vue.component('home', require('./components/HomeComponent'));
 Vue.component('nurseries', require('./components/NurseriesComponent'));
 Vue.component('users', require('./components/UsersComponent'));
 Vue.component('user-availabilities', require('./components/UserAvailabilitiesComponent'));
+Vue.component('search-substitute', require('./components/SearchSubstituteComponent'));
 
 
 const app = new Vue({

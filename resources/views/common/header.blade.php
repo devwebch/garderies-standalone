@@ -16,6 +16,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('users.index')}}">Employees</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('users.search')}}">Search substitute</a>
+                    </li>
                 </ul>
             </div>
         </div>
