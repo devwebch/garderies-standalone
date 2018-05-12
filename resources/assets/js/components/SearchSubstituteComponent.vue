@@ -7,11 +7,23 @@
                     <form action="#" method="post">
                         <div class="form-group">
                             <label for="date_start">Date start:</label>
-                            <input type="datetime-local" class="form-control" name="date_start" v-model="search.date_start">
+                            <flat-pickr
+                                    v-model="search.date_start"
+                                    :config="flatPickrConfig"
+                                    class="form-control"
+                                    placeholder="Select a date"
+                                    name="date">
+                            </flat-pickr>
                         </div>
                         <div class="form-group">
                             <label for="date_end">Date end:</label>
-                            <input type="datetime-local" class="form-control" name="date_end" v-model="search.date_end">
+                            <flat-pickr
+                                    v-model="search.date_end"
+                                    :config="flatPickrConfig"
+                                    class="form-control"
+                                    placeholder="Select a date"
+                                    name="date">
+                            </flat-pickr>
                         </div>
                     </form>
                 </div>
@@ -46,11 +58,27 @@
 </template>
 
 <script>
+    import flatPickr from 'vue-flatpickr-component';
+    import 'flatPickr/dist/flatpickr.css';
+    import {French} from 'flatPickr/dist/l10n/fr';
+
+    let today = new Date();
+    today.setHours(today.getHours() + 1);
+    today.setMinutes(0);
+
     let data = {
+        flatPickrConfig: {
+            wrap: true,
+            dateFormat: 'd.m.Y H:i',
+            enableTime: true,
+            time_24hr: true,
+            minuteIncrement: 30,
+            locale: French
+        },
         substitutes: {},
         search: {
-            date_start: 0,
-            date_end: 0
+            date_start: today,
+            date_end: today
         }
     };
 
@@ -67,6 +95,9 @@
                     console.log(response);
                     data.nurseries = response.data.data;
                 });*/
+        },
+        components: {
+            flatPickr
         }
     }
 </script>
