@@ -14,6 +14,11 @@ class Availability extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $data = parent::toArray($request);
+        $data['user']       = $this->user;
+        $data['user']['link']   = route('users.show', $this->user->id);
+        $data['nursery']    = $this->user->nursery;
+        $data['nursery']['link']    = route('nurseries.show', $this->user->nursery->id);
+        return $data;
     }
 }

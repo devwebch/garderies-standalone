@@ -4,7 +4,7 @@
             <div class="card card-default">
                 <div class="card-header">Search parameters</div>
                 <div class="card-body">
-                    <form action="#" method="post">
+                    <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
                         <div class="form-group">
                             <label for="date_start">Date start:</label>
                             <flat-pickr
@@ -25,27 +25,31 @@
                                     name="date">
                             </flat-pickr>
                         </div>
+
+                        <button class="btn btn-primary btn-block" type="submit">Search</button>
                     </form>
                 </div>
             </div>
         </div>
         <div class="col-md-8">
             <div class="card card-default">
-                <div class="card-header">Search substitute</div>
+                <div class="card-header">Search results</div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Nom</th>
-                            <th>Prénom</th>
+                            <th>Nom et prénom</th>
                             <th>Téléphone</th>
+                            <th>E-mail</th>
+                            <th>Nursery</th>
                             <th width="50">Actions</th>
                         </tr>
                         </thead>
-                        <tr>
-                            <td>Lorem</td>
-                            <td>Ipsum</td>
-                            <td>+41 79 474 42 37</td>
+                        <tr v-for="item in availabilities">
+                            <td>{{item.user.name}}</td>
+                            <td>{{item.user.phone}}</td>
+                            <td><a :href="'mailto:' + item.user.email">{{item.user.email}}</a></td>
+                            <td><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
                             <td>
                                 <a href="#"><i class="fas fa-phone"></i></a>
                             </td>
@@ -75,7 +79,7 @@
             minuteIncrement: 30,
             locale: French
         },
-        substitutes: {},
+        availabilities: {},
         search: {
             date_start: today,
             date_end: today
@@ -90,11 +94,16 @@
         mounted() {
             console.log('Component mounted.');
 
-            /*axios.get('/api/nurseries')
+            axios.get('/api/availabilities/search')
                 .then(function(response){
                     console.log(response);
-                    data.nurseries = response.data.data;
-                });*/
+                    data.availabilities = response.data.data;
+                });
+        },
+        methods: {
+            searchSubstitute: function () {
+                console.log('Searching now');
+            }
         },
         components: {
             flatPickr

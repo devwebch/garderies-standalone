@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Availability;
+use App\Http\Resources\Availability as AvailabilityResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -96,5 +97,10 @@ class AvailabilityController extends Controller
         }
 
         return $availabilities_formatted;
+    }
+
+    public function search(Request $request)
+    {
+        return AvailabilityResource::collection(Availability::all());
     }
 }
