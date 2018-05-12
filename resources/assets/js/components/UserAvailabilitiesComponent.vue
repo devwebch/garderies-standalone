@@ -5,6 +5,8 @@
 </template>
 
 <script>
+    import 'fullcalendar/dist/fullcalendar.min.css';
+
     let data = {};
 
     export default {
@@ -42,7 +44,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    @import '~fullcalendar/dist/fullcalendar.css';
-</style>
