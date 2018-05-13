@@ -7,13 +7,31 @@
 <script>
     import 'fullcalendar/dist/fullcalendar.min.css';
 
-    let data = {};
+    let vm;
+    let data = {
+        events: [
+            {
+                title: 'Lorem ipsum',
+                start: '2018-05-10T10:00:00',
+                end: '2018-05-10T16:00:00'
+            },
+            {
+                title: 'Lorem ipsum 2',
+                start: '2018-05-11T09:00:00',
+                end: '2018-05-11T15:00:00'
+            }
+        ],
+        newEvents: []
+    };
+    let calendar;
 
     export default {
         data() { return data; },
         props: ['user'],
         mounted() {
-            $('#calendar').fullCalendar({
+            vm = this;
+
+            calendar = $('#calendar').fullCalendar({
                 themeSystem: 'bootstrap4',
                 defaultView: 'agendaWeek',
                 locale: 'fr-ch',
@@ -27,6 +45,7 @@
                 slotLabelFormat: 'HH:mm',
                 minTime: '06:00:00',
                 maxTime: '19:00:00',
+                editable: true,
                 eventSources: [
                     {
                         url: '/api/availabilities/user/' + this.user,
@@ -38,9 +57,25 @@
                         color: 'red',
                         textColor: 'white'
                     }
-                ]
-            });
+                ],
+                events: data.events,
+                dayClick: function(date, event, view) {
+                    let start   = date;
+                    let end     = date.clone().add(2, 'hour');
 
+                    let newEvent = {
+                        title: 'New availability',
+                        start: start.format(),
+                        end: end.format()
+                    };
+
+                    calendar.fullCalendar('renderEvent', newEvent);
+                },
+                eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {
+                    console.log(event.start.format(), event.end.format());
+                    calendar.fullCalendar('updateEvent', event);
+                }
+            });
         }
     }
 </script>

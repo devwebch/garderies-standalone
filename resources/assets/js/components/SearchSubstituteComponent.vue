@@ -62,7 +62,6 @@
                     <div class="selection clearfix" v-if="selectedAvailabilities.length">
                         <a href="#" class="btn btn-primary float-right">Contact the selected people</a>
                     </div>
-
                 </div>
             </div>
         </div>
