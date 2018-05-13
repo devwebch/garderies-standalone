@@ -69,10 +69,20 @@
                         end: end.format()
                     };
 
-                    calendar.fullCalendar('renderEvent', newEvent);
+
+                    axios.post('/api/availabilities', {
+                        params: {
+                            'event': newEvent,
+                            'userID': vm.user
+                        }
+                    })
+                    .then(function(response){
+                        console.log(response);
+                        calendar.fullCalendar('renderEvent', newEvent);
+                    });
                 },
                 eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {
-                    console.log(event.start.format(), event.end.format());
+                    console.log(event.id);
                     calendar.fullCalendar('updateEvent', event);
                 }
             });

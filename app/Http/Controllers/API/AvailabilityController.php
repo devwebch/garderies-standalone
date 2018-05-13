@@ -30,7 +30,10 @@ class AvailabilityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userID     = $request->params['userID'];
+        $event      = $request->params['event'];
+
+        return $request->params;
     }
 
     /**
