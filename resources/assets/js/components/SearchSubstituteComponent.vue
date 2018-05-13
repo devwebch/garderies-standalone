@@ -38,23 +38,31 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th width="15"><input type="checkbox" v-on:click="selectAll"></th>
                             <th>Nom et prénom</th>
-                            <th>Téléphone</th>
-                            <th>E-mail</th>
+                            <th>Start</th>
+                            <th>End</th>
                             <th>Nursery</th>
                             <th width="50">Actions</th>
                         </tr>
                         </thead>
                         <tr v-for="item in availabilities">
+                            <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
                             <td>{{item.user.name}}</td>
-                            <td>{{item.user.phone}}</td>
-                            <td><a :href="'mailto:' + item.user.email">{{item.user.email}}</a></td>
+                            <td>{{item.start}}</td>
+                            <td>{{item.end}}</td>
                             <td><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
                             <td>
-                                <a href="#"><i class="fas fa-phone"></i></a>
+                                <a :href="'tel:' + item.user.phone"><i class="fas fa-phone"></i></a>
+                                <a :href="'mailto:' + item.user.email"><i class="fas fa-envelope"></i></a>
                             </td>
                         </tr>
                     </table>
+
+                    <div class="selection clearfix" v-if="selectedAvailabilities.length">
+                        <a href="#" class="btn btn-primary float-right">Contact the selected people</a>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -70,6 +78,11 @@
     today.setHours(today.getHours() + 1);
     today.setMinutes(0);
 
+    let otherDay = new Date();
+    otherDay.setDate(today.getDate() + 4);
+    otherDay.setHours(today.getHours() + 1);
+    otherDay.setMinutes(0);
+
     let data = {
         flatPickrConfig: {
             wrap: true,
@@ -79,10 +92,11 @@
             minuteIncrement: 30,
             locale: French
         },
+        selectedAvailabilities: [],
         availabilities: {},
         search: {
             date_start: today,
-            date_end: today
+            date_end: otherDay
         }
     };
 
@@ -92,17 +106,29 @@
             return data;
         },
         mounted() {
-            console.log('Component mounted.');
-
-            axios.get('/api/availabilities/search')
+            this.searchSubstitute();
+        },
+        methods: {
+            searchSubstitute: function () {
+                axios.get('/api/availabilities/search', {
+                    params: {
+                        'date_start': data.search.date_start,
+                        'date_end': data.search.date_end,
+                    }
+                })
                 .then(function(response){
                     console.log(response);
                     data.availabilities = response.data.data;
                 });
-        },
-        methods: {
-            searchSubstitute: function () {
-                console.log('Searching now');
+            },
+            selectAll: function (event) {
+                if (data.selectedAvailabilities.length) {
+                    data.selectedAvailabilities = [];
+                } else {
+                    data.availabilities.forEach(function(item){
+                        data.selectedAvailabilities.push(item);
+                    });
+                }
             }
         },
         components: {

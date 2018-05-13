@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Availability;
 use App\Http\Resources\Availability as AvailabilityResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -101,6 +102,21 @@ class AvailabilityController extends Controller
 
     public function search(Request $request)
     {
-        return AvailabilityResource::collection(Availability::all());
+        $date_start = null;
+        $date_end = null;
+        if ($request->input('date_start') && $request->input('date_end')) {
+            $date_start = Carbon::parse($request->input('date_start'));
+            $date_end   = Carbon::parse($request->input('date_end'));
+        }
+
+        if ($date_start && $date_end) {
+            $collection = Availability::where('start', '>=', $date_start)
+                ->where('end', '<=', $date_end)
+                ->get();
+        } else {
+            $collection = Availability::all();
+        }
+
+        return AvailabilityResource::collection($collection);
     }
 }
