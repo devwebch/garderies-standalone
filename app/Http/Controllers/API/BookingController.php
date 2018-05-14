@@ -79,7 +79,7 @@ class BookingController extends Controller
 
             // See fullcalendar doc for format
             $bookings_formatted[] = [
-                'id'        => $booking->id,
+                'id'        => 'b_' . $booking->id,
                 'title'     => 'En remplacement',
                 'start'     => $booking->start,
                 'end'       => $booking->end

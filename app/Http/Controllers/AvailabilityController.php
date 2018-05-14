@@ -46,7 +46,7 @@ class AvailabilityController extends Controller
      */
     public function show(Availability $availability)
     {
-        //
+        return view('availability.show', ['availability' => $availability]);
     }
 
     /**

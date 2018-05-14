@@ -20,3 +20,5 @@ Route::resource('nurseries', 'NurseryController');
 Route::get('users/search', 'UserController@search')->name('users.search');
 Route::resource('users', 'UserController');
 Route::get('users/{user}/availabilities', 'UserController@availabilities')->name('users.availabilities');
+
+Route::resource('availabilities', 'AvailabilityController');

@@ -17,6 +17,7 @@
         mounted() {
             vm = this;
 
+            // Instantiate the calendar
             calendar = $('#calendar').fullCalendar({
                 themeSystem: 'bootstrap4',
                 defaultView: 'agendaWeek',
@@ -40,7 +41,8 @@
                     {
                         url: '/api/bookings/user/' + this.user,
                         color: 'red',
-                        textColor: 'white'
+                        textColor: 'white',
+                        editable: false
                     }
                 ],
                 dayClick: function(date, event, view) {
@@ -92,6 +94,9 @@
                     .then(function(response){
                         console.log(response);
                     });
+                },
+                eventClick: function(event, jsEvent, view) {
+                    window.location = '/availabilities/' + event.id;
                 }
             });
         }
