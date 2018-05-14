@@ -33,7 +33,16 @@ class AvailabilityController extends Controller
         $userID     = $request->params['userID'];
         $event      = $request->params['event'];
 
-        return $request->params;
+        $availability = new Availability();
+        $availability->start    = Carbon::parse($event['start']);
+        $availability->end      = Carbon::parse($event['end']);
+        $availability->user_id  = $userID;
+        $availability->save();
+
+        return response()->json([
+            'status'    => 'Availability created',
+            'id'        => $availability->id
+        ]);
     }
 
     /**
@@ -56,7 +65,14 @@ class AvailabilityController extends Controller
      */
     public function update(Request $request, Availability $availability)
     {
-        //
+        $start  = Carbon::parse($request->params['start']);
+        $end    = Carbon::parse($request->params['end']);
+
+        $availability->start = $start;
+        $availability->end = $end;
+        $availability->save();
+
+        return response('Availability updated');
     }
 
     /**

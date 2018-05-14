@@ -8,21 +8,7 @@
     import 'fullcalendar/dist/fullcalendar.min.css';
 
     let vm;
-    let data = {
-        events: [
-            {
-                title: 'Lorem ipsum',
-                start: '2018-05-10T10:00:00',
-                end: '2018-05-10T16:00:00'
-            },
-            {
-                title: 'Lorem ipsum 2',
-                start: '2018-05-11T09:00:00',
-                end: '2018-05-11T15:00:00'
-            }
-        ],
-        newEvents: []
-    };
+    let data = {};
     let calendar;
 
     export default {
@@ -49,7 +35,6 @@
                 eventSources: [
                     {
                         url: '/api/availabilities/user/' + this.user,
-                        color: 'blue',
                         textColor: 'white'
                     },
                     {
@@ -58,18 +43,18 @@
                         textColor: 'white'
                     }
                 ],
-                events: data.events,
                 dayClick: function(date, event, view) {
                     let start   = date;
                     let end     = date.clone().add(2, 'hour');
 
+                    // New event object
                     let newEvent = {
                         title: 'New availability',
                         start: start.format(),
                         end: end.format()
                     };
 
-
+                    // Save the new event
                     axios.post('/api/availabilities', {
                         params: {
                             'event': newEvent,
@@ -78,12 +63,35 @@
                     })
                     .then(function(response){
                         console.log(response);
+                        // Assign the created ID to the event object
+                        newEvent.id = response.data.id;
+                        // Render the event on the calendar
                         calendar.fullCalendar('renderEvent', newEvent);
                     });
                 },
                 eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {
-                    console.log(event.id);
-                    calendar.fullCalendar('updateEvent', event);
+                    // Update the event
+                    axios.put('/api/availabilities/' + event.id, {
+                        params: {
+                            'start': event.start,
+                            'end': event.end,
+                        }
+                    })
+                    .then(function(response){
+                        console.log(response);
+                    });
+                },
+                eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
+                    // Update the event
+                    axios.put('/api/availabilities/' + event.id, {
+                        params: {
+                            'start': event.start,
+                            'end': event.end,
+                        }
+                    })
+                    .then(function(response){
+                        console.log(response);
+                    });
                 }
             });
         }
