@@ -22,6 +22,11 @@
                 themeSystem: 'bootstrap4',
                 defaultView: 'agendaWeek',
                 locale: 'fr-ch',
+                header: {
+                    left: 'title',
+                    center: 'agendaWeek listWeek',
+                    right: 'today prev,next'
+                },
                 buttonText: {
                     today: "Aujourd'hui"
                 },
@@ -96,9 +101,21 @@
                     });
                 },
                 eventClick: function(event, jsEvent, view) {
-                    window.location = '/availabilities/' + event.id;
+                    //window.location = '/availabilities/' + event.id;
+                },
+                eventRender: function (event, element, view) {
+                    element.append('<a href="/availabilities/' + event.id + '" class="edit-link">Editer</a>');
                 }
             });
         }
     }
 </script>
+
+<style lang="scss">
+    .edit-link {
+        position:absolute;
+        z-index: 10;
+        bottom: 0;
+        color: #fff;
+    }
+</style>
