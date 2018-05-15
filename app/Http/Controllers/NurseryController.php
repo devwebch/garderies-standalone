@@ -50,7 +50,12 @@ class NurseryController extends Controller
      */
     public function show(Nursery $nursery)
     {
-        return view('nursery.show', ['nursery' => $nursery]);
+        $bookings = $nursery->bookings;
+
+        return view('nursery.show', [
+            'nursery'   => $nursery,
+            'bookings'  => $bookings
+        ]);
     }
 
     /**

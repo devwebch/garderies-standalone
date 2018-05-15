@@ -15,10 +15,11 @@ class Nursery extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'    => $this->id,
-            'name'  => $this->name,
-            'employees_count' => $this->users->count(),
-            'link'  => route('nurseries.show', [$this->id])
+            'id'                => $this->id,
+            'name'              => $this->name,
+            'bookings_count'    => $this->bookings->count(),
+            'employees_count'   => $this->users->count(),
+            'link'              => route('nurseries.show', [$this->id])
         ];
 
     }

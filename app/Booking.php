@@ -11,6 +11,11 @@ class Booking extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function substitute()
+    {
+        return $this->belongsTo('App\User', 'substitute_id', 'id');
+    }
+
     public function nursery()
     {
         return $this->belongsTo('App\Nursery');

@@ -26,10 +26,38 @@
             @if( $nursery->users->count() )
             <ul>
                 @foreach( $nursery->users as $user )
-                <li>{{$user->name}}</li>
+                    <li>{{$user->name}}</li>
                 @endforeach
             </ul>
             @endif
+
+            <h3>Bookings</h3>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Employé</th>
+                    <th>Remplaçant</th>
+                    <th>Garderie</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                </tr>
+                </thead>
+                @forelse($bookings as $booking)
+                    <tr>
+                        <td><a href="{{route('users.show', $booking->user->id)}}">{{$booking->user->name}}</a></td>
+                        <td><a href="{{route('users.show', $booking->substitute->id)}}">{{$booking->substitute->name}}</a></td>
+                        <td><a href="{{route('nurseries.show', $booking->nursery->id)}}">{{$booking->nursery->name}}</a></td>
+                        <td>{{\Carbon\Carbon::parse($booking->start)->format('d.m.Y H:i')}}</td>
+                        <td>{{\Carbon\Carbon::parse($booking->end)->format('d.m.Y H:i')}}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4">Pas de remplacement</td>
+                    </tr>
+                @endforelse
+            </table>
+
         </div>
     </div>
 @endsection

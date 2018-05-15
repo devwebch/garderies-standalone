@@ -8,6 +8,7 @@
                         <th width="10%">#</th>
                         <th>Nom</th>
                         <th>Employés</th>
+                        <th>Remplacements</th>
                         <th width="5%"></th>
                     </tr>
                 </thead>
@@ -16,6 +17,7 @@
                         <th scope="row">{{nursery.id}}</th>
                         <td><a :href="nursery.link">{{nursery.name}}</a></td>
                         <td>{{nursery.employees_count}}</td>
+                        <td>{{nursery.bookings_count}}</td>
                         <td><a :href="nursery.link"><i class="fas fa-eye"></i></a></td>
                     </tr>
                 </tbody>
