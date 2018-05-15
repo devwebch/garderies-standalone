@@ -23,6 +23,8 @@ Vue.component('users', require('./components/UsersComponent'));
 Vue.component('user-availabilities', require('./components/UserAvailabilitiesComponent'));
 Vue.component('search-substitute', require('./components/SearchSubstituteComponent'));
 
+Vue.component('availability-edit', require('./components/AvailabilityEditComponent'));
+
 
 const app = new Vue({
     el: '#app'
