@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Availability;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AvailabilityController extends Controller
@@ -57,7 +58,7 @@ class AvailabilityController extends Controller
      */
     public function edit(Availability $availability)
     {
-        //
+        return view('availability.edit', ['availability' => $availability]);
     }
 
     /**
@@ -69,7 +70,11 @@ class AvailabilityController extends Controller
      */
     public function update(Request $request, Availability $availability)
     {
-        //
+        $availability->start    = Carbon::parse($request->date_start);
+        $availability->end      = Carbon::parse($request->date_end);
+        $availability->save();
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -80,6 +85,8 @@ class AvailabilityController extends Controller
      */
     public function destroy(Availability $availability)
     {
-        //
+        $availability->delete();
+
+        return redirect()->route('users.index');
     }
 }
