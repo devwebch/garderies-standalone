@@ -11,7 +11,7 @@
 |
 */
 
-Route::view('/', 'home');
+Route::get('/', 'HomeController@index');
 Route::view('blog', 'blog');
 Route::view('account', 'account');
 

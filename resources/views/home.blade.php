@@ -8,17 +8,17 @@
             <div class="row">
                 <div class="col-md-4 widget-count">
                     <h3 style="font-size: 1em">Garderies dans votre réseau</h3>
-                    <div class="number" style="font-size: 4em;">12</div>
+                    <div class="number" style="font-size: 4em;">{{$count_nursery}}</div>
                     <a href="{{route('nurseries.index')}}">Gérer mes garderies</a>
                 </div>
                 <div class="col-md-4 widget-count">
                     <h3 style="font-size: 1em">Nombre d'employés</h3>
-                    <div class="number" style="font-size: 4em;">56</div>
+                    <div class="number" style="font-size: 4em;">{{$count_user}}</div>
                     <a href="{{route('users.index')}}">Gérer mes employés</a>
                 </div>
                 <div class="col-md-4 widget-count">
                     <h3 style="font-size: 1em">Remplacements ce mois</h3>
-                    <div class="number" style="font-size: 4em;">34</div>
+                    <div class="number" style="font-size: 4em;">{{$count_booking}}</div>
                     <a href="#">Gérer les remplacements</a>
                 </div>
             </div>
