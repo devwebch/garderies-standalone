@@ -27,6 +27,16 @@
                     <img src="{{asset('img/graphs.jpg')}}" alt="">
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <div>{!! $chart->container() !!}</div>
+                </div>
+            </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js" charset="utf-8"></script>
+    {!! $chart->script() !!}
 @endsection
