@@ -1,66 +1,83 @@
 <template>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card card-default">
-                <div class="card-header">Search parameters</div>
-                <div class="card-body">
-                    <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
-                        <div class="form-group">
-                            <label for="date_start">Date start:</label>
-                            <flat-pickr
-                                    v-model="search.date_start"
-                                    :config="flatPickrConfig"
-                                    class="form-control"
-                                    placeholder="Select a date"
-                                    name="date">
-                            </flat-pickr>
-                        </div>
-                        <div class="form-group">
-                            <label for="date_end">Date end:</label>
-                            <flat-pickr
-                                    v-model="search.date_end"
-                                    :config="flatPickrConfig"
-                                    class="form-control"
-                                    placeholder="Select a date"
-                                    name="date">
-                            </flat-pickr>
-                        </div>
-
-                        <button class="btn btn-primary btn-block" type="submit">Search</button>
-                    </form>
+    <div>
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card card-default">
+                    <div class="card-header">Search parameters</div>
+                    <div class="card-body">
+                        <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="date_start">Date start:</label>
+                                    <flat-pickr
+                                            v-model="search.date_start"
+                                            :config="flatPickrConfig"
+                                            class="form-control"
+                                            placeholder="Select a date"
+                                            name="date">
+                                    </flat-pickr>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="date_end">Date end:</label>
+                                    <flat-pickr
+                                            v-model="search.date_end"
+                                            :config="flatPickrConfig"
+                                            class="form-control"
+                                            placeholder="Select a date"
+                                            name="date">
+                                    </flat-pickr>
+                                </div>
+                                <div class="col" style="padding-top: 31px;">
+                                    <button class="btn btn-primary btn-block" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <div class="card card-default">
-                <div class="card-header">Search results</div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th width="15"><input type="checkbox" v-on:click="selectAll"></th>
-                            <th>Nom et prénom</th>
-                            <th>Start</th>
-                            <th>End</th>
-                            <th>Nursery</th>
-                            <th width="50">Actions</th>
-                        </tr>
-                        </thead>
-                        <tr v-for="item in availabilities">
-                            <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
-                            <td>{{item.user.name}}</td>
-                            <td>{{item.start}}</td>
-                            <td>{{item.end}}</td>
-                            <td><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
-                            <td>
-                                <a :href="'tel:' + item.user.phone"><i class="fas fa-phone"></i></a>
-                                <a :href="'mailto:' + item.user.email"><i class="fas fa-envelope"></i></a>
-                            </td>
-                        </tr>
-                    </table>
+        <div class="row">
+            <div class="col">
+                <div class="card card-default">
+                    <div class="card-header">Search results</div>
+                    <div class="card-body p-0">
 
-                    <div class="selection clearfix" v-if="selectedAvailabilities.length">
-                        <a href="#" class="btn btn-primary float-right">Contact the selected people</a>
+                        <div class="loading-overlay" v-show="!loaded">
+                            <div class="sk-folding-cube">
+                                <div class="sk-cube1 sk-cube"></div>
+                                <div class="sk-cube2 sk-cube"></div>
+                                <div class="sk-cube4 sk-cube"></div>
+                                <div class="sk-cube3 sk-cube"></div>
+                            </div>
+                        </div>
+
+                        <table class="table table-responsive-sm">
+                            <thead>
+                            <tr>
+                                <th width="15"><input type="checkbox" v-on:click="selectAll"></th>
+                                <th>Nom et prénom</th>
+                                <th>Date</th>
+                                <th>Hours</th>
+                                <th class="d-none d-sm-block">Nursery</th>
+                                <th width="50">Actions</th>
+                            </tr>
+                            </thead>
+                            <tr v-for="item in availabilities">
+                                <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
+                                <td><a :href="item.user.link">{{item.user.name}}</a></td>
+                                <td><i class="fas fa-calendar"></i> {{item.start}}</td>
+                                <td>{{item.start_hour}} <i class="fas fa-arrow-right"></i> {{item.end_hour}}</td>
+                                <td class="d-none d-sm-block"><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
+                                <td>
+                                    <a :href="'tel:' + item.user.phone"><i class="fas fa-phone"></i></a>
+                                    <a :href="'mailto:' + item.user.email"><i class="fas fa-envelope"></i></a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="selection clearfix" v-if="selectedAvailabilities.length">
+                            <a href="#" class="btn btn-primary float-right">Contact the selected people</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -96,7 +113,8 @@
         search: {
             date_start: today,
             date_end: otherDay
-        }
+        },
+        loaded: false
     };
 
     export default {
@@ -109,6 +127,7 @@
         },
         methods: {
             searchSubstitute: function () {
+                data.loaded = false;
                 axios.get('/api/availabilities/search', {
                     params: {
                         'date_start': data.search.date_start,
@@ -117,6 +136,7 @@
                 })
                 .then(function(response){
                     console.log(response);
+                    data.loaded = true;
                     data.availabilities = response.data.data;
                 });
             },
@@ -135,3 +155,18 @@
         }
     }
 </script>
+
+<style lang="scss">
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.18);
+
+        .sk-folding-cube {
+            top: 46%;
+        }
+    }
+</style>

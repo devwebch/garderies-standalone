@@ -16,8 +16,10 @@ class Availability extends JsonResource
     public function toArray($request)
     {
         $data = parent::toArray($request);
-        $data['start']              = Carbon::parse($this->start)->format('d.m.Y H:i');
-        $data['end']                = Carbon::parse($this->end)->format('d.m.Y H:i');
+        $data['start']              = Carbon::parse($this->start)->format('d.m.Y');
+        $data['end']                = Carbon::parse($this->end)->format('d.m.Y');
+        $data['start_hour']         = Carbon::parse($this->start)->format('H\hi');
+        $data['end_hour']           = Carbon::parse($this->end)->format('H\hi');
         $data['user']               = $this->user;
         $data['user']['link']       = route('users.show', $this->user->id);
         $data['nursery']            = $this->user->nursery;
