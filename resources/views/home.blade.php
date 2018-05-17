@@ -23,8 +23,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col pt-5">
-                    <div>{!! $chart->container() !!}</div>
+                <div class="col-md-6 pt-5">
+                    <div style="height: 300px;">{!! $chart->container() !!}</div>
                 </div>
             </div>
         </div>

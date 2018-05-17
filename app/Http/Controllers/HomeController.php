@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
-use App\Charts\HomeChart;
+use App\Charts\BookingsChart;
 use App\Nursery;
 use App\User;
 use Carbon\Carbon;
@@ -29,12 +29,23 @@ class HomeController extends Controller
             }
         }
 
-        $chart = new HomeChart();
+        $chart = new BookingsChart();
+        $chart->displayAxes(true);
         $chart->options([
             'animation' => ['duration' => 0],
+            'layout'    => [
+                'padding' => [
+                    'top'       => 10,
+                    'right'     => 10,
+                    'bottom'    => 10,
+                    'left'      => 10
+                ]
+            ],
             'elements' => [
                 'point' => [
                     'radius' => 5,
+                    'hoverRadius' => 8,
+                    'hitRadius' => 10,
                     'backgroundColor' => 'rgba(3,0,0,0.5)',
                     'borderWidth' => 3,
                 ]
@@ -43,7 +54,7 @@ class HomeController extends Controller
                 'yAxes' => [
                     ['ticks' => [
                         'beginAtZero'   => true,
-                        'max'           => 15
+                        //'max'           => 15
                     ]]
                 ],
             ],
@@ -59,13 +70,15 @@ class HomeController extends Controller
                 'pointBorderColor'      => '#336699',
                 'pointStyle'            => 'circle',
                 'borderWidth'           => 3,
+                'lineTension'           => 0.3
             ]);
 
         return view('home', [
             'count_nursery'     => $count_nursery,
             'count_user'        => $count_user,
             'count_booking'     => $count_booking,
-            'chart'             => $chart
+            'chart'             => $chart,
+            'chart2'             => $chart
         ]);
     }
 }
