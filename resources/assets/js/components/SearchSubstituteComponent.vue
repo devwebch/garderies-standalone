@@ -8,20 +8,30 @@
                         <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
                             <div class="row">
                                 <div class="form-group col">
-                                    <label for="date_start">Date start:</label>
+                                    <label for="hour_start">Day:</label>
                                     <flat-pickr
-                                            v-model="search.date_start"
-                                            :config="flatPickrConfig"
+                                            v-model="search.day_start"
+                                            :config="flatPickrConfigDays"
                                             class="form-control"
                                             placeholder="Select a date"
                                             name="date">
                                     </flat-pickr>
                                 </div>
                                 <div class="form-group col">
-                                    <label for="date_end">Date end:</label>
+                                    <label for="hour_start">Date start:</label>
                                     <flat-pickr
-                                            v-model="search.date_end"
-                                            :config="flatPickrConfig"
+                                            v-model="search.hour_start"
+                                            :config="flatPickrConfigHours"
+                                            class="form-control"
+                                            placeholder="Select a date"
+                                            name="date">
+                                    </flat-pickr>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="hour_end">Date end:</label>
+                                    <flat-pickr
+                                            v-model="search.hour_end"
+                                            :config="flatPickrConfigHours"
                                             class="form-control"
                                             placeholder="Select a date"
                                             name="date">
@@ -40,7 +50,7 @@
             <div class="col">
                 <div class="card card-default">
                     <div class="card-header">Search results</div>
-                    <div class="card-body p-0">
+                    <div class="card-body">
 
                         <div class="loading-overlay" v-show="!loaded">
                             <div class="sk-folding-cube">
@@ -96,19 +106,21 @@
     import {French} from 'flatPickr/dist/l10n/fr';
 
     let today = new Date();
+    today.setDate(today.getDate() + 1);
     today.setHours(today.getHours() + 1);
     today.setMinutes(0);
 
-    let otherDay = new Date();
-    otherDay.setDate(today.getDate() + 4);
-    otherDay.setHours(today.getHours() + 1);
-    otherDay.setMinutes(0);
-
     let data = {
-        flatPickrConfig: {
+        flatPickrConfigDays: {
             wrap: true,
-            dateFormat: 'd.m.Y H:i',
+            dateFormat: 'd.m.Y',
+            locale: French
+        },
+        flatPickrConfigHours: {
+            wrap: true,
+            dateFormat: 'H:i',
             enableTime: true,
+            noCalendar: true,
             time_24hr: true,
             minuteIncrement: 30,
             locale: French
@@ -116,8 +128,9 @@
         selectedAvailabilities: [],
         availabilities: {},
         search: {
-            date_start: today,
-            date_end: otherDay
+            day_start: today,
+            hour_start: today,
+            hour_end: today
         },
         loaded: false
     };
@@ -135,8 +148,9 @@
                 data.loaded = false;
                 axios.get('/api/availabilities/search', {
                     params: {
-                        'date_start': data.search.date_start,
-                        'date_end': data.search.date_end,
+                        'day_start': data.search.day_start,
+                        'hour_start': data.search.hour_start,
+                        'hour_end': data.search.hour_end,
                     }
                 })
                 .then(function(response){

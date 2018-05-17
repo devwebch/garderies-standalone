@@ -123,14 +123,18 @@ class AvailabilityController extends Controller
     {
         $date_start = null;
         $date_end = null;
-        if ($request->input('date_start') && $request->input('date_end')) {
-            $date_start = Carbon::parse($request->input('date_start'));
-            $date_end   = Carbon::parse($request->input('date_end'));
+        if ($request->input('hour_start') && $request->input('hour_end')) {
+            $day_start  = Carbon::parse($request->input('day_start'))->format('d.m.Y');
+            $hour_start = Carbon::parse($request->input('hour_start'))->format('H:i');
+            $hour_end   = Carbon::parse($request->input('hour_end'))->format('H:i');
+
+            $date_start = Carbon::parse($day_start . ' ' . $hour_start);
+            $date_end   = Carbon::parse($day_start . ' ' . $hour_end);
         }
 
         if ($date_start && $date_end) {
-            $collection = Availability::where('start', '>=', $date_start)
-                ->where('end', '<=', $date_end)
+            $collection = Availability::where('start', '<=', $date_start)
+                ->where('end', '>=', $date_end)
                 ->get();
         } else {
             $collection = Availability::all();
