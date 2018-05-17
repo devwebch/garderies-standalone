@@ -11,9 +11,11 @@ class AvailabilitySeeder extends Seeder
      */
     public function run()
     {
-        for($user_id = 1; $user_id <= 5; $user_id++) {
+        $users = \App\User::all()->count();
 
-            for ($i = 0; $i < 7; $i++) {
+        for($user_id = 1; $user_id <= $users; $user_id++) {
+
+            for ($i = 0; $i <= 5; $i++) {
                 $day = $i;
 
                 $start = \Carbon\Carbon::tomorrow()->addDay($day)->hour(rand(6, 11));
