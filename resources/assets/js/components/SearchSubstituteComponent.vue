@@ -73,6 +73,11 @@
                                     <a :href="'mailto:' + item.user.email"><i class="fas fa-envelope"></i></a>
                                 </td>
                             </tr>
+                            <tr v-if="!availabilities.length">
+                                <td colspan="6">
+                                    <div class="alert alert-info mb-0">Aucune disponibilité</div>
+                                </td>
+                            </tr>
                         </table>
 
                         <div class="selection clearfix" v-if="selectedAvailabilities.length">
