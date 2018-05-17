@@ -168,7 +168,8 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(0, 0, 0, 0.18);
+        background: rgba(255, 255, 255, 0.75);
+        z-index: 10;
 
         .sk-folding-cube {
             top: 46%;
