@@ -58,9 +58,10 @@
 
                     // New event object
                     let newEvent = {
-                        title: 'New availability',
+                        title: 'Nouvelle disponibilité',
                         start: start.format(),
-                        end: end.format()
+                        end: end.format(),
+                        color: '#ffa000'
                     };
 
                     // Save the new event
