@@ -22,3 +22,4 @@ Route::resource('users', 'UserController');
 Route::get('users/{user}/availabilities', 'UserController@availabilities')->name('users.availabilities');
 
 Route::resource('availabilities', 'AvailabilityController');
+Route::resource('bookings', 'BookingController');

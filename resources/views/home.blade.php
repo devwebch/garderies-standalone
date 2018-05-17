@@ -19,7 +19,7 @@
                 <div class="col-md-4 widget-count">
                     <h3 style="font-size: 1em">Remplacements ce mois</h3>
                     <div class="number" style="font-size: 4em;">{{$count_booking}}</div>
-                    <a href="#">Gérer les remplacements</a>
+                    <a href="{{route('bookings.index')}}">Gérer les remplacements</a>
                 </div>
             </div>
             <div class="row">

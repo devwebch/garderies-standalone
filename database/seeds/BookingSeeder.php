@@ -19,8 +19,8 @@ class BookingSeeder extends Seeder
             for($i = 0; $i < rand(2, 12); $i++) {
                 $day = $i;
 
-                $start  = \Carbon\Carbon::create(date('Y'), $m)->addDay($day)->hour(rand(6, 11));
-                $end    = \Carbon\Carbon::create(date('Y'), $m)->addDay($day)->hour(rand(12, 18));
+                $start  = \Carbon\Carbon::create(date('Y'), $m)->addDay($day)->hour(rand(6, 11))->minute(0);
+                $end    = \Carbon\Carbon::create(date('Y'), $m)->addDay($day)->hour(rand(12, 18))->minute(0);
 
                 if ($start->isSaturday()) {
                     $start->addDay(2);
