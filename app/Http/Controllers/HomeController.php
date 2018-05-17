@@ -50,7 +50,7 @@ class HomeController extends Controller
 
         ]);
 
-        $chart->labels(['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octore', 'Novembre', 'Décembre']);
+        $chart->labels(['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']);
         $chart->dataset('Remplacements mensuels', 'line', $monthly_bookings_dataset)
             ->options([
                 'backgroundColor'       => '#33669959',
