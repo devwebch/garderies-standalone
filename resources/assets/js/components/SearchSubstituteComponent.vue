@@ -110,6 +110,11 @@
     today.setHours(today.getHours() + 1);
     today.setMinutes(0);
 
+    let todayButAfter = new Date();
+    todayButAfter.setDate(today.getDate());
+    todayButAfter.setHours(today.getHours() + 4);
+    todayButAfter.setMinutes(0);
+
     let data = {
         flatPickrConfigDays: {
             wrap: true,
@@ -130,7 +135,7 @@
         search: {
             day_start: today,
             hour_start: today,
-            hour_end: today
+            hour_end: todayButAfter
         },
         loaded: false
     };

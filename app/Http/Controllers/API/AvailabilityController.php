@@ -122,8 +122,9 @@ class AvailabilityController extends Controller
     public function search(Request $request)
     {
         $date_start = null;
-        $date_end = null;
-        if ($request->input('hour_start') && $request->input('hour_end')) {
+        $date_end   = null;
+
+        if ($request->input('day_start') && $request->input('hour_start') && $request->input('hour_end')) {
             $day_start  = Carbon::parse($request->input('day_start'))->format('d.m.Y');
             $hour_start = Carbon::parse($request->input('hour_start'))->format('H:i');
             $hour_end   = Carbon::parse($request->input('hour_end'))->format('H:i');
