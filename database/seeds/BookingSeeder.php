@@ -11,6 +11,9 @@ class BookingSeeder extends Seeder
      */
     public function run()
     {
+        $users      = \App\User::all()->count();
+        $nurseries  = \App\Nursery::all()->count();
+
         for($m = 1; $m <= 12; $m++) {
 
             for($i = 0; $i < rand(2, 12); $i++) {
@@ -30,9 +33,9 @@ class BookingSeeder extends Seeder
                 }
 
                 DB::table('bookings')->insert([
-                    'user_id'           => 2,
-                    'substitute_id'     => 1,
-                    'nursery_id'        => 1,
+                    'user_id'           => rand(1, $users),
+                    'substitute_id'     => rand(1, $users),
+                    'nursery_id'        => rand(1, $nurseries),
                     'start'             => $start,
                     'end'               => $end,
                     'created_at'        => \Carbon\Carbon::now()
