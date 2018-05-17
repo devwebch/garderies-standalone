@@ -1,0 +1,42 @@
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+// Nav
+.nav-lateral {
+  ul {
+    list-style: none outside;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin-bottom: 5px;
+    }
+  }
+  a {
+    display: block;
+    color: $gray-900;
+    font-weight: 600;
+    vertical-align: top;
+    text-decoration: none;
+    padding: 5px 0;
+  }
+  .icon {
+    margin-right: 5px;
+    vertical-align: text-top;
+  }
+  .icon svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@include media-breakpoint-up(sm) {}
+// Medium devices (tablets, 768px and up)
+@include media-breakpoint-up(md) {}
+// Large devices (desktops, 992px and up)
+@include media-breakpoint-up(lg) {}
+// Extra large devices (large desktops, 1200px and up)
+@include media-breakpoint-up(xl) {}
