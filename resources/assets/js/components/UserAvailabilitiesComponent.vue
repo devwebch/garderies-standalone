@@ -28,7 +28,9 @@
                     right: 'today prev,next'
                 },
                 buttonText: {
-                    today: "Aujourd'hui"
+                    today: "Aujourd'hui",
+                    week: "Vue semaine",
+                    list: "Vue liste"
                 },
                 weekends: false,
                 allDaySlot: false,
