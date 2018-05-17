@@ -11,31 +11,33 @@ class BookingSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 0; $i < 7; $i++) {
+        for($m = 1; $m <= 12; $m++) {
 
-            $day = $i;
+            for($i = 0; $i < rand(2, 12); $i++) {
+                $day = $i;
 
-            $start  = \Carbon\Carbon::tomorrow()->addDay($day)->hour(rand(6, 11));
-            $end    = \Carbon\Carbon::tomorrow()->addDay($day)->hour(rand(12, 18));
+                $start  = \Carbon\Carbon::create(date('Y'), $m)->addDay($day)->hour(rand(6, 11));
+                $end    = \Carbon\Carbon::create(date('Y'), $m)->addDay($day)->hour(rand(12, 18));
 
-            if ($start->isSaturday()) {
-                $start->addDay(2);
-                $end->addDay(2);
-                $i+=2;
-            } elseif ($start->isSunday()) {
-                $start->addDay(1);
-                $end->addDay(1);
-                $i++;
+                if ($start->isSaturday()) {
+                    $start->addDay(2);
+                    $end->addDay(2);
+                    $i+=2;
+                } elseif ($start->isSunday()) {
+                    $start->addDay(1);
+                    $end->addDay(1);
+                    $i++;
+                }
+
+                DB::table('bookings')->insert([
+                    'user_id'           => 2,
+                    'substitute_id'     => 1,
+                    'nursery_id'        => 1,
+                    'start'             => $start,
+                    'end'               => $end,
+                    'created_at'        => \Carbon\Carbon::now()
+                ]);
             }
-
-            DB::table('bookings')->insert([
-                'user_id'           => 2,
-                'substitute_id'     => 1,
-                'nursery_id'        => 1,
-                'start'             => $start,
-                'end'               => $end,
-                'created_at'        => \Carbon\Carbon::now()
-            ]);
         }
     }
 }

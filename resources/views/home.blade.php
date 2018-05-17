@@ -23,12 +23,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col p-5 text-center">
-                    <img src="{{asset('img/graphs.jpg')}}" alt="">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
+                <div class="col pt-5">
                     <div>{!! $chart->container() !!}</div>
                 </div>
             </div>
