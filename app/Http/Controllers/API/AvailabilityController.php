@@ -18,8 +18,7 @@ class AvailabilityController extends Controller
     public function index()
     {
         $availabilities = Availability::all();
-
-        return $availabilities;
+        return $availabilities; //TODO: check where this is called, must change the return value
     }
 
     /**
@@ -83,7 +82,13 @@ class AvailabilityController extends Controller
      */
     public function destroy(Availability $availability)
     {
-        //
+        //TODO: return a boolean to do a check on the front side
+        if ($availability) {
+            $availability->delete();
+            return response('Availability destroyed');
+        }
+
+        return response('Availability not destroyed');
     }
 
     /**
