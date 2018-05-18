@@ -24,7 +24,10 @@
             </div>
             <div class="row">
                 <div class="col-md-6 pt-5">
-                    <div style="height: 300px;">{!! $chart->container() !!}</div>
+                    <div style="height: 300px;">{!! $chartBookings->container() !!}</div>
+                </div>
+                <div class="col-md-6 pt-5">
+                    <div style="height: 300px;">{!! $chartAvailabilities->container() !!}</div>
                 </div>
             </div>
         </div>
@@ -33,5 +36,6 @@
 
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js" charset="utf-8"></script>
-    {!! $chart->script() !!}
+    {!! $chartBookings->script() !!}
+    {!! $chartAvailabilities->script() !!}
 @endsection

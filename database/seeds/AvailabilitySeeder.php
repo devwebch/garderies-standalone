@@ -15,11 +15,11 @@ class AvailabilitySeeder extends Seeder
 
         for($user_id = 1; $user_id <= $users; $user_id++) {
 
-            for ($i = 0; $i <= 5; $i++) {
+            for ($i = 1; $i <= 7; $i++) {
                 $day = $i;
 
-                $start = \Carbon\Carbon::tomorrow()->addDay($day)->hour(rand(6, 11));
-                $end = \Carbon\Carbon::tomorrow()->addDay($day)->hour(rand(12, 18));
+                $start = \Carbon\Carbon::tomorrow()->month(5 - (5 % $i))->addDay($day)->hour(rand(6, 11));
+                $end = \Carbon\Carbon::tomorrow()->month(5 - (5 % $i))->addDay($day)->hour(rand(12, 18));
 
                 if ($start->isSaturday()) {
                     $start->addDay(2);

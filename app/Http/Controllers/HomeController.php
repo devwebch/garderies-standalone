@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
+use App\Charts\AvailabilitiesChart;
 use App\Charts\BookingsChart;
 use App\Nursery;
 use App\User;
@@ -28,10 +29,7 @@ class HomeController extends Controller
                 $monthly_bookings_dataset[$booking->month - 1] = $booking->count;
             }
         }
-
-        $chart = new BookingsChart();
-        $chart->displayAxes(true);
-        $chart->options([
+        $chart_options = [
             'animation' => ['duration' => 0],
             'layout'    => [
                 'padding' => [
@@ -46,23 +44,22 @@ class HomeController extends Controller
                     'radius' => 5,
                     'hoverRadius' => 8,
                     'hitRadius' => 10,
-                    'backgroundColor' => 'rgba(3,0,0,0.5)',
-                    'borderWidth' => 3,
                 ]
             ],
             'scales' => [
                 'yAxes' => [
                     ['ticks' => [
-                        'beginAtZero'   => true,
-                        //'max'           => 15
+                        'beginAtZero'   => true
                     ]]
                 ],
             ],
 
-        ]);
+        ];
+        $bookingsChart = new BookingsChart();
+        $bookingsChart->options($chart_options);
 
-        $chart->labels(['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']);
-        $chart->dataset('Remplacements mensuels', 'line', $monthly_bookings_dataset)
+        $bookingsChart->labels(['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']);
+        $bookingsChart->dataset('Remplacements mensuels', 'line', $monthly_bookings_dataset)
             ->options([
                 'backgroundColor'       => '#33669959',
                 'borderColor'           => '#33669995',
@@ -73,12 +70,39 @@ class HomeController extends Controller
                 'lineTension'           => 0.3
             ]);
 
+
+        $monthly_availabilities = DB::table('availabilities')
+            ->select(DB::raw("MONTH(start) as month"), DB::raw("COUNT(MONTH(start)) count"))
+            ->groupBy('month')
+            ->get();
+        $monthly_availabilities_dataset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        foreach ($monthly_availabilities as $availability) {
+            if ( ($availability->month - 1) < date('m')) {
+                $monthly_availabilities_dataset[$availability->month - 1] = $availability->count;
+            }
+        }
+
+        $availabilitiesChart = new AvailabilitiesChart();
+        $availabilitiesChart->options($chart_options);
+
+        $availabilitiesChart->labels(['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']);
+        $availabilitiesChart->dataset('Disponibilités mensuelles', 'line', $monthly_availabilities_dataset)
+            ->options([
+                'backgroundColor'       => '#8bc34a59',
+                'borderColor'           => '#8bc34a95',
+                'pointBackgroundColor'  => '#8bc34a',
+                'pointBorderColor'      => '#8bc34a',
+                'pointStyle'            => 'circle',
+                'borderWidth'           => 3,
+                'lineTension'           => 0.3
+            ]);
+
         return view('home', [
-            'count_nursery'     => $count_nursery,
-            'count_user'        => $count_user,
-            'count_booking'     => $count_booking,
-            'chart'             => $chart,
-            'chart2'             => $chart
+            'count_nursery'         => $count_nursery,
+            'count_user'            => $count_user,
+            'count_booking'         => $count_booking,
+            'chartBookings'         => $bookingsChart,
+            'chartAvailabilities'   => $availabilitiesChart,
         ]);
     }
 }
