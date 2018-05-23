@@ -18,6 +18,7 @@ window.fullcalendar = require('fullcalendar');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('home', require('./components/HomeComponent'));
+Vue.component('tour', require('./components/TourComponent'));
 Vue.component('nurseries', require('./components/NurseriesComponent'));
 Vue.component('users', require('./components/UsersComponent'));
 Vue.component('user-availabilities', require('./components/UserAvailabilitiesComponent'));

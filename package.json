@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "fullcalendar": "^3.9.0",
-    "vue-flatpickr-component": "^7.0.2"
+    "vue-flatpickr-component": "^7.0.2",
+    "vue-tour": "^1.0.1"
   }
 }
