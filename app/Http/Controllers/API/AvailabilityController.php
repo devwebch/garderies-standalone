@@ -145,8 +145,8 @@ class AvailabilityController extends Controller
             $hour_start = Carbon::parse($request->input('hour_start'))->format('H:i');
             $hour_end   = Carbon::parse($request->input('hour_end'))->format('H:i');
 
-            $date_start = Carbon::parse($day_start . ' ' . $hour_start);
-            $date_end   = Carbon::parse($day_start . ' ' . $hour_end);
+            $date_start = Carbon::parse($day_start . ' ' . $hour_start)->addHour(1);
+            $date_end   = Carbon::parse($day_start . ' ' . $hour_end)->subHour(1);
         }
 
         if ($date_start && $date_end) {
