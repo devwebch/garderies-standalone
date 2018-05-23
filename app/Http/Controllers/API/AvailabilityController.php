@@ -32,9 +32,18 @@ class AvailabilityController extends Controller
         $userID     = $request->params['userID'];
         $event      = $request->params['event'];
 
+        $start      = Carbon::parse($event['start']);
+        $end        = Carbon::parse($event['end']);
+
+        // if no starting hour is passed (thanks momentJS), set it to 8
+        if (!$start->hour) {
+            $start->hour(8);
+            $end->hour($start->hour + 2);
+        }
+
         $availability = new Availability();
-        $availability->start    = Carbon::parse($event['start']);
-        $availability->end      = Carbon::parse($event['end']);
+        $availability->start    = $start;
+        $availability->end      = $end;
         $availability->user_id  = $userID;
         $availability->save();
 
@@ -66,6 +75,8 @@ class AvailabilityController extends Controller
     {
         $start  = Carbon::parse($request->params['start']);
         $end    = Carbon::parse($request->params['end']);
+
+        //TODO: add constraint check
 
         $availability->start = $start;
         $availability->end = $end;
