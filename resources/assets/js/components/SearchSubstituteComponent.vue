@@ -8,37 +8,37 @@
                         <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
                             <div class="row">
                                 <div class="form-group col">
-                                    <label for="hour_start">Day:</label>
+                                    <label for="hour_start">Jour :</label>
                                     <flat-pickr
                                             v-model="search.day_start"
                                             :config="flatPickrConfigDays"
                                             class="form-control"
-                                            placeholder="Select a date"
+                                            placeholder="Sélectionner une date"
                                             name="date">
                                     </flat-pickr>
                                 </div>
                                 <div class="form-group col">
-                                    <label for="hour_start">Date start:</label>
+                                    <label for="hour_start">Heure de début:</label>
                                     <flat-pickr
                                             v-model="search.hour_start"
                                             :config="flatPickrConfigHours"
                                             class="form-control"
-                                            placeholder="Select a date"
+                                            placeholder="Heure de départ"
                                             name="date">
                                     </flat-pickr>
                                 </div>
                                 <div class="form-group col">
-                                    <label for="hour_end">Date end:</label>
+                                    <label for="hour_end">Heure de fin :</label>
                                     <flat-pickr
                                             v-model="search.hour_end"
                                             :config="flatPickrConfigHours"
                                             class="form-control"
-                                            placeholder="Select a date"
+                                            placeholder="Heure de fin"
                                             name="date">
                                     </flat-pickr>
                                 </div>
                                 <div class="col" style="padding-top: 31px;">
-                                    <button class="btn btn-primary btn-block" type="submit">Search</button>
+                                    <button class="btn btn-primary btn-block" type="submit">Rechercher</button>
                                 </div>
                             </div>
                         </form>
@@ -64,7 +64,7 @@
                         <table class="table table-responsive-sm">
                             <thead>
                             <tr>
-                                <th width="15"><input type="checkbox" v-on:click="selectAll"></th>
+                                <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="selected"></th>
                                 <th>Nom et prénom</th>
                                 <th>Date</th>
                                 <th>Hours</th>
@@ -89,10 +89,9 @@
                                 </td>
                             </tr>
                         </table>
-
-                        <div class="selection clearfix" v-if="selectedAvailabilities.length">
-                            <a href="#" class="btn btn-primary float-right">Contact the selected people</a>
-                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">
+                        <a href="#" class="btn btn-success btn-sm">Contact the selected people</a>
                     </div>
                 </div>
             </div>
@@ -130,6 +129,7 @@
             minuteIncrement: 30,
             locale: French
         },
+        selected: false,
         selectedAvailabilities: [],
         availabilities: {},
         search: {
@@ -165,7 +165,7 @@
                 });
             },
             selectAll: function (event) {
-                if (data.selectedAvailabilities.length) {
+                if (data.selected) {
                     data.selectedAvailabilities = [];
                 } else {
                     data.availabilities.forEach(function(item){

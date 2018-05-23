@@ -156,8 +156,10 @@ class AvailabilityController extends Controller
             $hour_end   = Carbon::parse($request->input('hour_end'))->format('H:i');
 
             // recompose the date object through Carbon, extends the search perimeter for flexibility
-            $date_start = Carbon::parse($day_start . ' ' . $hour_start)->addHour(1);
-            $date_end   = Carbon::parse($day_start . ' ' . $hour_end)->subHour(1);
+            //$date_start = Carbon::parse($day_start . ' ' . $hour_start)->subHour(1);
+            //$date_end   = Carbon::parse($day_start . ' ' . $hour_end)->addHour(1);
+            $date_start = Carbon::parse($day_start . ' ' . $hour_start);
+            $date_end   = Carbon::parse($day_start . ' ' . $hour_end);
         }
 
         // if the search perimeter is correctly defined, proceed
