@@ -135,20 +135,32 @@ class AvailabilityController extends Controller
         return $availabilities_formatted;
     }
 
+    /**
+     * Search for availabilities
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function search(Request $request)
     {
         $date_start = null;
         $date_end   = null;
 
+        // check if all the inputs are presents
         if ($request->input('day_start') && $request->input('hour_start') && $request->input('hour_end')) {
+            // retrieve the starting day
             $day_start  = Carbon::parse($request->input('day_start'))->format('d.m.Y');
+            // starting hour
             $hour_start = Carbon::parse($request->input('hour_start'))->format('H:i');
+            // ending hour
             $hour_end   = Carbon::parse($request->input('hour_end'))->format('H:i');
 
+            // recompose the date object through Carbon, extends the search perimeter for flexibility
             $date_start = Carbon::parse($day_start . ' ' . $hour_start)->addHour(1);
             $date_end   = Carbon::parse($day_start . ' ' . $hour_end)->subHour(1);
         }
 
+        // if the search perimeter is correctly defined, proceed
         if ($date_start && $date_end) {
             $collection = Availability::where('start', '<=', $date_start)
                 ->where('end', '>=', $date_end)
