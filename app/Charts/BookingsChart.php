@@ -33,9 +33,7 @@ class BookingsChart extends Chart
             ->get();
         $monthly_availabilities_dataset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         foreach ($monthly_availabilities as $availability) {
-            if ( ($availability->month - 1) < date('m')) {
-                $monthly_availabilities_dataset[$availability->month - 1] = $availability->count;
-            }
+            $monthly_availabilities_dataset[$availability->month - 1] = $availability->count;
         }
 
         $this->labels(['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']);
