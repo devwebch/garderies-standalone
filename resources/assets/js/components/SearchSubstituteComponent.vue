@@ -1,107 +1,125 @@
 <template>
     <div>
-        <div class="row mb-4">
-            <div class="col">
-                <div class="card card-default">
-                    <div class="card-header">Search parameters</div>
-                    <div class="card-body">
-                        <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label for="hour_start">Jour :</label>
-                                    <flat-pickr
-                                            v-model="search.day_start"
-                                            :config="flatPickrConfigDays"
-                                            class="form-control"
-                                            placeholder="Sélectionner une date"
-                                            name="date">
-                                    </flat-pickr>
-                                </div>
-                                <div class="form-group col">
-                                    <label for="hour_start">Heure de début:</label>
-                                    <flat-pickr
-                                            v-model="search.hour_start"
-                                            :config="flatPickrConfigHours"
-                                            class="form-control"
-                                            placeholder="Heure de départ"
-                                            name="date">
-                                    </flat-pickr>
-                                </div>
-                                <div class="form-group col">
-                                    <label for="hour_end">Heure de fin :</label>
-                                    <flat-pickr
-                                            v-model="search.hour_end"
-                                            :config="flatPickrConfigHours"
-                                            class="form-control"
-                                            placeholder="Heure de fin"
-                                            name="date">
-                                    </flat-pickr>
-                                </div>
-                                <div class="col" style="padding-top: 31px;">
-                                    <button class="btn btn-primary btn-block" type="submit">Rechercher</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="card card-default">
-                    <div class="card-header">Search results</div>
-                    <div class="card-body">
-
-                        <div class="loading-overlay" v-show="!loaded">
-                            <div class="sk-folding-cube">
-                                <div class="sk-cube1 sk-cube"></div>
-                                <div class="sk-cube2 sk-cube"></div>
-                                <div class="sk-cube4 sk-cube"></div>
-                                <div class="sk-cube3 sk-cube"></div>
-                            </div>
+        <div class="card card-default mb-4">
+            <div class="card-header">Search parameters</div>
+            <div class="card-body">
+                <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="hour_start">Jour :</label>
+                            <flat-pickr
+                                    v-model="search.day_start"
+                                    :config="flatPickrConfigDays"
+                                    class="form-control"
+                                    placeholder="Sélectionner une date"
+                                    name="date">
+                            </flat-pickr>
                         </div>
-
-                        <table class="table table-responsive-sm">
-                            <thead>
-                            <tr>
-                                <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="selected"></th>
-                                <th>Nom et prénom</th>
-                                <th>Date</th>
-                                <th>Disponibilité</th>
-                                <th class="d-none d-sm-block">Nursery</th>
-                                <th>Matching</th>
-                                <th width="50">Actions</th>
-                            </tr>
-                            </thead>
-                            <tr v-for="item in availabilities">
-                                <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
-                                <td><a :href="item.user.link">{{item.user.name}}</a></td>
-                                <td><i class="fas fa-calendar"></i> {{item.start}}</td>
-                                <td>{{item.start_hour}} <i class="fas fa-arrow-right"></i> {{item.end_hour}}</td>
-                                <td class="d-none d-sm-block"><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
-                                <td>
-                                    <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
-                                    <span class="badge badge-success" v-if="item.matching=='complete'">{{item.matching}}</span>
-                                    <span class="badge badge-warning" v-if="item.matching=='partial'">{{item.matching}}</span>
-                                </td>
-                                <td>
-                                    <a :href="'tel:' + item.user.phone"><i class="fas fa-phone"></i></a>
-                                    <a :href="'mailto:' + item.user.email"><i class="fas fa-envelope"></i></a>
-                                </td>
-                            </tr>
-                            <tr v-if="!availabilities.length">
-                                <td colspan="6">
-                                    <div class="alert alert-info mb-0">Aucune disponibilité</div>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="form-group col">
+                            <label for="hour_start">Heure de début:</label>
+                            <flat-pickr
+                                    v-model="search.hour_start"
+                                    :config="flatPickrConfigHours"
+                                    class="form-control"
+                                    placeholder="Heure de départ"
+                                    name="date">
+                            </flat-pickr>
+                        </div>
+                        <div class="form-group col">
+                            <label for="hour_end">Heure de fin :</label>
+                            <flat-pickr
+                                    v-model="search.hour_end"
+                                    :config="flatPickrConfigHours"
+                                    class="form-control"
+                                    placeholder="Heure de fin"
+                                    name="date">
+                            </flat-pickr>
+                        </div>
+                        <div class="col" style="padding-top: 31px;">
+                            <button class="btn btn-primary btn-block" type="submit">Rechercher</button>
+                        </div>
                     </div>
-                    <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">
-                        <a href="#" class="btn btn-success btn-sm">Contact the selected people</a>
+                </form>
+            </div>
+        </div>
+        <div class="card card-default">
+            <div class="card-header">Search results</div>
+            <div class="card-body">
+
+                <div class="loading-overlay" v-show="!loaded">
+                    <div class="sk-folding-cube">
+                        <div class="sk-cube1 sk-cube"></div>
+                        <div class="sk-cube2 sk-cube"></div>
+                        <div class="sk-cube4 sk-cube"></div>
+                        <div class="sk-cube3 sk-cube"></div>
+                    </div>
+                </div>
+
+                <table class="table table-responsive-sm">
+                    <thead>
+                    <tr>
+                        <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>
+                        <th>Nom et prénom</th>
+                        <th>Date</th>
+                        <th>Disponibilité</th>
+                        <th class="d-none d-sm-block">Nursery</th>
+                        <th>Matching</th>
+                        <th width="50">Actions</th>
+                    </tr>
+                    </thead>
+                    <tr v-for="item in availabilities">
+                        <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
+                        <td><a :href="item.user.link">{{item.user.name}}</a></td>
+                        <td><i class="fas fa-calendar"></i> {{item.start}}</td>
+                        <td>{{item.start_hour}} <i class="fas fa-arrow-right"></i> {{item.end_hour}}</td>
+                        <td class="d-none d-sm-block"><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
+                        <td>
+                            <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
+                            <span class="badge badge-success" v-if="item.matching=='complete'">{{item.matching}}</span>
+                            <span class="badge badge-warning" v-if="item.matching=='partial'">{{item.matching}}</span>
+                        </td>
+                        <td>
+                            <a :href="'tel:' + item.user.phone"><i class="fas fa-phone"></i></a>
+                            <a :href="'mailto:' + item.user.email"><i class="fas fa-envelope"></i></a>
+                        </td>
+                    </tr>
+                    <tr v-if="!availabilities.length">
+                        <td colspan="6">
+                            <div class="alert alert-info mb-0">Aucune disponibilité</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">
+                <button class="btn btn-success btn-sm" v-on:click="contactPeopleValidation">Contact the selected people</button>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmation de contact</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Les personnes sélectionnées seront contactées dans les plus brefs délais afin de confirmer le remplacement du slot défini, merci de confirmer le remplacement ci-dessous :</p>
+
+                        <div class="text-center">
+                            <h2>{{search.day_start}}</h2>
+                            <p>De {{search.hour_start}} à {{search.hour_end}}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-primary" v-on:click="contactPeople">Envoyer la demande</button>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -113,11 +131,11 @@
     let vm;
 
     let today = new Date();
-    today.setHours(today.getHours() + 1);
+    today.setHours(6);
     today.setMinutes(0);
 
     let later = new Date();
-    later.setHours(today.getHours() + 4);
+    later.setHours(18);
     later.setMinutes(0);
 
     let data = {
@@ -135,7 +153,7 @@
             minuteIncrement: 30,
             locale: French
         },
-        selected: false,
+        peopleSelected: false,
         selectedAvailabilities: [],
         availabilities: {},
         search: {
@@ -177,13 +195,22 @@
                 });
             },
             selectAll: function (event) {
-                if (data.selected) {
+                if (data.peopleSelected) {
                     data.selectedAvailabilities = [];
                 } else {
                     data.availabilities.forEach(function(item){
                         data.selectedAvailabilities.push(item);
                     });
                 }
+            },
+            contactPeopleValidation: function () {
+                $('.modal').modal('show');
+            },
+            contactPeople: function () {
+                console.log('Contact the people');
+                data.peopleSelected = false;
+                data.selectedAvailabilities = [];
+                $('.modal').modal('hide');
             }
         },
         components: {
@@ -198,7 +225,6 @@
         }
         return num;
     }
-
     function formattedHour(date) {
         return zeroLeadingNumber(date.getHours()) + ':' + zeroLeadingNumber(date.getMinutes());
     }
