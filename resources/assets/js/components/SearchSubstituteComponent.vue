@@ -67,8 +67,9 @@
                                 <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="selected"></th>
                                 <th>Nom et prénom</th>
                                 <th>Date</th>
-                                <th>Hours</th>
+                                <th>Disponibilité</th>
                                 <th class="d-none d-sm-block">Nursery</th>
+                                <th>Matching</th>
                                 <th width="50">Actions</th>
                             </tr>
                             </thead>
@@ -78,6 +79,11 @@
                                 <td><i class="fas fa-calendar"></i> {{item.start}}</td>
                                 <td>{{item.start_hour}} <i class="fas fa-arrow-right"></i> {{item.end_hour}}</td>
                                 <td class="d-none d-sm-block"><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
+                                <td>
+                                    <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
+                                    <span class="badge badge-success" v-if="item.matching=='complete'">{{item.matching}}</span>
+                                    <span class="badge badge-warning" v-if="item.matching=='partial'">{{item.matching}}</span>
+                                </td>
                                 <td>
                                     <a :href="'tel:' + item.user.phone"><i class="fas fa-phone"></i></a>
                                     <a :href="'mailto:' + item.user.email"><i class="fas fa-envelope"></i></a>
@@ -104,15 +110,15 @@
     import 'flatPickr/dist/flatpickr.css';
     import {French} from 'flatPickr/dist/l10n/fr';
 
+    let vm;
+
     let today = new Date();
-    today.setDate(today.getDate() + 1);
     today.setHours(today.getHours() + 1);
     today.setMinutes(0);
 
-    let todayButAfter = new Date();
-    todayButAfter.setDate(today.getDate());
-    todayButAfter.setHours(today.getHours() + 4);
-    todayButAfter.setMinutes(0);
+    let later = new Date();
+    later.setHours(today.getHours() + 4);
+    later.setMinutes(0);
 
     let data = {
         flatPickrConfigDays: {
@@ -133,11 +139,11 @@
         selectedAvailabilities: [],
         availabilities: {},
         search: {
-            day_start: today,
-            hour_start: today,
-            hour_end: todayButAfter
+            day_start: formattedDate(today),
+            hour_start: formattedHour(today),
+            hour_end: formattedHour(later)
         },
-        loaded: false
+        loaded: true
     };
 
     export default {
@@ -146,11 +152,17 @@
             return data;
         },
         mounted() {
-            this.searchSubstitute();
+            vm = this;
+
+            this.$nextTick(function(){
+                this.searchSubstitute();
+            });
         },
         methods: {
             searchSubstitute: function () {
                 data.loaded = false;
+                data.availabilities = {};
+
                 axios.get('/api/availabilities/search', {
                     params: {
                         'day_start': data.search.day_start,
@@ -178,6 +190,22 @@
             flatPickr
         }
     }
+
+    // Utils
+    function zeroLeadingNumber(num) {
+        if (num < 10) {
+            return '0' + num;
+        }
+        return num;
+    }
+
+    function formattedHour(date) {
+        return zeroLeadingNumber(date.getHours()) + ':' + zeroLeadingNumber(date.getMinutes());
+    }
+    function formattedDate(date) {
+        return zeroLeadingNumber(date.getDate()) + '.' + zeroLeadingNumber(date.getMonth() + 1) + '.' + zeroLeadingNumber(date.getFullYear());
+    }
+
 </script>
 
 <style lang="scss">
