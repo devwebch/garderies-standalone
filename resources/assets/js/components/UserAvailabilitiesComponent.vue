@@ -86,6 +86,7 @@
             // Instantiate the calendar
             calendar = $('#calendar').fullCalendar({
                 themeSystem: 'bootstrap4',
+                contentHeight: 'auto',
                 defaultView: 'agendaWeek',
                 locale: 'fr-ch',
                 header: {
@@ -172,6 +173,9 @@
                     });
                 },
                 eventClick: function(event, jsEvent, view) {
+
+                    if (event.type != 'availability') { return; }
+
                     $('.modal-event').modal({show: true, focus: false}); // focus on the modal messes up with flatpickr
                     data.editEvent = {
                         event: event,
@@ -181,7 +185,9 @@
                     };
                 },
                 eventRender: function (event, element, view) {
-                    element.append('<a href="/availabilities/' + event.id + '" class="edit-link">Editer</a>');
+                    if (event.type == 'availability' && event.status == 0) {
+                        element.append('<a href="/availabilities/' + event.id + '" class="edit-link">Editer</a>');
+                    }
                 }
             });
         },

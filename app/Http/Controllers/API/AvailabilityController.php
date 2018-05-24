@@ -120,15 +120,21 @@ class AvailabilityController extends Controller
         // New array for formatted data
         $availabilities_formatted = [];
 
+        $colors = ['#3a87ad', '#666666'];
+
         // Loop through each object
         foreach ($availabilities as $availability) {
 
             // See fullcalendar doc for format
             $availabilities_formatted[] = [
-                'id' => $availability->id,
-                'title' => 'Disponible',
-                'start' => $availability->start,
-                'end' => $availability->end
+                'id'        => $availability->id,
+                'title'     => 'Disponible',
+                'start'     => $availability->start,
+                'end'       => $availability->end,
+                'status'    => $availability->status,
+                'color'     => $colors[$availability->status],
+                'rendering' => ($availability->status == Availability::STATUS_UNTOUCHED) ? '' : 'background',
+                'type'      => 'availability'
             ];
         }
 
