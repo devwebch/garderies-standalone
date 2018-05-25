@@ -143,4 +143,31 @@ class UserController extends Controller
     {
         return view('user.search');
     }
+
+    public function bookings(User $user)
+    {
+        global $bookings;
+        $bookings       = [];
+
+        // TODO: retrieve bookings for the current user
+        $user->bookings()->orderBy('start')->each(function ($data){
+            global $bookings;
+
+            $start  = Carbon::parse($data->start);
+            $end    = Carbon::parse($data->end);
+
+            $bookings[] = (object)[
+                'day_start'     => $start->format('d.m.Y'),
+                'day_end'       => $end->format('d.m.Y'),
+                'hour_start'    => $start->format('H\hi'),
+                'hour_end'      => $end->format('H\hi'),
+                'nursery'       => $data->nursery,
+            ];
+        });
+
+        return view('user.bookings', [
+            'user'      => $user,
+            'bookings'  => $bookings
+        ]);
+    }
 }

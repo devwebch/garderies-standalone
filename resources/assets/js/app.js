@@ -24,6 +24,7 @@ Vue.component('user-availabilities', require('./components/UserAvailabilitiesCom
 Vue.component('search-substitute', require('./components/SearchSubstituteComponent'));
 
 Vue.component('availability-edit', require('./components/AvailabilityEditComponent'));
+Vue.component('user-show', require('./components/UserShowComponent'));
 
 
 const app = new Vue({
