@@ -24,16 +24,16 @@ class AvailabilityController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $userID     = $request->params['userID'];
-        $event      = $request->params['event'];
+        $userID = $request->params['userID'];
+        $event = $request->params['event'];
 
-        $start      = Carbon::parse($event['start']);
-        $end        = Carbon::parse($event['end']);
+        $start = Carbon::parse($event['start']);
+        $end = Carbon::parse($event['end']);
 
         // if no starting hour is passed (thanks momentJS), set it to 8
         if (!$start->hour) {
@@ -42,21 +42,21 @@ class AvailabilityController extends Controller
         }
 
         $availability = new Availability();
-        $availability->start    = $start;
-        $availability->end      = $end;
-        $availability->user_id  = $userID;
+        $availability->start = $start;
+        $availability->end = $end;
+        $availability->user_id = $userID;
         $availability->save();
 
         return response()->json([
-            'status'    => 'Availability created',
-            'id'        => $availability->id
+            'status' => 'Availability created',
+            'id' => $availability->id
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Availability  $availability
+     * @param  \App\Availability $availability
      * @return \Illuminate\Http\Response
      */
     public function show(Availability $availability)
@@ -67,14 +67,14 @@ class AvailabilityController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Availability  $availability
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Availability $availability
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Availability $availability)
     {
-        $start  = Carbon::parse($request->params['start']);
-        $end    = Carbon::parse($request->params['end']);
+        $start = Carbon::parse($request->params['start']);
+        $end = Carbon::parse($request->params['end']);
 
         //TODO: add constraint check
 
@@ -88,7 +88,7 @@ class AvailabilityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Availability  $availability
+     * @param  \App\Availability $availability
      * @return \Illuminate\Http\Response
      */
     public function destroy(Availability $availability)
@@ -120,6 +120,8 @@ class AvailabilityController extends Controller
         // New array for formatted data
         $availabilities_formatted = [];
 
+        $colors = ['#3a87ad', '#666666'];
+
         // Loop through each object
         foreach ($availabilities as $availability) {
 
@@ -128,7 +130,11 @@ class AvailabilityController extends Controller
                 'id'        => $availability->id,
                 'title'     => 'Disponible',
                 'start'     => $availability->start,
-                'end'       => $availability->end
+                'end'       => $availability->end,
+                'status'    => $availability->status,
+                'color'     => $colors[$availability->status],
+                'rendering' => ($availability->status == Availability::STATUS_UNTOUCHED) ? '' : 'background',
+                'type'      => 'availability'
             ];
         }
 
@@ -143,30 +149,58 @@ class AvailabilityController extends Controller
      */
     public function search(Request $request)
     {
+        global $date_start, $date_end;
+
         $date_start = null;
-        $date_end   = null;
+        $date_end = null;
 
         // check if all the inputs are presents
         if ($request->input('day_start') && $request->input('hour_start') && $request->input('hour_end')) {
             // retrieve the starting day
-            $day_start  = Carbon::parse($request->input('day_start'))->format('d.m.Y');
+            $day_start = Carbon::parse($request->input('day_start'))->format('d.m.Y');
             // starting hour
-            $hour_start = Carbon::parse($request->input('hour_start'))->format('H:i');
+            $hour_start = Carbon::parse($request->input('hour_start'), 'Europe/Zurich')->format('H:i');
             // ending hour
-            $hour_end   = Carbon::parse($request->input('hour_end'))->format('H:i');
+            $hour_end = Carbon::parse($request->input('hour_end'), 'Europe/Zurich')->format('H:i');
 
             // recompose the date object through Carbon, extends the search perimeter for flexibility
             //$date_start = Carbon::parse($day_start . ' ' . $hour_start)->subHour(1);
             //$date_end   = Carbon::parse($day_start . ' ' . $hour_end)->addHour(1);
             $date_start = Carbon::parse($day_start . ' ' . $hour_start);
-            $date_end   = Carbon::parse($day_start . ' ' . $hour_end);
+            $date_end = Carbon::parse($day_start . ' ' . $hour_end);
         }
 
         // if the search perimeter is correctly defined, proceed
         if ($date_start && $date_end) {
-            $collection = Availability::where('start', '<=', $date_start)
-                ->where('end', '>=', $date_end)
-                ->get();
+
+            // availabilities request
+            $collection = Availability::where([
+                ['start', '<=', $date_start], ['end', '>=', $date_end] // complete
+            ])->orWhere([
+                ['start', '<=', $date_start], ['end', '<', $date_end], ['end', '>', $date_start] // partial
+            ])->orWhere([
+                ['start', '>', $date_start], ['end', '>=', $date_end], ['start', '<', $date_end] // partial
+            ])->orWhere([
+                ['start', '>', $date_start], ['end', '<', $date_end] // partial
+            ])->get();
+
+            // determine the matching between the slot and the request
+            $collection->each(function ($item, $key) {
+                global $date_start, $date_end;
+
+                if ($item->start <= $date_start && $item->end >= $date_end) {
+                    $item->matching = 'complete';
+                } elseif ($item->start <= $date_start && $item->end < $date_end && $item->end > $date_start) {
+                    $item->matching = 'partial';
+                } elseif ($item->start > $date_start && $item->end >= $date_end && $item->start < $date_end) {
+                    $item->matching = 'partial';
+                } elseif ($item->start > $date_start && $item->end < $date_end) {
+                    $item->matching = 'partial';
+                } else {
+                    $item->matching = 'none';
+                }
+            });
+
         } else {
             $collection = Availability::all();
         }

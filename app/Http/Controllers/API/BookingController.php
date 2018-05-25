@@ -65,6 +65,8 @@ class BookingController extends Controller
 
     public function showForUser(\App\User $user, Request $request)
     {
+        // TODO: retrieve only validated bookings
+
         // Retrieve user availabilities, constrains to start and end paramaters passed from fullcalendar
         $bookings = $user->bookings()
             ->where('start', '>=', $request->start)
@@ -82,7 +84,9 @@ class BookingController extends Controller
                 'id'        => 'b_' . $booking->id,
                 'title'     => 'En remplacement',
                 'start'     => $booking->start,
-                'end'       => $booking->end
+                'end'       => $booking->end,
+                'status'    => $booking->status,
+                'type'      => 'booking'
             ];
         }
 
