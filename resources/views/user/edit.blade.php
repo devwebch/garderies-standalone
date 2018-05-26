@@ -16,6 +16,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" name="email" value="{{$user->email}}">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" class="form-control" name="phone" value="{{$user->phone}}">
+                </div>
+
+                <div class="form-group">
                     <label for="nursery">Nursery:</label>
                     <select name="nursery" class="form-control">
                         <option value="0">Select...</option>

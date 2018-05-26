@@ -115,6 +115,8 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $user->name         = $request->name;
+        $user->email        = $request->email;
+        $user->phone        = $request->phone;
         $user->nursery_id   = $request->nursery;
         $user->save();
 
