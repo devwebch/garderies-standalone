@@ -86,7 +86,7 @@
                 </table>
             </div>
             <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">
-                <button class="btn btn-success btn-sm" v-on:click="contactPeopleValidation">Contact the selected people</button>
+                <button class="btn btn-success btn-sm" v-on:click="contactPeopleValidation">Contacter les personnes sélectionnées</button>
             </div>
         </div>
 
@@ -122,6 +122,9 @@
     import flatPickr from 'vue-flatpickr-component';
     import 'flatPickr/dist/flatpickr.css';
     import {French} from 'flatPickr/dist/l10n/fr';
+
+    import swal from 'sweetalert2';
+    import 'sweetalert2/dist/sweetalert2.min.css';
 
     let vm;
 
@@ -206,6 +209,12 @@
                 data.peopleSelected = false;
                 data.selectedAvailabilities = [];
                 $('.modal').modal('hide');
+
+                swal({
+                    title: "Demandes envoyées",
+                    text: "Les demandes de remplacements sont en cours d'envoi.",
+                    type: "success"
+                });
             }
         },
         components: {
