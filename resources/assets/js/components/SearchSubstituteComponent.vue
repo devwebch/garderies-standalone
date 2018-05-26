@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card card-default mb-4">
-            <div class="card-header">Search parameters</div>
+            <div class="card-header">Paramètres de recherche</div>
             <div class="card-body">
                 <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
                     <div class="row">
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="card card-default">
-            <div class="card-header">Search results</div>
+            <div class="card-header">Résultats de recherche</div>
             <div class="card-body">
 
                 <div class="loading-overlay" v-show="!loaded">
@@ -63,8 +63,7 @@
                         <th>Date</th>
                         <th>Disponibilité</th>
                         <th class="d-none d-sm-block">Nursery</th>
-                        <th>Matching</th>
-                        <th width="50">Actions</th>
+                        <th>Correspondance</th>
                     </tr>
                     </thead>
                     <tr v-for="item in availabilities">
@@ -75,12 +74,8 @@
                         <td class="d-none d-sm-block"><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
                         <td>
                             <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
-                            <span class="badge badge-success" v-if="item.matching=='complete'">{{item.matching}}</span>
-                            <span class="badge badge-warning" v-if="item.matching=='partial'">{{item.matching}}</span>
-                        </td>
-                        <td>
-                            <a :href="'tel:' + item.user.phone"><i class="fas fa-phone"></i></a>
-                            <a :href="'mailto:' + item.user.email"><i class="fas fa-envelope"></i></a>
+                            <span class="badge badge-success" v-if="item.matching=='complete'">Complète</span>
+                            <span class="badge badge-warning" v-if="item.matching=='partial'">Partielle</span>
                         </td>
                     </tr>
                     <tr v-if="!availabilities.length">
