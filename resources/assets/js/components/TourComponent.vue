@@ -25,6 +25,13 @@
                         params: {
                             placement: 'top'
                         }
+                    },
+                    {
+                        target: '.v-step-3',
+                        content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.',
+                        params: {
+                            placement: 'top'
+                        }
                     }
                 ]
             }
