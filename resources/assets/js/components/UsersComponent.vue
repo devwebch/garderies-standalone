@@ -20,7 +20,6 @@
                         <td>{{user.nursery}}</td>
                         <td>
                             <a href="#"><i class="fas fa-phone"></i></a>
-                            <a :href="user.link"><i class="fas fa-eye"></i></a>
                         </td>
                     </tr>
                 </tbody>
