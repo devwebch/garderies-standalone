@@ -129,8 +129,8 @@ class AvailabilityController extends Controller
             $availabilities_formatted[] = [
                 'id'        => $availability->id,
                 'title'     => 'Disponible',
-                'start'     => $availability->start,
-                'end'       => $availability->end,
+                'start'     => $availability->start->toDateTimeString(),
+                'end'       => $availability->end->toDateTimeString(),
                 'status'    => $availability->status,
                 'color'     => $colors[$availability->status],
                 'rendering' => ($availability->status == Availability::STATUS_UNTOUCHED) ? '' : 'background',

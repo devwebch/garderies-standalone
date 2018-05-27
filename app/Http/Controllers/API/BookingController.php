@@ -83,8 +83,8 @@ class BookingController extends Controller
             $bookings_formatted[] = [
                 'id'        => 'b_' . $booking->id,
                 'title'     => 'En remplacement',
-                'start'     => $booking->start,
-                'end'       => $booking->end,
+                'start'     => $booking->start->toDateTimeString(),
+                'end'       => $booking->end->toDateTimeString(),
                 'status'    => $booking->status,
                 'type'      => 'booking'
             ];
