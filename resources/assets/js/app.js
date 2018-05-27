@@ -26,6 +26,7 @@ Vue.component('search-substitute', require('./components/SearchSubstituteCompone
 
 Vue.component('availability-edit', require('./components/AvailabilityEditComponent'));
 Vue.component('user-show', require('./components/UserShowComponent'));
+Vue.component('nursery-show', require('./components/NurseryShowComponent'));
 
 
 const app = new Vue({

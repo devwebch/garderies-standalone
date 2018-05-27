@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->integer('nursery_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -3,12 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Availability extends Model
 {
+    use SoftDeletes;
+
     public const STATUS_UNTOUCHED    = 0;
     public const STATUS_BOOKED       = 1;
     public const STATUS_ARCHIVED     = 2;
+
+    protected $dates = ['start', 'end', 'deleted_at'];
 
     public function user()
     {

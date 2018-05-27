@@ -18,6 +18,7 @@ class CreateNurseriesTable extends Migration
             $table->string('name');
             $table->integer('owner_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

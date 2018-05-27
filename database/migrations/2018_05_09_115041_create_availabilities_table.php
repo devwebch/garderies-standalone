@@ -21,6 +21,7 @@ class CreateAvailabilitiesTable extends Migration
             $table->integer('reccurence_type')->default(0);
             $table->integer('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

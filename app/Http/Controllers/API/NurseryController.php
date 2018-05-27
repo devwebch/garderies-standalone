@@ -61,6 +61,11 @@ class NurseryController extends Controller
      */
     public function destroy(Nursery $nursery)
     {
-        //
+        $nursery->delete();
+
+        return response()->json([
+            'status'    => 'User deleted',
+            'redirect'  => route('nurseries.index')
+        ]);
     }
 }

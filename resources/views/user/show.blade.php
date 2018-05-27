@@ -9,7 +9,7 @@
                 <div class="card-header">{{$user->name}}
                     <div class="actions float-right">
                         <a href="{{route('users.edit', [$user->id])}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-edit"></i> Editer</a>
-                        <a href="{{route('users.edit', [$user->id])}}" v-on:click.prevent="deleteUser({{$user->id}})" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Supprimer</a>
+                        <a href="#" v-on:click.prevent="deleteUser({{$user->id}})" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Supprimer</a>
                     </div>
                 </div>
                 <div class="card-body">
