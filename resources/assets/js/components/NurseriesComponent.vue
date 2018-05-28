@@ -5,7 +5,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th width="10%">#</th>
                         <th>Nom</th>
                         <th>Employés</th>
                         <th>Remplacements</th>
@@ -14,7 +13,6 @@
                 </thead>
                 <tbody>
                     <tr v-for="nursery in nurseries" :key="nursery.id">
-                        <th scope="row">{{nursery.id}}</th>
                         <td><a :href="nursery.link">{{nursery.name}}</a></td>
                         <td>{{nursery.employees_count}}</td>
                         <td>{{nursery.bookings_count}}</td>

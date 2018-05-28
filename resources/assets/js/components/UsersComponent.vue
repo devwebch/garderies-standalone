@@ -5,16 +5,14 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th width="10%">#</th>
-                        <th>Name</th>
-                        <th>Phone</th>
+                        <th>Nom et prénom</th>
+                        <th>Téléphone</th>
                         <th>Nursery</th>
                         <th width="10%"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="user in users">
-                        <th scope="row">{{user.id}}</th>
                         <td><a :href="user.link">{{user.name}}</a></td>
                         <td>{{user.phone}}</td>
                         <td>{{user.nursery}}</td>

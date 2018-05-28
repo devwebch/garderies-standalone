@@ -18,7 +18,7 @@
                     <p><strong>Téléphone :</strong> {{$user->phone}}</p>
                     <p><strong>Garderie :</strong> {{$user->nursery->name ?? '-'}}</p>
 
-                    <p><a href="{{route('users.availabilities', $user->id)}}" class="btn btn-info"><i class="fas fa-calendar"></i> Availabilities</a></p>
+                    <p><a href="{{route('users.availabilities', $user->id)}}" class="btn btn-info"><i class="fas fa-calendar"></i> Gérer mes disponibilités</a></p>
                 </div>
             </div>
             <div class="card card-default mb-4">

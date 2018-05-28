@@ -1,9 +1,9 @@
 @extends('layouts.two-columns')
 
-@section('title', 'Users')
+@section('title', 'Employés')
 
 @section('content')
-    <h1>Employees</h1>
+    <h1>Employés</h1>
     <users></users>
 @endsection
 
