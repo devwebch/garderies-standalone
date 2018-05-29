@@ -16,7 +16,7 @@
                     <td><a :href="user.link">{{user.name}}</a></td>
                     <td>{{user.phone}}</td>
                     <td>{{user.email}}</td>
-                    <td v-if="!nursery">{{user.nursery}}</td>
+                    <td v-if="!nursery"><a :href="user.nursery.link">{{user.nursery.name}}</a></td>
                 </tr>
                 </tbody>
             </table>
