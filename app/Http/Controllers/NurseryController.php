@@ -35,8 +35,15 @@ class NurseryController extends Controller
      */
     public function store(Request $request)
     {
+        // TODO: Add validation
+
         $nursery = new Nursery();
-        $nursery->name = $request->name;
+        $nursery->name      = $request->name;
+        $nursery->address   = $request->address;
+        $nursery->post_code = $request->post_code;
+        $nursery->city      = $request->city;
+        $nursery->email     = $request->email;
+        $nursery->phone     = $request->phone;
         $nursery->save();
 
         return redirect()->route('nurseries.index');
@@ -78,10 +85,17 @@ class NurseryController extends Controller
      */
     public function update(Request $request, Nursery $nursery)
     {
-        $nursery->name = $request->name;
+        // TODO: Add validation
+
+        $nursery->name      = $request->name;
+        $nursery->address   = $request->address;
+        $nursery->post_code = $request->post_code;
+        $nursery->city      = $request->city;
+        $nursery->email     = $request->email;
+        $nursery->phone     = $request->phone;
         $nursery->save();
 
-        return redirect()->route('nurseries.index');
+        return redirect()->route('nurseries.index')->with('status', 'Nursery mise à jour.');
     }
 
     /**

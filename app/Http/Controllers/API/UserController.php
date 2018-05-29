@@ -14,9 +14,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return UserResource::collection(\App\User::all());
+        $nursery = $request->nursery;
+
+        if ($nursery) {
+            $collection = UserResource::collection(\App\User::where('nursery_id', $nursery)->get());
+        } else {
+            $collection = UserResource::collection(\App\User::all());
+        }
+
+        return response()->json($collection);
     }
 
     /**

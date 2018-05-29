@@ -12,7 +12,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col">
-                                <label for="date_start">Date start</label>
+                                <label for="date_start">Heure de début</label>
                                 <flat-pickr
                                         v-model="editEvent.hour_start"
                                         :config="flatPickrConfig"
@@ -22,7 +22,7 @@
                                 </flat-pickr>
                             </div>
                             <div class="form-group col">
-                                <label for="date_end">Date end</label>
+                                <label for="date_end">Heure de fin</label>
                                 <flat-pickr
                                         v-model="editEvent.hour_end"
                                         :config="flatPickrConfig"
@@ -49,6 +49,9 @@
     import flatPickr from 'vue-flatpickr-component';
     import 'flatPickr/dist/flatpickr.css';
     import {French} from 'flatPickr/dist/l10n/fr';
+
+    import swal from 'sweetalert2';
+    import 'sweetalert2/dist/sweetalert2.min.css';
 
     import 'fullcalendar/dist/fullcalendar.min.css';
 
@@ -105,8 +108,8 @@
                 columnHeaderFormat: 'ddd DD.MM',
                 timeFormat: 'HH:mm',
                 slotLabelFormat: 'HH:mm',
-                minTime: '06:00:00',
-                maxTime: '19:00:00',
+                minTime: '06:00:00', // May change depending on Nursery
+                maxTime: '19:00:00', // May change depending on Nursery
                 editable: true,
                 eventSources: [
                     {
@@ -130,7 +133,9 @@
                         description: '',
                         start: start.format(),
                         end: end.format(),
-                        color: '#ffa000'
+                        color: '#ffa000',
+                        status: 0,
+                        type: 'availability'
                     };
 
                     // Save the new event
@@ -174,9 +179,13 @@
                 },
                 eventClick: function(event, jsEvent, view) {
 
+                    // Limit the event to events that are availabilities
                     if (event.type != 'availability') { return; }
 
+                    // Display the modale
                     $('.modal-event').modal({show: true, focus: false}); // focus on the modal messes up with flatpickr
+
+                    // Fill the event object for edit
                     data.editEvent = {
                         event: event,
                         date_start: event.start.format('DD.MM.YYYY'),
@@ -185,6 +194,8 @@
                     };
                 },
                 eventRender: function (event, element, view) {
+
+                    // Inject a link element to the events
                     if (event.type == 'availability' && event.status == 0) {
                         element.append('<a href="/availabilities/' + event.id + '" class="edit-link">Editer</a>');
                     }
@@ -228,6 +239,15 @@
                         $('.modal-event').modal('hide');
                         calendar.fullCalendar('refetchEvents');
                         data.editEvent.event = null;
+
+                        swal({
+                            type: 'success',
+                            position: 'top-end',
+                            toast: true,
+                            title: 'Disponibilité supprimée',
+                            showConfirmButton: false
+                        });
+
                     });
                 }
             }

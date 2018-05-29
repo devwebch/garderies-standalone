@@ -1,25 +1,23 @@
 <template>
-    <div class="card card-default">
-        <div class="card-header">Utilisateurs</div>
-        <div class="card-body p-0">
+    <div class="card card-default mb-4">
+        <div class="card-header">Employés</div>
+        <div class="card-body">
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>Nom et prénom</th>
-                        <th>Téléphone</th>
-                        <th>Nursery</th>
-                        <th width="10%"></th>
-                    </tr>
+                <tr>
+                    <th>Nom et prénom</th>
+                    <th>Téléphone</th>
+                    <th>E-mail</th>
+                    <th v-if="!nursery">Nursery</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="user in users">
-                        <td><a :href="user.link">{{user.name}}</a></td>
-                        <td>{{user.phone}}</td>
-                        <td>{{user.nursery}}</td>
-                        <td>
-                            <a href="#"><i class="fas fa-phone"></i></a>
-                        </td>
-                    </tr>
+                <tr v-for="user in users">
+                    <td><a :href="user.link">{{user.name}}</a></td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.email}}</td>
+                    <td v-if="!nursery">{{user.nursery}}</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -27,6 +25,9 @@
 </template>
 
 <script>
+
+    //TODO: add prop for nursery, restrict listing to a single parent
+
     let data = {
         users: {}
     };
@@ -36,13 +37,24 @@
         data() {
             return data;
         },
+        props: {
+            nursery: {
+                type: Number,
+                default: 0
+            }
+        },
         mounted() {
             console.log('Component mounted.');
 
-            axios.get('/api/users')
-                .then(function(response){
-                    data.users = response.data.data;
-                });
+            axios.get('/api/users', {
+                params: {
+                    nursery: this.nursery
+                }
+            })
+            .then(function (response) {
+                console.log(response);
+                data.users = response.data;
+            });
         }
     }
 </script>

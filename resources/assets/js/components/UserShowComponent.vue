@@ -18,9 +18,10 @@
                 swal({
                     title: 'Attention !',
                     text: "Vous êtes sur le point de supprimer définitivement cet utilisateur.",
-                    type: 'info',
-                    confirmButtonText: 'Cool',
-                    showCancelButton: true
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Supprimer',
+                    cancelButtonText: 'Annuler'
                 }).then((result) => {
                     if (result.value) {
                         axios.delete('/api/users/' + user)

@@ -16,6 +16,11 @@ class CreateNurseriesTable extends Migration
         Schema::create('nurseries', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('address')->nullable();
+            $table->string('post_code')->nullable();
+            $table->string('city')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->integer('owner_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

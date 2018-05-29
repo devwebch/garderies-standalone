@@ -1,14 +1,13 @@
 <template>
     <div class="card card-default">
         <div class="card-header">Etablissements</div>
-        <div class="card-body p-0">
+        <div class="card-body">
             <table class="table">
                 <thead>
                     <tr>
                         <th>Nom</th>
                         <th>Employés</th>
                         <th>Remplacements</th>
-                        <th width="5%"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -16,7 +15,6 @@
                         <td><a :href="nursery.link">{{nursery.name}}</a></td>
                         <td>{{nursery.employees_count}}</td>
                         <td>{{nursery.bookings_count}}</td>
-                        <td><a :href="nursery.link"><i class="fas fa-eye"></i></a></td>
                     </tr>
                 </tbody>
             </table>

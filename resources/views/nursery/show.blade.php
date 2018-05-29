@@ -14,16 +14,15 @@
                 </div>
 
                 <div class="card-body">
-                    <p><strong>Employés: </strong></p>
-                    @if( $nursery->users->count() )
-                    <ul class="list-group">
-                        @foreach( $nursery->users as $user )
-                            <li class="list-group-item"><i class="fas fa-user-circle text-black-50"></i> {{$user->name}}</li>
-                        @endforeach
-                    </ul>
-                    @endif
+                    <p><strong>Adresse :</strong> {{$nursery->address}}</p>
+                    <p><strong>Localité :</strong> {{$nursery->post_code . ', ' ?? ''}}{{$nursery->city}}</p>
+                    <p><strong>Téléphone :</strong> {{$nursery->phone}}</p>
+                    <p><strong>E-mail :</strong> {{$nursery->email}}</p>
                 </div>
             </div>
+
+            <users :nursery="{{$nursery->id}}"></users>
+
             <div class="card card-default">
                 <div class="card-header">Remplacements</div>
                 <div class="card-body">
