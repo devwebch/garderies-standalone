@@ -1,30 +1,26 @@
 <script>
-    import Vue from 'vue'
-    import VueTour from 'vue-tour'
-
-    require('vue-tour/dist/vue-tour.css')
-
-    Vue.use(VueTour)
+    import VueTour from 'vue-tour';
+    import 'vue-tour/dist/vue-tour.css';
 
     export default {
-        name: "TourComponent",
         data () {
             return {
                 steps: [
                     {
+                        target: '.dashboard__summary',
+                        content: "Ceci est votre tableau de bord en tant que réseau de garderies."
+                    },
+                    {
                         target: '.v-step-0',  // We're using document.querySelector() under the hood
-                        content: `Discover <strong>Vue Tour</strong>!`
+                        content: "Gardez un oeil sur tous vos établissements"
                     },
                     {
                         target: '.v-step-1',
-                        content: 'An awesome plugin made with Vue.js!'
+                        content: "Gérez vos employées"
                     },
                     {
                         target: '.v-step-2',
-                        content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.',
-                        params: {
-                            placement: 'top'
-                        }
+                        content: "Surveillez les événements de votre réseau",
                     },
                     {
                         target: '.v-step-3',
@@ -38,10 +34,13 @@
         },
         mounted: function () {
             this.$tours['myTour'].start()
-        }
+        },
+        components: {VueTour}
     }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+    .v-step {
+        z-index: 1;
+    }
 </style>
