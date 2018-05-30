@@ -9,6 +9,7 @@
                     <th>Téléphone</th>
                     <th>E-mail</th>
                     <th v-if="!nursery">Nursery</th>
+                    <th>Réseaux</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -17,6 +18,11 @@
                     <td>{{user.phone}}</td>
                     <td>{{user.email}}</td>
                     <td v-if="!nursery"><a :href="user.nursery.link">{{user.nursery.name}}</a></td>
+                    <td>
+                        <ul class="list-inline" v-if="user.networks.length">
+                            <li class="list-inline-item" v-for="network in user.networks">{{network.name}}</li>
+                        </ul>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -25,8 +31,6 @@
 </template>
 
 <script>
-
-    //TODO: add prop for nursery, restrict listing to a single parent
 
     let data = {
         users: {}
@@ -41,6 +45,10 @@
             nursery: {
                 type: Number,
                 default: 0
+            },
+            network: {
+                type: Number,
+                default: 0
             }
         },
         mounted() {
@@ -48,7 +56,8 @@
 
             axios.get('/api/users', {
                 params: {
-                    nursery: this.nursery
+                    nursery: this.nursery,
+                    network: this.network
                 }
             })
             .then(function (response) {

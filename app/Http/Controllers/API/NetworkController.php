@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Resources\Nursery as NurseryResource;
-use App\Nursery;
+use App\Network;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class NurseryController extends Controller
+class NetworkController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,7 @@ class NurseryController extends Controller
      */
     public function index()
     {
-        return NurseryResource::collection(\App\Nursery::all());
+        //
     }
 
     /**
@@ -33,10 +32,10 @@ class NurseryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Nursery  $nursery
+     * @param  \App\Network  $network
      * @return \Illuminate\Http\Response
      */
-    public function show(Nursery $nursery)
+    public function show(Network $network)
     {
         //
     }
@@ -45,10 +44,10 @@ class NurseryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Nursery  $nursery
+     * @param  \App\Network  $network
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Nursery $nursery)
+    public function update(Request $request, Network $network)
     {
         //
     }
@@ -56,16 +55,16 @@ class NurseryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Nursery  $nursery
+     * @param  \App\Network  $network
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Nursery $nursery)
+    public function destroy(Network $network)
     {
-        $nursery->delete();
+        $network->delete();
 
         return response()->json([
-            'status'    => 'Nursery deleted',
-            'redirect'  => route('nurseries.index')
+            'status'    => 'Network deleted',
+            'redirect'  => route('networks.index')
         ]);
     }
 }

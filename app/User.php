@@ -41,4 +41,14 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Booking', 'substitute_id', 'id');
     }
+
+    public function managedNetworks()
+    {
+        return $this->hasMany('App\Network');
+    }
+
+    public function networks()
+    {
+        return $this->belongsToMany('App\Network');
+    }
 }

@@ -13,7 +13,7 @@ class AvailabilitySeeder extends Seeder
     {
         $users = \App\User::all()->count();
 
-        for($user_id = 1; $user_id <= $users; $user_id++) {
+        for($user_id = 2; $user_id <= $users; $user_id++) {
 
             for ($i = 1; $i <= 5; $i++) {
                 $day    = $i;

@@ -24,3 +24,4 @@ Route::get('users/{user}/bookings', 'UserController@bookings')->name('users.book
 
 Route::resource('availabilities', 'AvailabilityController');
 Route::resource('bookings', 'BookingController');
+Route::resource('networks', 'NetworkController');

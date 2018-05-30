@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Resources\User as UserResource;
+use App\Network;
+use App\Nursery;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,11 +19,14 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $nursery = $request->nursery;
+        $network = $request->network;
 
         if ($nursery) {
-            $collection = UserResource::collection(\App\User::where('nursery_id', $nursery)->get());
+            $collection = UserResource::collection(Nursery::find($nursery)->users()->orderBy('name', 'ASC')->get());
+        } elseif ($network) {
+            $collection = UserResource::collection(Network::find($network)->users()->orderBy('name', 'ASC')->get());
         } else {
-            $collection = UserResource::collection(\App\User::all());
+            $collection = UserResource::collection(\App\User::orderBy('name', 'ASC')->get());
         }
 
         return response()->json($collection);

@@ -35,6 +35,16 @@ class UserSeeder extends Seeder
             ]);
         }*/
 
+        // Create network admin
+        DB::table('users')->insert([
+            'id'            => 1,
+            'name'          => 'Network admin',
+            'email'         => 'admin@ajerco.ch',
+            'phone'         => '+41211234567',
+            'password'      => bcrypt('123456'),
+            'created_at'    => \Carbon\Carbon::now()
+        ]);
+
         factory(App\User::class, 30)->create();
     }
 }

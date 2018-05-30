@@ -17,8 +17,9 @@ class User extends JsonResource
         $data = parent::toArray($request);
 
         $data['link']            = route('users.show', [$this->id]);
-        $data['nursery']['name']         = $this->nursery->name ?? '-';
+        $data['nursery']['name'] = $this->nursery->name ?? '-';
         $data['nursery']['link'] = route('nurseries.show', $this->nursery->id ?? 0);
+        $data['networks']        = $this->networks()->get();
 
         return $data;
     }

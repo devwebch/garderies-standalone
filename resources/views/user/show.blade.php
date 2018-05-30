@@ -18,18 +18,27 @@
                     <p><strong>Téléphone :</strong> {{$user->phone}}</p>
                     <p><strong>Garderie :</strong> {{$user->nursery->name ?? '-'}}</p>
 
-                    <p><a href="{{route('users.availabilities', $user->id)}}" class="btn btn-info"><i class="fas fa-calendar"></i> Gérer mes disponibilités</a></p>
+                    <p><strong>Réseaux</strong>
+                    @foreach($user->networks as $network)
+                    <span class="badge badge-info">{{$network->name}}</span>
+                    @endforeach
+                    </p>
                 </div>
             </div>
             <div class="card card-default mb-4">
-                <div class="card-header">Vos prochaines disponibilités</div>
+                <div class="card-header">
+                    Vos prochaines disponibilités
+                    <div class="actions float-right">
+                        <a href="{{route('users.availabilities', $user->id)}}" class="btn btn-info btn-sm"><i class="fas fa-calendar"></i> Gérer mes disponibilités</a>
+                    </div>
+                </div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Day</th>
-                            <th>Start</th>
-                            <th>End</th>
+                            <th>Date</th>
+                            <th>Début</th>
+                            <th>Fin</th>
                         </tr>
                         </thead>
                         @foreach($availabilities as $slot)
@@ -48,9 +57,9 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Day</th>
-                            <th>Start</th>
-                            <th>End</th>
+                            <th>Jour</th>
+                            <th>Début</th>
+                            <th>Fin</th>
                         </tr>
                         </thead>
                         @foreach($bookings as $slot)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Network;
 use App\Nursery;
 use App\User;
 use Carbon\Carbon;
@@ -81,10 +82,13 @@ class UserController extends Controller
             ];
         });
 
+        $networks = $user->networks();
+
         return view('user.show', [
             'user'              => $user,
             'availabilities'    => $availabilities,
-            'bookings'          => $bookings
+            'bookings'          => $bookings,
+            'networks'          => $networks
         ]);
     }
 
@@ -97,11 +101,16 @@ class UserController extends Controller
     public function edit(User $user)
     {
         // TODO: restrict to the user data
-        $nurseries = Nursery::orderBy('name', 'asc')->get();
+        $nurseries          = Nursery::orderBy('name', 'asc')->get();
+        $managedNetworks    = Network::all();
+
+        $currentNetworksKeys = array_values(array_flatten((array)$user->networks->keyBy('id')->keys()));
 
         return view('user.edit', [
-            'user'      => $user,
-            'nurseries' => $nurseries
+            'user'                  => $user,
+            'nurseries'             => $nurseries,
+            'managedNetworks'       => $managedNetworks,
+            'currentNetworksKeys'   => $currentNetworksKeys
         ]);
     }
 
@@ -119,6 +128,12 @@ class UserController extends Controller
         $user->phone        = $request->phone;
         $user->nursery_id   = $request->nursery;
         $user->save();
+
+        $network_ids = [];
+        if ($request->networks) {
+            $network_ids = array_values($request->networks);
+        }
+        $user->networks()->sync($network_ids);
 
         return redirect()->route('users.index');
     }

@@ -21,4 +21,9 @@ class Nursery extends Model
     {
         return $this->hasManyThrough('App\Booking', 'App\User');
     }
+
+    public function network()
+    {
+        return $this->belongsTo('App\Network');
+    }
 }

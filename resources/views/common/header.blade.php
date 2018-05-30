@@ -13,13 +13,16 @@
                         <a class="nav-link" href="/account">Compte garderie</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('nurseries.index')}}">Nurseries</a>
+                        <a class="nav-link" href="{{route('networks.index')}}"><i class="fas fa-sitemap"></i> Vos réseaux</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('users.index')}}">Employés</a>
+                        <a class="nav-link" href="{{route('nurseries.index')}}"><i class="fas fa-building"></i> Nurseries</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('users.search')}}">Recherche de remplaçant</a>
+                        <a class="nav-link" href="{{route('users.index')}}"><i class="fas fa-users"></i> Employés</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('users.search')}}"><i class="fas fa-search"></i> Recherche de remplaçant</a>
                     </li>
                 </ul>
             </div>
