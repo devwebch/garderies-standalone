@@ -62,7 +62,7 @@
                         <th>Nom et prénom</th>
                         <th>Date</th>
                         <th>Disponibilité</th>
-                        <th class="d-none d-sm-block">Nursery</th>
+                        <th class="d-none d-sm-table-cell">Nursery</th>
                         <th>Correspondance</th>
                     </tr>
                     </thead>
@@ -71,7 +71,7 @@
                         <td><a :href="item.user.link">{{item.user.name}}</a></td>
                         <td><i class="fas fa-calendar"></i> {{item.start}}</td>
                         <td>{{item.start_hour}} <i class="fas fa-arrow-right"></i> {{item.end_hour}}</td>
-                        <td class="d-none d-sm-block"><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
+                        <td class="d-none d-sm-table-cell"><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
                         <td>
                             <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
                             <span class="badge badge-success" v-if="item.matching=='complete'">Complète</span>
