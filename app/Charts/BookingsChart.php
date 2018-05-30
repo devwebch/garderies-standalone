@@ -22,7 +22,7 @@ class BookingsChart extends Chart
             ->get();
         $monthly_bookings_dataset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         foreach ($monthly_bookings as $booking) {
-            if ( ($booking->month - 1) < date('m')) {
+            if ( ($booking->month - 1) <= date('m')) {
                 $monthly_bookings_dataset[$booking->month - 1] = $booking->count;
             }
         }
