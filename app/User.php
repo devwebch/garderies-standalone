@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Network');
     }
+
+    public function diploma()
+    {
+        return $this->belongsTo('App\Diploma');
+    }
+
+    public function workgroups()
+    {
+        return $this->belongsToMany('App\Workgroup');
+    }
 }

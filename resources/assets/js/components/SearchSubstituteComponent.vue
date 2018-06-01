@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <table class="table table-responsive-sm">
+                <table class="table table-responsive-md">
                     <thead>
                     <tr>
                         <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>

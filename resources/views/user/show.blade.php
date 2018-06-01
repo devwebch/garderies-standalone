@@ -12,17 +12,33 @@
                         <a href="#" v-on:click.prevent="deleteUser({{$user->id}})" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Supprimer</a>
                     </div>
                 </div>
-                <div class="card-body">
-                    <p><strong>Nom :</strong> {{$user->name}}</p>
-                    <p><strong>E-mail :</strong> {{$user->email}}</p>
-                    <p><strong>Téléphone :</strong> {{$user->phone}}</p>
-                    <p><strong>Garderie :</strong> {{$user->nursery->name ?? '-'}}</p>
+                <div class="card-body user-card">
+                    <div class="row">
+                        <div class="col">
+                            <p><strong>Nom :</strong> {{$user->name}}</p>
+                            <p><strong>E-mail :</strong> {{$user->email}}</p>
+                            <p><strong>Téléphone :</strong> {{$user->phone}}</p>
+                            <p><strong>Garderie :</strong> {{$user->nursery->name ?? '-'}}</p>
+                            <p><strong>Diplôme :</strong> {{$user->diploma->name}}</p>
 
-                    <p><strong>Réseaux</strong>
-                    @foreach($user->networks as $network)
-                    <span class="badge badge-info">{{$network->name}}</span>
-                    @endforeach
-                    </p>
+                            <p><strong>Groupes de travail :</strong>
+                                @foreach($user->workgroups as $workgroup)
+                                    <span class="badge badge-warning">{{$workgroup->name}}</span>
+                                @endforeach
+                            </p>
+
+                            <p><strong>Réseaux :</strong>
+                                @foreach($user->networks as $network)
+                                    <span class="badge badge-info">{{$network->name}}</span>
+                                @endforeach
+                            </p>
+                        </div>
+                        <div class="col">
+                            <div class="user-card__avatar text-right">
+                                <img src="{{asset('img/dummy_avatar.jpg')}}" alt="User profile picture">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card card-default mb-4">
@@ -33,7 +49,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table table-responsive-md">
                         <thead>
                         <tr>
                             <th>Date</th>
@@ -54,7 +70,7 @@
             <div class="card card-default">
                 <div class="card-header">Vos prochains remplacements</div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table table-responsive-md">
                         <thead>
                         <tr>
                             <th>Jour</th>

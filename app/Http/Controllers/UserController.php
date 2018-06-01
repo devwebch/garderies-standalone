@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Network;
 use App\Nursery;
 use App\User;
+use App\Workgroup;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -103,14 +104,18 @@ class UserController extends Controller
         // TODO: restrict to the user data
         $nurseries          = Nursery::orderBy('name', 'asc')->get();
         $managedNetworks    = Network::all();
+        $workgroups         = Workgroup::all();
 
-        $currentNetworksKeys = array_values(array_flatten((array)$user->networks->keyBy('id')->keys()));
+        $currentNetworksKeys    = array_values(array_flatten((array)$user->networks->keyBy('id')->keys()));
+        $currentWorkgroups      = array_values(array_flatten((array)$user->workgroups->keyBy('id')->keys()));
 
         return view('user.edit', [
             'user'                  => $user,
             'nurseries'             => $nurseries,
             'managedNetworks'       => $managedNetworks,
-            'currentNetworksKeys'   => $currentNetworksKeys
+            'currentNetworksKeys'   => $currentNetworksKeys,
+            'workgroups'            => $workgroups,
+            'currentWorkgroups'     => $currentWorkgroups,
         ]);
     }
 
@@ -129,11 +134,19 @@ class UserController extends Controller
         $user->nursery_id   = $request->nursery;
         $user->save();
 
+        // networks
         $network_ids = [];
         if ($request->networks) {
             $network_ids = array_values($request->networks);
         }
         $user->networks()->sync($network_ids);
+
+        // workgroups
+        $workgroup_ids = [];
+        if ($request->workgroups) {
+            $workgroup_ids = array_values($request->workgroups);
+        }
+        $user->workgroups()->sync($workgroup_ids);
 
         return redirect()->route('users.index');
     }

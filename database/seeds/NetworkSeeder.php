@@ -21,7 +21,7 @@ class NetworkSeeder extends Seeder
         ]);
 
         // Seeds the network_user table
-        $users = \App\User::all()->count();
+        $users = \App\User::count();
         for ($i = 2; $i <= $users; $i++) {
             DB::table('network_user')->insert([
                 'user_id'       => $i,

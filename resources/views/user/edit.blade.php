@@ -37,13 +37,24 @@
                         </div>
                     </div>
                     <div class="col-5">
-                        <label>Réseaux :</label>
-                        @foreach($managedNetworks as $network)
-                        <div class="form-check">
-                            <input type="checkbox" value="{{$network->id}}" class="form-check-input" id="network-{{$network->id}}" name="networks[]" {{(in_array($network->id, $currentNetworksKeys) ? 'checked' : '')}}>
-                            <label for="network-{{$network->id}}" class="form-check-label">{{$network->name}}</label>
+                        <div class="form-group">
+                            <label>Réseaux :</label>
+                            @foreach($managedNetworks as $network)
+                                <div class="form-check">
+                                    <input type="checkbox" value="{{$network->id}}" class="form-check-input" id="network-{{$network->id}}" name="networks[]" {{(in_array($network->id, $currentNetworksKeys) ? 'checked' : '')}}>
+                                    <label for="network-{{$network->id}}" class="form-check-label">{{$network->name}}</label>
+                                </div>
+                            @endforeach
                         </div>
-                        @endforeach
+                        <div class="form-group">
+                            <label>Groupes de travail :</label>
+                            @foreach($workgroups as $workgroup)
+                                <div class="form-check">
+                                    <input type="checkbox" value="{{$workgroup->id}}" class="form-check-input" id="workgroup-{{$workgroup->id}}" name="workgroups[]" {{(in_array($workgroup->id, $currentWorkgroups) ? 'checked' : '')}}>
+                                    <label for="workgroup-{{$workgroup->id}}" class="form-check-label">{{$workgroup->name}}</label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
 

@@ -26,7 +26,7 @@
             <div class="card card-default">
                 <div class="card-header">Remplacements</div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table table-responsive-md">
                         <thead>
                         <tr>
                             <th>Employé</th>

@@ -5,7 +5,7 @@
 @section('content')
     <h1>Bookings</h1>
 
-    <table class="table">
+    <table class="table table-responsive-md">
         <thead>
             <tr>
                 <th>User</th>

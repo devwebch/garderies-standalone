@@ -2,7 +2,7 @@
     <div class="card card-default mb-4">
         <div class="card-header">Employés</div>
         <div class="card-body">
-            <table class="table table-responsive-sm">
+            <table class="table table-responsive-md">
                 <thead>
                 <tr>
                     <th>Nom et prénom</th>
