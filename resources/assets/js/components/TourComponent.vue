@@ -62,7 +62,9 @@
             }
         },
         mounted: function () {
-            this.$tours['myTour'].start()
+            if (window.location.hash === '#tour') {
+                this.$tours['myTour'].start();
+            }
         },
         components: {VueTour}
     }
