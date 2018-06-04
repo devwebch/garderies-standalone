@@ -6,7 +6,7 @@
     <div class="card card-default">
         <div class="card-header">Vos prochains remplacements</div>
         <div class="card-body">
-            <table class="table table-responsive-md">
+            <table class="table table-borderless table-striped table-responsive-md">
                 <thead>
                 <tr>
                     <th>Jour</th>

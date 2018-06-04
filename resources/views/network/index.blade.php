@@ -3,12 +3,10 @@
 @section('title', 'Réseaux')
 
 @section('content')
-    <h1>Réseaux</h1>
-
     <div class="card card-default">
         <div class="card-header">Réseaux</div>
         <div class="card-body">
-            <table class="table table-responsive-md">
+            <table class="table table-borderless table-striped table-responsive-md">
                 <thead>
                 <tr>
                     <th>Nom</th>

@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <table class="table table-responsive-md">
+                <table class="table table-borderless table-striped table-responsive-md">
                     <thead>
                     <tr>
                         <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>
@@ -66,6 +66,7 @@
                         <th>Correspondance</th>
                     </tr>
                     </thead>
+                    <tbody>
                     <tr v-for="item in availabilities">
                         <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
                         <td><a :href="item.user.link">{{item.user.name}}</a></td>
@@ -83,6 +84,7 @@
                             <div class="alert alert-info mb-0">Aucune disponibilité</div>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
             <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">

@@ -3,9 +3,7 @@
 @section('title', 'Bookings')
 
 @section('content')
-    <h1>Bookings</h1>
-
-    <table class="table table-responsive-md">
+    <table class="table table-borderless table-striped table-responsive-md">
         <thead>
             <tr>
                 <th>User</th>

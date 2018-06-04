@@ -3,7 +3,6 @@
 @section('title', 'Employés')
 
 @section('content')
-    <h1>Employés</h1>
     <users></users>
 @endsection
 

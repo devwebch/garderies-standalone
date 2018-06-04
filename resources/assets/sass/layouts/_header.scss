@@ -1,4 +1,9 @@
+.navbar {
 
+  &.navbar-dark {
+    background: #415c77;
+  }
+}
 
 // Small devices (landscape phones, 576px and up)
 @include media-breakpoint-up(sm) {}
