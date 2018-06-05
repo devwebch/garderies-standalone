@@ -3,6 +3,7 @@
 @section('title', 'Home')
 
 @section('content')
+
     <div class="card card-default dashboard__summary">
         <div class="card-body">
             <div class="row">

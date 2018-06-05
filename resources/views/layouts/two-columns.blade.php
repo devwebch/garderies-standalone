@@ -6,10 +6,10 @@
         <div class="main" id="app">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3 d-print-none">
+                    <div class="col-md-3 col-lg-2 d-print-none">
                         @yield('nav-lateral')
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-9 col-lg-10">
                         @yield('content')
                     </div>
                 </div>

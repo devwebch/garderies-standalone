@@ -55,28 +55,28 @@
                     </div>
                 </div>
 
-                <table class="table table-borderless table-striped table-responsive-md">
+                <table class="table table-borderless table-striped table-sm table-responsive-sm">
                     <thead>
                     <tr>
                         <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>
-                        <th>Nom et prénom</th>
+                        <th>Remplaçant</th>
                         <th>Date</th>
                         <th>Disponibilité</th>
-                        <th class="d-none d-sm-table-cell">Nursery</th>
-                        <th>Correspondance</th>
+                        <th class="d-none d-md-table-cell">Nursery</th>
+                        <th class="d-none d-md-table-cell">&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="item in availabilities">
                         <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
                         <td><a :href="item.user.link">{{item.user.name}}</a></td>
-                        <td><i class="fas fa-calendar"></i> {{item.start}}</td>
-                        <td>{{item.start_hour}} <i class="fas fa-arrow-right"></i> {{item.end_hour}}</td>
-                        <td class="d-none d-sm-table-cell"><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
-                        <td>
+                        <td><i class="fas fa-calendar d-none d-sm-inline"></i> {{item.start}}</td>
+                        <td class="text-truncate">{{item.start_hour}} <i class="fas fa-arrow-right"></i> {{item.end_hour}}</td>
+                        <td class="d-none d-md-table-cell"><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
+                        <td class="d-none d-md-table-cell">
                             <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
-                            <span class="badge badge-success" v-if="item.matching=='complete'">Complète</span>
-                            <span class="badge badge-warning" v-if="item.matching=='partial'">Partielle</span>
+                            <span class="badge badge-success" v-if="item.matching=='complete'">Complet</span>
+                            <span class="badge badge-warning" v-if="item.matching=='partial'">Partiel</span>
                         </td>
                     </tr>
                     <tr v-if="!availabilities.length">
@@ -93,7 +93,7 @@
         </div>
 
         <div class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Confirmation de contact</h5>
@@ -253,5 +253,8 @@
         .sk-folding-cube {
             top: 46%;
         }
+    }
+    .fa-arrow-right {
+        font-size: 0.7em;
     }
 </style>

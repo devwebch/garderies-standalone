@@ -2,23 +2,23 @@
     <div class="card card-default mb-4">
         <div class="card-header">Employés</div>
         <div class="card-body">
-            <table class="table table-borderless table-striped table-responsive-md">
+            <table class="table table-borderless table-striped">
                 <thead>
                 <tr>
                     <th>Nom et prénom</th>
                     <th>Téléphone</th>
-                    <th>E-mail</th>
-                    <th v-if="!nursery">Nursery</th>
-                    <th>Réseaux</th>
+                    <th class="d-none d-lg-table-cell">E-mail</th>
+                    <th v-if="!nursery">Etablissement</th>
+                    <th class="d-none d-lg-table-cell">Réseaux</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr v-for="user in users">
                         <td><a :href="user.link">{{user.name}}</a></td>
                         <td>{{user.phone}}</td>
-                        <td>{{user.email}}</td>
+                        <td class="d-none d-lg-table-cell">{{user.email}}</td>
                         <td v-if="!nursery"><a :href="user.nursery.link">{{user.nursery.name}}</a></td>
-                        <td>
+                        <td class="d-none d-lg-table-cell">
                             <ul class="list-inline" v-if="user.networks.length">
                                 <li class="list-inline-item" v-for="network in user.networks">{{network.name}}</li>
                             </ul>

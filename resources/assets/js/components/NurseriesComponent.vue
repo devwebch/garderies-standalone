@@ -2,19 +2,19 @@
     <div class="card card-default">
         <div class="card-header">Etablissements</div>
         <div class="card-body">
-            <table class="table table-borderless table-striped table-responsive-md">
+            <table class="table table-borderless table-striped">
                 <thead>
                     <tr>
                         <th>Nom</th>
                         <th>Employés</th>
-                        <th>Remplacements</th>
+                        <th class="d-none">Remplacements</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="nursery in nurseries" :key="nursery.id">
                         <td><a :href="nursery.link">{{nursery.name}}</a></td>
                         <td>{{nursery.employees_count}}</td>
-                        <td>{{nursery.bookings_count}}</td>
+                        <td class="d-none">{{nursery.bookings_count}}</td>
                     </tr>
                 </tbody>
             </table>

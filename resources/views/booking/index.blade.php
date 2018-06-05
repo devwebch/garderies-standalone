@@ -3,7 +3,7 @@
 @section('title', 'Bookings')
 
 @section('content')
-    <table class="table table-borderless table-striped table-responsive-md">
+    <table class="table table-borderless table-striped table-responsive-lg">
         <thead>
             <tr>
                 <th>User</th>
