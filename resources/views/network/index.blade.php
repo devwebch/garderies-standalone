@@ -8,11 +8,11 @@
         <div class="card-body">
             <table class="table table-borderless table-striped table-responsive-md">
                 <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Employés</th>
-                    <th>Administrateur</th>
-                </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Employés</th>
+                        <th>Administrateur</th>
+                    </tr>
                 </thead>
                 <tbody>
                 @foreach($networks as $network)

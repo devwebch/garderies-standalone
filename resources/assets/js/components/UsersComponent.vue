@@ -13,17 +13,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="user in users">
-                    <td><a :href="user.link">{{user.name}}</a></td>
-                    <td>{{user.phone}}</td>
-                    <td>{{user.email}}</td>
-                    <td v-if="!nursery"><a :href="user.nursery.link">{{user.nursery.name}}</a></td>
-                    <td>
-                        <ul class="list-inline" v-if="user.networks.length">
-                            <li class="list-inline-item" v-for="network in user.networks">{{network.name}}</li>
-                        </ul>
-                    </td>
-                </tr>
+                    <tr v-for="user in users">
+                        <td><a :href="user.link">{{user.name}}</a></td>
+                        <td>{{user.phone}}</td>
+                        <td>{{user.email}}</td>
+                        <td v-if="!nursery"><a :href="user.nursery.link">{{user.nursery.name}}</a></td>
+                        <td>
+                            <ul class="list-inline" v-if="user.networks.length">
+                                <li class="list-inline-item" v-for="network in user.networks">{{network.name}}</li>
+                            </ul>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
