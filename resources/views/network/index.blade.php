@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="card card-default">
-        <div class="card-header">Réseaux</div>
+        <div class="card-header bg-dark text-white">Réseaux</div>
         <div class="card-body">
             <table class="table table-borderless table-striped table-responsive-lg">
                 <thead>

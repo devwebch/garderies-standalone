@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="card card-default">
-            <div class="card-header">Résultats de recherche</div>
+            <div class="card-header bg-dark text-white">Résultats de recherche</div>
             <div class="card-body">
 
                 <div class="loading-overlay" v-show="!loaded">

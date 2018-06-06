@@ -1,6 +1,6 @@
 <template>
     <div class="card card-default">
-        <div class="card-header">Etablissements</div>
+        <div class="card-header bg-dark text-white">Etablissements</div>
         <div class="card-body">
             <table class="table table-borderless table-striped">
                 <thead>
