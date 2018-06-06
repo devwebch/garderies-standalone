@@ -190,7 +190,6 @@
                     }
                 })
                 .then(function(response){
-                    console.log(response);
                     data.loaded = true;
                     data.availabilities = response.data.data;
                 });
@@ -208,19 +207,30 @@
                 $('.modal').modal('show');
             },
             contactPeople: function () {
-                console.log('Contact the people');
-                data.peopleSelected = false;
-                data.selectedAvailabilities = [];
                 $('.modal').modal('hide');
 
+                axios.post('/api/booking-requests', {
+                    availabilities: data.selectedAvailabilities
+                })
+                .then(function(response){
+                    console.log(response);
+                });
+
+
+                data.peopleSelected = false;
+                data.selectedAvailabilities = [];
+
                 // for demonstration purposes
-                setTimeout(function(){
+                /*setTimeout(function(){
                     swal({
                         title: "Demandes envoyées",
                         text: "Les demandes de remplacements sont en cours d'envoi.",
                         type: "success"
+                    }).then((response) => {
+                        data.peopleSelected = false;
+                        data.selectedAvailabilities = [];
                     });
-                }, 800);
+                }, 800);*/
             }
         },
         components: {

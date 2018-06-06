@@ -29,11 +29,11 @@ class AvailabilityController extends Controller
      */
     public function store(Request $request)
     {
-        $userID = $request->params['userID'];
-        $event = $request->params['event'];
+        $userID     = $request->params['userID'];
+        $event      = $request->params['event'];
 
-        $start = Carbon::parse($event['start']);
-        $end = Carbon::parse($event['end']);
+        $start      = Carbon::parse($event['start']);
+        $end        = Carbon::parse($event['end']);
 
         // if no starting hour is passed (thanks momentJS), set it to 8
         if (!$start->hour) {
@@ -42,14 +42,14 @@ class AvailabilityController extends Controller
         }
 
         $availability = new Availability();
-        $availability->start = $start;
-        $availability->end = $end;
-        $availability->user_id = $userID;
+        $availability->start    = $start;
+        $availability->end      = $end;
+        $availability->user_id  = $userID;
         $availability->save();
 
         return response()->json([
-            'status' => 'Availability created',
-            'id' => $availability->id
+            'status'    => 'Availability created',
+            'id'        => $availability->id
         ]);
     }
 
