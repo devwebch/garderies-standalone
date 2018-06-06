@@ -6,14 +6,14 @@
                 <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Employés</th>
+                        <th width="50">Employés</th>
                         <th class="d-none">Remplacements</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="nursery in nurseries" :key="nursery.id">
                         <td><a :href="nursery.link">{{nursery.name}}</a></td>
-                        <td>{{nursery.employees_count}}</td>
+                        <td class="text-center">{{nursery.employees_count}}</td>
                         <td class="d-none">{{nursery.bookings_count}}</td>
                     </tr>
                 </tbody>

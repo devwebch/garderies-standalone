@@ -55,7 +55,11 @@ class UserController extends Controller
         $availabilities = [];
         $bookings       = [];
 
-        $user->availabilities()->orderBy('start')->each(function ($data){
+        $user->availabilities()
+            ->where('start', '>=', now())
+            ->orderBy('start')
+            ->each(function ($data) {
+
             global $availabilities;
 
             $start  = Carbon::parse($data->start);
@@ -69,7 +73,11 @@ class UserController extends Controller
             ];
         });
 
-        $user->bookings()->orderBy('start')->each(function ($data){
+        $user->bookings()
+            ->where('start', '>=', now())
+            ->orderBy('start')
+            ->each(function ($data) {
+
             global $bookings;
 
             $start  = Carbon::parse($data->start);
@@ -79,7 +87,8 @@ class UserController extends Controller
                 'day_start'     => $start->format('d.m.Y'),
                 'day_end'       => $end->format('d.m.Y'),
                 'hour_start'    => $start->format('H\hi'),
-                'hour_end'      => $end->format('H\hi')
+                'hour_end'      => $end->format('H\hi'),
+                'status'        => $data->status,
             ];
         });
 

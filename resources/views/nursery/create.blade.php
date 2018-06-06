@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="card card-default">
-        <div class="card-header">Créer une nursery</div>
+        <div class="card-header">Ajouter un établissement</div>
         <div class="card-body">
             <form action="{{route('nurseries.store')}}" method="post">
                 {{csrf_field()}}

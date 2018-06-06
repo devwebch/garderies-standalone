@@ -40,8 +40,9 @@ if (token) {
 
 // Initialize bootstrap plugins
 $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover({
-        trigger: 'focus'
+        trigger: 'focus hover'
     });
 });
 

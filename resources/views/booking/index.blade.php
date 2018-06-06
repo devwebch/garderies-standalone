@@ -27,13 +27,13 @@
                             </a>
                         </td>
                         <td>
-                            <a href="{{route('users.show', $booking->user->id)}}">{{$booking->user->name}}</a>
+                            <a href="{{route('users.show', $booking->user)}}" data-toggle="tooltip" title="Employé remplacé">{{$booking->user->name}}</a>
                         </td>
                         <td>
-                            <a href="{{route('users.show', $booking->substitute->id)}}">{{$booking->substitute->name}}</a>
+                            <a href="{{route('users.show', $booking->substitute)}}" data-toggle="tooltip" title="Personne effectuant le remplacement">{{$booking->substitute->name}}</a>
                         </td>
                         <td>
-                            <a href="{{route('nurseries.show', $booking->nursery->id)}}">{{$booking->nursery->name}}</a>
+                            <a href="{{route('nurseries.show', $booking->nursery)}}" data-toggle="tooltip" title="Etablissement où le remplacement a lieu">{{$booking->nursery->name}}</a>
                         </td>
                         <td>{{$booking->start->format('H\hi')}}</td>
                         <td>{{$booking->end->format('H\hi')}}</td>

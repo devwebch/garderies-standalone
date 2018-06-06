@@ -6,7 +6,7 @@
     <user-show inline-template>
         <div>
             <div class="card card-default mb-4">
-                <div class="card-header">{{$user->name}}
+                <div class="card-header bg-dark text-white">{{$user->name}}
                     <div class="actions float-right">
                         <a href="{{route('users.edit', [$user->id])}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-edit"></i> Editer</a>
                         <a href="#" v-on:click.prevent="deleteUser({{$user->id}})" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Supprimer</a>
@@ -76,6 +76,7 @@
                             <th>Jour</th>
                             <th>Début</th>
                             <th>Fin</th>
+                            <th width="50">Status</th>
                         </tr>
                         </thead>
                         @foreach($bookings as $slot)
@@ -83,6 +84,19 @@
                                 <td>{{$slot->day_start}}</td>
                                 <td>{{$slot->hour_start}}</td>
                                 <td>{{$slot->hour_end}}</td>
+                                <td>
+                                    @switch($slot->status)
+                                        @case(\App\Booking::STATUS_PENDING)
+                                        <span class="badge badge-info">En attente</span>
+                                        @break
+                                        @case(\App\Booking::STATUS_APPROVED)
+                                        <span class="badge badge-success">Validé</span>
+                                        @break
+                                        @case(\App\Booking::STATUS_ARCHIVED)
+                                        <span class="badge badge-dark">Archivé</span>
+                                        @break
+                                    @endswitch
+                                </td>
                             </tr>
                         @endforeach
                     </table>

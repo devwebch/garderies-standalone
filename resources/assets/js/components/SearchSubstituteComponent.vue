@@ -56,7 +56,7 @@
                 </div>
 
                 <table class="table table-borderless table-striped table-sm table-responsive-sm">
-                    <thead>
+                    <thead v-show="availabilities.length">
                     <tr>
                         <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>
                         <th>Remplaçant</th>
@@ -102,7 +102,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Les personnes sélectionnées seront contactées dans les plus brefs délais afin de confirmer le remplacement du slot défini, merci de confirmer le remplacement ci-dessous :</p>
+                        <p>Les personnes sélectionnées seront contactées dans les plus brefs délais afin de confirmer le remplacement de la plage horaire définie, merci de confirmer le remplacement ci-dessous :</p>
 
                         <div class="text-center">
                             <h2>{{search.day_start}}</h2>
@@ -213,11 +213,14 @@
                 data.selectedAvailabilities = [];
                 $('.modal').modal('hide');
 
-                swal({
-                    title: "Demandes envoyées",
-                    text: "Les demandes de remplacements sont en cours d'envoi.",
-                    type: "success"
-                });
+                // for demonstration purposes
+                setTimeout(function(){
+                    swal({
+                        title: "Demandes envoyées",
+                        text: "Les demandes de remplacements sont en cours d'envoi.",
+                        type: "success"
+                    });
+                }, 800);
             }
         },
         components: {
