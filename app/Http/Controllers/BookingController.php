@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
+use App\Nursery;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -14,8 +17,18 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::all();
-        return view('booking.index', ['bookings' => $bookings]);
+        $bookings = Booking::where('start', '>=', now())
+            ->orderBy('status', 'desc')
+            ->orderBy('start')
+            ->get();
+        $bookings_archive = Booking::where('start', '<', now())
+            ->orderBy('start')
+            ->get();
+
+        return view('booking.index', [
+            'bookings'          => $bookings,
+            'bookings_archive'  => $bookings_archive,
+        ]);
     }
 
     /**
@@ -25,7 +38,10 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+        $users      = User::where('id', '!=', 1)->orderBy('name')->get();
+        $nurseries  = Nursery::all();
+
+        return view('booking.create', ['users' => $users, 'nurseries' => $nurseries]);
     }
 
     /**
@@ -36,7 +52,15 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $booking = new Booking();
+        $booking->user_id       = $request->user;
+        $booking->substitute_id = $request->substitute;
+        $booking->nursery_id    = $request->nursery;
+        $booking->start         = Carbon::parse($request->date_start);
+        $booking->end           = Carbon::parse($request->date_end);
+        $booking->save();
+
+        return redirect()->route('bookings.index');
     }
 
     /**
@@ -47,7 +71,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
+        return view('booking.show', ['booking' => $booking]);
     }
 
     /**
@@ -58,7 +82,7 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
-        //
+        return view('booking.edit', ['booking' => $booking]);
     }
 
     /**
@@ -70,7 +94,14 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        $start  = Carbon::parse($request->date_start);
+        $end    = Carbon::parse($request->date_end);
+
+        $booking->start = $start;
+        $booking->end   = $end;
+        $booking->save();
+
+        return redirect()->route('bookings.index');
     }
 
     /**

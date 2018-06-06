@@ -60,9 +60,29 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        $booking->delete();
+
+        return response()->json([
+            'status'    => 'Booking deleted',
+            'redirect'  => route('bookings.index')
+        ]);
     }
 
+    public function approve(Booking $booking)
+    {
+        $booking->status = Booking::STATUS_APPROVED;
+        $booking->save();
+
+        return response()->json([
+            'status'    => 'Booking approved'
+        ]);
+    }
+
+    /**
+     * @param \App\User $user
+     * @param Request $request
+     * @return array
+     */
     public function showForUser(\App\User $user, Request $request)
     {
         // TODO: retrieve only validated bookings

@@ -25,6 +25,9 @@ Vue.component('user-availabilities', require('./components/UserAvailabilitiesCom
 Vue.component('search-substitute', require('./components/SearchSubstituteComponent'));
 
 Vue.component('availability-edit', require('./components/AvailabilityEditComponent'));
+Vue.component('booking-show', require('./components/BookingShowComponent'));
+Vue.component('booking-edit', require('./components/BookingEditComponent'));
+Vue.component('booking-create', require('./components/BookingCreateComponent'));
 Vue.component('user-show', require('./components/UserShowComponent'));
 Vue.component('nursery-show', require('./components/NurseryShowComponent'));
 Vue.component('network-show', require('./components/NetworkShowComponent'));

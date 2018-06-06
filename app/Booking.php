@@ -9,9 +9,10 @@ class Booking extends Model
 {
     use SoftDeletes;
 
-    public const STATUS_UNTOUCHED   = 0;
-    public const STATUS_VALIDATED   = 1;
-    public const STATUS_ARCHIVED    = 2;
+    public const STATUS_PENDING     = 0;
+    public const STATUS_APPROVED    = 1;
+    public const STATUS_DENIED      = 2;
+    public const STATUS_ARCHIVED    = 3;
 
     protected $dates = ['start', 'end', 'deleted_at'];
 

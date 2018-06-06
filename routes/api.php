@@ -29,4 +29,5 @@ Route::get('availabilities/user/{user}', 'API\AvailabilityController@showForUser
 
 Route::resource('bookings', 'API\BookingController');
 Route::get('bookings/user/{user}', 'API\BookingController@showForUser')->name('bookings.showforuser');
+Route::post('bookings/approve/{booking}', 'API\BookingController@approve')->name('bookings.approve');
 

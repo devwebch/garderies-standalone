@@ -32,12 +32,15 @@ class BookingSeeder extends Seeder
                     $i++;
                 }
 
+                $status = ($start < now()) ? \App\Booking::STATUS_ARCHIVED : \App\Booking::STATUS_PENDING;
+
                 DB::table('bookings')->insert([
-                    'user_id'           => rand(1, $users),
-                    'substitute_id'     => rand(1, $users),
+                    'user_id'           => rand(2, $users),
+                    'substitute_id'     => rand(2, $users),
                     'nursery_id'        => rand(1, $nurseries),
                     'start'             => $start,
                     'end'               => $end,
+                    'status'            => $status,
                     'created_at'        => \Carbon\Carbon::now()
                 ]);
             }
