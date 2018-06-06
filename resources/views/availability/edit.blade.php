@@ -16,7 +16,7 @@
                             <flat-pickr
                                     v-model="date_start"
                                     :config="flatPickrConfig"
-                                    value="{{\Carbon\Carbon::parse($availability->start)->format('d.m.Y H:i')}}"
+                                    value="{{$availability->start->format('d.m.Y H:i')}}"
                                     class="form-control"
                                     placeholder="Select a date"
                                     name="date_start">
@@ -27,14 +27,14 @@
                             <flat-pickr
                                     v-model="date_end"
                                     :config="flatPickrConfig"
-                                    value="{{\Carbon\Carbon::parse($availability->end)->format('d.m.Y H:i')}}"
+                                    value="{{$availability->end->format('d.m.Y H:i')}}"
                                     class="form-control"
                                     placeholder="Select a date"
                                     name="date_end">
                             </flat-pickr>
                         </div>
                     </div>
-                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-primary" type="submit">Enregistrer</button>
                 </form>
             </div>
         </div>
