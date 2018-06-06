@@ -22,6 +22,9 @@
                         <a class="nav-link" href="{{route('users.index')}}"><i class="fas fa-users"></i> Employés</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route('bookings.index')}}"><i class="fas fa-user-clock"></i> Remplaçements</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{route('users.search')}}"><i class="fas fa-search"></i> Recherche de remplaçant</a>
                     </li>
                 </ul>
