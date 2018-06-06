@@ -6,13 +6,13 @@
                 <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
                     <div class="row">
                         <div class="form-group col">
-                            <label for="hour_start">Jour :</label>
+                            <label for="day_start">Jour :</label>
                             <flat-pickr
                                     v-model="search.day_start"
                                     :config="flatPickrConfigDays"
                                     class="form-control"
                                     placeholder="Sélectionner une date"
-                                    name="date">
+                                    name="day_start">
                             </flat-pickr>
                         </div>
                         <div class="form-group col">
@@ -22,7 +22,7 @@
                                     :config="flatPickrConfigHours"
                                     class="form-control"
                                     placeholder="Heure de départ"
-                                    name="date">
+                                    name="hour_start">
                             </flat-pickr>
                         </div>
                         <div class="form-group col">
@@ -32,7 +32,7 @@
                                     :config="flatPickrConfigHours"
                                     class="form-control"
                                     placeholder="Heure de fin"
-                                    name="date">
+                                    name="hour_end">
                             </flat-pickr>
                         </div>
                         <div class="col" style="padding-top: 31px;">
@@ -62,7 +62,7 @@
                         <th>Remplaçant</th>
                         <th>Date</th>
                         <th>Disponibilité</th>
-                        <th class="d-none d-md-table-cell">Nursery</th>
+                        <th class="d-none d-md-table-cell">Etablissement</th>
                         <th class="d-none d-md-table-cell">&nbsp;</th>
                     </tr>
                     </thead>
@@ -73,7 +73,7 @@
                         <td><i class="fas fa-calendar d-none d-sm-inline"></i> {{item.start}}</td>
                         <td class="text-truncate">{{item.start_hour}} <i class="fas fa-arrow-right"></i> {{item.end_hour}}</td>
                         <td class="d-none d-md-table-cell"><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
-                        <td class="d-none d-md-table-cell">
+                        <td class="d-none d-md-table-cell text-right">
                             <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
                             <span class="badge badge-success" v-if="item.matching=='complete'">Complet</span>
                             <span class="badge badge-warning" v-if="item.matching=='partial'">Partiel</span>
@@ -142,7 +142,8 @@
         flatPickrConfigDays: {
             wrap: true,
             dateFormat: 'd.m.Y',
-            locale: French
+            locale: French,
+            minDate: formattedDate(today)
         },
         flatPickrConfigHours: {
             wrap: true,
