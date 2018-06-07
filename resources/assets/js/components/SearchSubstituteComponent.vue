@@ -258,6 +258,8 @@
                     }).then((response) => {
                         data.peopleSelected = false;
                         data.selectedAvailabilities = [];
+                        data.nursery = 0;
+                        data.message = null;
                     });
                 });
             }

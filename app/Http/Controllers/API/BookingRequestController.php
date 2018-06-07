@@ -30,7 +30,7 @@ class BookingRequestController extends Controller
      */
     public function store(Request $request)
     {
-        $user_count     = User::count();
+        $user           = User::where('id', '!=', 1)->inRandomOrder()->first();
         $availabilities = $request->availabilities;
         $start          = Carbon::parse($request->date_start);
         $end            = Carbon::parse($request->date_end);
@@ -40,7 +40,7 @@ class BookingRequestController extends Controller
             $bookingRequest = new BookingRequest();
             $bookingRequest->availability_id    = $availability['id'];
             $bookingRequest->substitute_id      = $availability['user_id'];
-            $bookingRequest->user_id            = rand(2, $user_count); //TODO: update with the logged in user
+            $bookingRequest->user_id            = $user->id;
             $bookingRequest->nursery_id         = $request->nursery;
             $bookingRequest->message            = $request->message;
             $bookingRequest->start              = $start;

@@ -17,7 +17,23 @@
                 </tr>
                 </thead>
                 <tbody>
+                @php
+                    $last_timestamp = 0;
+                @endphp
+
                 @foreach($bookingRequests as $request)
+
+                    @if ($last_timestamp != $request->start->timestamp)
+                        <tr class="bg-dark text-white small">
+                            <td colspan="5" class="p-2">
+                                <strong>{{$request->start->format('d.m.Y')}}</strong>
+                            </td>
+                        </tr>
+                    @endif
+
+                    @php
+                        $last_timestamp = $request->start->timestamp;
+                    @endphp
                     <tr>
                         <td>
                             <a href="{{route('booking-requests.show', $request)}}">
