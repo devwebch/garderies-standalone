@@ -12,20 +12,20 @@
                     <li class="nav-item d-none">
                         <a class="nav-link" href="/account">Compte garderie</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('networks.index')}}"><i class="fas fa-sitemap"></i> Vos réseaux</a>
+                    <li class="nav-item link-networks">
+                        <a class="nav-link" href="{{route('networks.index')}}"><i class="fas fa-sitemap"></i> Réseaux</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item link-nurseries">
                         <a class="nav-link" href="{{route('nurseries.index')}}"><i class="fas fa-building"></i> Etablissements</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item link-users">
                         <a class="nav-link" href="{{route('users.index')}}"><i class="fas fa-users"></i> Employés</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item link-bookings">
                         <a class="nav-link" href="{{route('booking-requests.index')}}"><i class="fas fa-user-clock"></i> Remplaçements</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('availabilities.search')}}"><i class="fas fa-search"></i> Recherche de remplaçant</a>
+                    <li class="nav-item link-availabilities">
+                        <a class="nav-link" href="{{route('availabilities.search')}}"><i class="fas fa-search"></i> Recherche</a>
                     </li>
                 </ul>
             </div>
