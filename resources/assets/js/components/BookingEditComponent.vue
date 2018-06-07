@@ -11,7 +11,8 @@
             enableTime: true,
             time_24hr: true,
             minuteIncrement: 30,
-            locale: French
+            locale: French,
+            minDate: new Date()
         },
         date_start: 0,
         date_end: 0

@@ -61,7 +61,7 @@
                         <th>Remplaçant</th>
                         <th>Date</th>
                         <th>Disponibilité</th>
-                        <th class="d-none d-md-table-cell">Réseaux</th>
+                        <th class="d-none d-md-table-cell"><span data-toggle="tooltip" title="Réseau de travail">Réseaux</span></th>
                         <th class="d-none d-md-table-cell">&nbsp;</th>
                     </tr>
                     </thead>
@@ -75,7 +75,9 @@
                         </td>
                         <td class="d-none d-md-table-cell">
                             <ul class="list-inline m-0">
-                                <li v-for="network in item.networks" class="list-inline-item"><span class="badge badge-info">{{network.name}}</span></li>
+                                <li v-for="network in item.networks" class="list-inline-item">
+                                    <span class="badge badge-info">{{network.name}}</span>
+                                </li>
                             </ul>
                         </td>
                         <td class="d-none d-md-table-cell text-right">
