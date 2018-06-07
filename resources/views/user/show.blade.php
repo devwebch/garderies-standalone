@@ -15,7 +15,6 @@
                 <div class="card-body user-card">
                     <div class="row">
                         <div class="col">
-                            <p><strong>Nom :</strong> {{$user->name}}</p>
                             <p><strong>E-mail :</strong> {{$user->email}}</p>
                             <p><strong>Téléphone :</strong> {{$user->phone}}</p>
                             <p><strong>Garderie :</strong> {{$user->nursery->name ?? '-'}}</p>
