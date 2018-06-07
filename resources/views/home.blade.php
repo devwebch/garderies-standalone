@@ -3,13 +3,9 @@
 @section('title', 'Logiciels de gestion de garderie')
 
 @section('content')
-    <div class="row mb-4">
-        <div class="col">
-            <div class="alert alert-primary alert-guided-tour">
-                Nouvel utilisateur ? Suivez la visite guidée pour découvrir en quoi <em>Garderies</em> peut vous simplifier la gestion de vos structures d'accueil.
-                <a href="{{config('app.url')}}/?{{str_random(5)}}#tour">Démarrer la visite</a>
-            </div>
-        </div>
+    <div class="alert alert-primary alert-guided-tour">
+        Nouvel utilisateur ? Suivez la visite guidée pour découvrir en quoi <em>Garderies</em> peut vous simplifier la gestion de vos structures d'accueil.
+        <a href="{{config('app.url')}}/?{{str_random(5)}}#tour">Démarrer la visite</a>
     </div>
 
     <div class="row mb-4 dashboard__summary">
