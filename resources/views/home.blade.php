@@ -15,7 +15,7 @@
                     <div class="widget-count v-step-0">
                         <h3>Garderies dans votre réseau</h3>
                         <div class="number">{{$count_nursery}}</div>
-                        <a href="{{route('nurseries.index')}}">Gérer mes garderies</a>
+                        <a href="{{route('nurseries.index')}}">Gérer les garderies</a>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <div class="widget-count v-step-1">
                         <h3>Nombre d'employés</h3>
                         <div class="number">{{$count_user}}</div>
-                        <a href="{{route('users.index')}}">Gérer mes employés</a>
+                        <a href="{{route('users.index')}}">Gérer les employés</a>
                     </div>
                 </div>
             </div>
