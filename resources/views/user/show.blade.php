@@ -34,7 +34,7 @@
                         </div>
                         <div class="col">
                             <div class="user-card__avatar text-right">
-                                <img src="{{asset('img/dummy_avatar.jpg')}}" alt="User profile picture">
+                                <img src="{{asset($avatar)}}" alt="User profile picture">
                             </div>
                         </div>
                     </div>
@@ -54,13 +54,33 @@
                             <th>Date</th>
                             <th>Début</th>
                             <th>Fin</th>
+                            <th width="120">Status</th>
+                            <th width="50"></th>
                         </tr>
                         </thead>
                         @foreach($availabilities as $availability)
                             <tr>
-                                <td>{{$availability->day_start}}</td>
-                                <td>{{$availability->hour_start}}</td>
-                                <td>{{$availability->hour_end}}</td>
+                                <td>{{$availability->start->format('d.m.Y')}}</td>
+                                <td>{{$availability->start->format('H\hi')}}</td>
+                                <td>{{$availability->end->format('H\hi')}}</td>
+                                <td>
+                                    @switch($availability->status)
+                                        @case(\App\Availability::STATUS_UNTOUCHED)
+                                        <span class="badge badge-info">Libre</span>
+                                        @break
+                                        @case(\App\Availability::STATUS_BOOKED)
+                                        <span class="badge badge-success">Réservé</span>
+                                        @break
+                                        @case(\App\Availability::STATUS_ARCHIVED)
+                                        <span class="badge badge-dark">Archivé</span>
+                                        @break
+                                    @endswitch
+                                </td>
+                                <td>
+                                    @if ($availability->request)
+                                    <a href="{{route('booking-requests.show', $availability->request)}}">Voir</a>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </table>
@@ -76,14 +96,15 @@
                             <th>Début</th>
                             <th>Fin</th>
                             <th>Etablissement</th>
-                            <th width="50">Status</th>
+                            <th width="120">Status</th>
+                            <th width="50"></th>
                         </tr>
                         </thead>
                         @foreach($bookings as $booking)
                             <tr>
-                                <td>{{$booking->day_start}}</td>
-                                <td>{{$booking->hour_start}}</td>
-                                <td>{{$booking->hour_end}}</td>
+                                <td>{{$booking->start->format('d.m.Y')}}</td>
+                                <td>{{$booking->start->format('H\hi')}}</td>
+                                <td>{{$booking->end->format('H\hi')}}</td>
                                 <td><a href="{{route('nurseries.show', $booking->nursery)}}">{{$booking->nursery->name}}</a></td>
                                 <td>
                                     @switch($booking->status)
@@ -98,6 +119,7 @@
                                         @break
                                     @endswitch
                                 </td>
+                                <td><a href="{{route('bookings.show', $booking)}}">Voir</a></td>
                             </tr>
                         @endforeach
                     </table>

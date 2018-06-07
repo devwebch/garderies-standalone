@@ -50,56 +50,23 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        // TODO: Fuck scopes
-        global $availabilities, $bookings;
-        $availabilities = [];
-        $bookings       = [];
-
-        $user->availabilities()
+        $availabilities = $user->availabilities()
             ->where('start', '>=', now())
             ->orderBy('start')
-            ->each(function ($data) {
+            ->get();
 
-            global $availabilities;
-
-            $start  = Carbon::parse($data->start);
-            $end    = Carbon::parse($data->end);
-
-            $availabilities[] = (object)[
-                'day_start'     => $start->format('d.m.Y'),
-                'day_end'       => $end->format('d.m.Y'),
-                'hour_start'    => $start->format('H\hi'),
-                'hour_end'      => $end->format('H\hi')
-            ];
-        });
-
-        $user->bookings()
+        $bookings = $user->bookings()
             ->where('start', '>=', now())
             ->orderBy('start')
-            ->each(function ($data) {
+            ->get();
 
-            global $bookings;
-
-            $start  = Carbon::parse($data->start);
-            $end    = Carbon::parse($data->end);
-
-            $bookings[] = (object)[
-                'day_start'     => $start->format('d.m.Y'),
-                'day_end'       => $end->format('d.m.Y'),
-                'hour_start'    => $start->format('H\hi'),
-                'hour_end'      => $end->format('H\hi'),
-                'nursery'       => $data->nursery,
-                'status'        => $data->status,
-            ];
-        });
-
-        $networks = $user->networks();
+        $avatars = ['img/dummy_avatar_1.jpg', 'img/dummy_avatar_2.jpg', 'img/dummy_avatar_3.jpg'];
 
         return view('user.show', [
             'user'              => $user,
             'availabilities'    => $availabilities,
             'bookings'          => $bookings,
-            'networks'          => $networks
+            'avatar'            => $avatars[rand(0, count($avatars) - 1)]
         ]);
     }
 
