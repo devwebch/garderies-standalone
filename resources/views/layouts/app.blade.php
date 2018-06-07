@@ -4,6 +4,7 @@
     <body>
         @include('common.header')
         <div class="main" id="app">
+            @yield('hook-vue')
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
