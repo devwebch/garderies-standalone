@@ -82,7 +82,6 @@
             vm = this;
 
             $('.modal-event').on('shown.bs.modal', function () {
-                //$('#myInput').trigger('focus');
                 console.log('modal opened');
             });
 
@@ -94,7 +93,7 @@
                 locale: 'fr-ch',
                 header: {
                     left: 'title',
-                    center: 'month agendaWeek listWeek',
+                    center: 'agendaWeek listWeek',
                     right: 'today prev,next'
                 },
                 buttonText: {

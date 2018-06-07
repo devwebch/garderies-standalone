@@ -19,4 +19,9 @@ class Availability extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function request()
+    {
+        return $this->hasOne('App\BookingRequest');
+    }
 }
