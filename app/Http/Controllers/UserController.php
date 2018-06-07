@@ -88,6 +88,7 @@ class UserController extends Controller
                 'day_end'       => $end->format('d.m.Y'),
                 'hour_start'    => $start->format('H\hi'),
                 'hour_end'      => $end->format('H\hi'),
+                'nursery'       => $data->nursery,
                 'status'        => $data->status,
             ];
         });
@@ -176,11 +177,6 @@ class UserController extends Controller
     public function availabilities(User $user)
     {
         return view('user.availabilities', ['user' => $user]);
-    }
-
-    public function search()
-    {
-        return view('user.search');
     }
 
     public function bookings(User $user)

@@ -32,4 +32,4 @@ Route::get('bookings/user/{user}', 'API\BookingController@showForUser')->name('b
 Route::post('bookings/approve/{booking}', 'API\BookingController@approve')->name('bookings.approve');
 
 Route::resource('booking-requests', 'API\BookingRequestController');
-
+Route::post('booking-requests/approve/{bookingRequest}', 'API\BookingRequestController@approve')->name('booking-requests.approve');

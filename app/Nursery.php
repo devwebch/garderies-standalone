@@ -19,7 +19,7 @@ class Nursery extends Model
 
     public function bookings()
     {
-        return $this->hasManyThrough('App\Booking', 'App\User');
+        return $this->hasMany('App\Booking');
     }
 
     public function network()

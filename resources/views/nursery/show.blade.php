@@ -34,19 +34,23 @@
                             <th>Jour</th>
                             <th>Début</th>
                             <th>Fin</th>
+                            <th width="50"></th>
                         </tr>
                         </thead>
                         @forelse($bookings as $booking)
                             <tr>
                                 <td><a href="{{route('users.show', $booking->user->id)}}">{{$booking->user->name}}</a></td>
                                 <td><a href="{{route('users.show', $booking->substitute->id)}}">{{$booking->substitute->name}}</a></td>
-                                <td>{{\Carbon\Carbon::parse($booking->start)->format('d.m.Y')}}</td>
-                                <td>{{\Carbon\Carbon::parse($booking->start)->format('H:i')}}</td>
-                                <td>{{\Carbon\Carbon::parse($booking->end)->format('H:i')}}</td>
+                                <td>{{$booking->start->format('d.m.Y')}}</td>
+                                <td>{{$booking->start->format('H:i')}}</td>
+                                <td>{{$booking->end->format('H:i')}}</td>
+                                <td>
+                                    <a href="{{route('bookings.show', $booking)}}">Voir</a>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4">Pas de remplacement</td>
+                                <td colspan="5">Pas de remplacement</td>
                             </tr>
                         @endforelse
                     </table>

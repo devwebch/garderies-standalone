@@ -15,6 +15,7 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('request_id')->nullable(); // from where this booking is
             $table->integer('user_id'); // person asking for substitution
             $table->integer('substitute_id'); // person filling the substitution
             $table->integer('nursery_id'); // nursery in which the substitution is occuring

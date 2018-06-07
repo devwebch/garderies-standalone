@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Availability;
-use Carbon\Carbon;
+use App\BookingRequest;
 use Illuminate\Http\Request;
 
-class AvailabilityController extends Controller
+class BookingRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,8 @@ class AvailabilityController extends Controller
      */
     public function index()
     {
-        //
+        $bookingRequests = BookingRequest::orderBy('status')->get(); // orders them by status
+        return view('booking-request.index', ['bookingRequests' => $bookingRequests]);
     }
 
     /**
@@ -42,55 +42,45 @@ class AvailabilityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Availability  $availability
+     * @param  \App\BookingRequest  $bookingRequest
      * @return \Illuminate\Http\Response
      */
-    public function show(Availability $availability)
+    public function show(BookingRequest $bookingRequest)
     {
-        return view('availability.show', ['availability' => $availability]);
+        return view('booking-request.show', ['bookingRequest' => $bookingRequest]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Availability  $availability
+     * @param  \App\BookingRequest  $bookingRequest
      * @return \Illuminate\Http\Response
      */
-    public function edit(Availability $availability)
+    public function edit(BookingRequest $bookingRequest)
     {
-        return view('availability.edit', ['availability' => $availability]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Availability  $availability
+     * @param  \App\BookingRequest  $bookingRequest
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Availability $availability)
+    public function update(Request $request, BookingRequest $bookingRequest)
     {
-        $availability->start    = Carbon::parse($request->date_start);
-        $availability->end      = Carbon::parse($request->date_end);
-        $availability->save();
-
-        return redirect()->route('users.index');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Availability  $availability
+     * @param  \App\BookingRequest  $bookingRequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Availability $availability)
+    public function destroy(BookingRequest $bookingRequest)
     {
-        $availability->delete();
-        return redirect()->route('users.index');
-    }
-
-    public function search()
-    {
-        return view('availability.search');
+        //
     }
 }

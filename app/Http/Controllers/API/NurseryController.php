@@ -16,7 +16,7 @@ class NurseryController extends Controller
      */
     public function index()
     {
-        return NurseryResource::collection(\App\Nursery::all());
+        return NurseryResource::collection(\App\Nursery::orderBy('name')->get());
     }
 
     /**

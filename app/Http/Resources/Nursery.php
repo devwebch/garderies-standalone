@@ -19,6 +19,7 @@ class Nursery extends JsonResource
             'name'              => $this->name,
             'bookings_count'    => $this->bookings->count(),
             'employees_count'   => $this->users->count(),
+            'network'           => optional($this->network)->name,
             'link'              => route('nurseries.show', [$this->id])
         ];
 

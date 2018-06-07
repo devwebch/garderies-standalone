@@ -17,11 +17,13 @@ Route::view('account', 'account');
 
 Route::resource('nurseries', 'NurseryController');
 
-Route::get('users/search', 'UserController@search')->name('users.search'); // probably more appropriate as Availability search
 Route::resource('users', 'UserController');
 Route::get('users/{user}/availabilities', 'UserController@availabilities')->name('users.availabilities');
 Route::get('users/{user}/bookings', 'UserController@bookings')->name('users.bookings');
 
+Route::get('availabilities/search', 'AvailabilityController@search')->name('availabilities.search');
 Route::resource('availabilities', 'AvailabilityController');
+
 Route::resource('bookings', 'BookingController');
+Route::resource('booking-requests', 'BookingRequestController');
 Route::resource('networks', 'NetworkController');

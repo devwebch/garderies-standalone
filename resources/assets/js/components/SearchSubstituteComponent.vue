@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="card card-default mb-4">
-            <div class="card-header">Paramètres de recherche</div>
             <div class="card-body">
                 <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
                     <div class="row">
@@ -62,17 +61,23 @@
                         <th>Remplaçant</th>
                         <th>Date</th>
                         <th>Disponibilité</th>
-                        <th class="d-none d-md-table-cell">Etablissement</th>
+                        <th class="d-none d-md-table-cell">Réseaux</th>
                         <th class="d-none d-md-table-cell">&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="item in availabilities">
                         <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
-                        <td><a :href="item.user.link">{{item.user.name}}</a></td>
+                        <td><a :href="item.user.link" target="_blank">{{item.user.name}}</a></td>
                         <td><i class="fas fa-calendar d-none d-sm-inline"></i> {{item.start}}</td>
-                        <td class="text-truncate">{{item.start_hour}} <i class="fas fa-arrow-right"></i> {{item.end_hour}}</td>
-                        <td class="d-none d-md-table-cell"><a :href="item.nursery.link">{{item.nursery.name}}</a></td>
+                        <td class="text-truncate">{{item.start_hour}} <i class="fas fa-arrow-right"></i>
+                            {{item.end_hour}}
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            <ul class="list-inline m-0">
+                                <li v-for="network in item.networks" class="list-inline-item"><span class="badge badge-info">{{network.name}}</span></li>
+                            </ul>
+                        </td>
                         <td class="d-none d-md-table-cell text-right">
                             <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
                             <span class="badge badge-success" v-if="item.matching=='complete'">Complet</span>
@@ -88,12 +93,14 @@
                 </table>
             </div>
             <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">
-                <button class="btn btn-success btn-sm" v-on:click="contactPeopleValidation">Contacter les personnes sélectionnées</button>
+                <button class="btn btn-success btn-sm" v-on:click="contactPeopleValidation">Contacter les personnes
+                    sélectionnées
+                </button>
             </div>
         </div>
 
         <div class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Confirmation de contact</h5>
@@ -102,21 +109,37 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Les personnes sélectionnées seront contactées dans les plus brefs délais afin de confirmer le remplacement de la plage horaire définie, merci de confirmer le remplacement ci-dessous :</p>
+                        <p>Les personnes sélectionnées seront contactées dans les plus brefs délais afin de confirmer le
+                            remplacement de la plage horaire définie, merci de confirmer le remplacement ci-dessous
+                            :</p>
 
                         <div class="text-center">
                             <h2>{{search.day_start}}</h2>
                             <p>De {{search.hour_start}} à {{search.hour_end}}</p>
                         </div>
+
+                        <div class="form-group">
+                            <label for="nursery">Etablissement</label>
+                            <select name="nursery" class="form-control" v-model="nursery">
+                                <option value="0">Sélectionner...</option>
+                                <option v-for="nursery in nurseries" :value="nursery.id">{{nursery.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea name="message" cols="30" rows="5" class="form-control" v-model="message"></textarea>
+                            <p class="text-muted">Communiquez à votre remplaçant les informations essentielles.</p>
+                        </div>
+
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary" v-on:click="contactPeople">Envoyer la demande</button>
+                        <button type="button" class="btn btn-primary" :disabled="nursery == 0" v-on:click="contactPeople">Envoyer la demande
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -162,6 +185,9 @@
             hour_start: formattedHour(today),
             hour_end: formattedHour(later)
         },
+        nurseries: [],
+        nursery: 0,
+        message: null,
         loaded: true
     };
 
@@ -173,7 +199,7 @@
         mounted() {
             vm = this;
 
-            this.$nextTick(function(){
+            this.$nextTick(function () {
                 this.searchSubstitute();
             });
         },
@@ -189,7 +215,7 @@
                         'hour_end': data.search.hour_end,
                     }
                 })
-                .then(function(response){
+                .then(function (response) {
                     data.loaded = true;
                     data.availabilities = response.data.data;
                 });
@@ -198,30 +224,31 @@
                 if (data.peopleSelected) {
                     data.selectedAvailabilities = [];
                 } else {
-                    data.availabilities.forEach(function(item){
+                    data.availabilities.forEach(function (item) {
                         data.selectedAvailabilities.push(item);
                     });
                 }
             },
             contactPeopleValidation: function () {
+
+                // Retrieve nurseries
+                axios.get('/api/nurseries').then(function (response) {
+                   data.nurseries = response.data.data;
+                });
+
                 $('.modal').modal('show');
             },
             contactPeople: function () {
                 $('.modal').modal('hide');
 
                 axios.post('/api/booking-requests', {
-                    availabilities: data.selectedAvailabilities
-                })
-                .then(function(response){
+                    availabilities: data.selectedAvailabilities,
+                    date_start: data.search.day_start + " " + data.search.hour_start,
+                    date_end: data.search.day_start + " " + data.search.hour_end,
+                    nursery: data.nursery,
+                    message: data.message
+                }).then(function (response) {
                     console.log(response);
-                });
-
-
-                data.peopleSelected = false;
-                data.selectedAvailabilities = [];
-
-                // for demonstration purposes
-                /*setTimeout(function(){
                     swal({
                         title: "Demandes envoyées",
                         text: "Les demandes de remplacements sont en cours d'envoi.",
@@ -230,7 +257,7 @@
                         data.peopleSelected = false;
                         data.selectedAvailabilities = [];
                     });
-                }, 800);*/
+                });
             }
         },
         components: {
@@ -245,9 +272,11 @@
         }
         return num;
     }
+
     function formattedHour(date) {
         return zeroLeadingNumber(date.getHours()) + ':' + zeroLeadingNumber(date.getMinutes());
     }
+
     function formattedDate(date) {
         return zeroLeadingNumber(date.getDate()) + '.' + zeroLeadingNumber(date.getMonth() + 1) + '.' + zeroLeadingNumber(date.getFullYear());
     }
@@ -268,6 +297,7 @@
             top: 46%;
         }
     }
+
     .fa-arrow-right {
         font-size: 0.7em;
     }

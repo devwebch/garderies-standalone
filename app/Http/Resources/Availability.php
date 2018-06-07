@@ -27,9 +27,10 @@ class Availability extends JsonResource
         $data['start_hour']         = $start_hour;
         $data['end_hour']           = $end_hour;
         $data['user']               = $this->user;
-        $data['user']['link']       = route('users.show', $this->user->id ?? 0);
+        $data['user']['link']       = route('users.show', $this->user ?? 0);
         $data['nursery']            = $this->user->nursery;
-        $data['nursery']['link']    = route('nurseries.show', $this->user->nursery->id ?? 0);
+        $data['nursery']['link']    = route('nurseries.show', $this->user->nursery ?? 0);
+        $data['networks']           = $this->user->networks;
         return $data;
     }
 }

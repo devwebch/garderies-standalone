@@ -57,11 +57,11 @@
                             <th>Fin</th>
                         </tr>
                         </thead>
-                        @foreach($availabilities as $slot)
+                        @foreach($availabilities as $availability)
                             <tr>
-                                <td>{{$slot->day_start}}</td>
-                                <td>{{$slot->hour_start}}</td>
-                                <td>{{$slot->hour_end}}</td>
+                                <td>{{$availability->day_start}}</td>
+                                <td>{{$availability->hour_start}}</td>
+                                <td>{{$availability->hour_end}}</td>
                             </tr>
                         @endforeach
                     </table>
@@ -76,16 +76,18 @@
                             <th>Jour</th>
                             <th>Début</th>
                             <th>Fin</th>
+                            <th>Etablissement</th>
                             <th width="50">Status</th>
                         </tr>
                         </thead>
-                        @foreach($bookings as $slot)
+                        @foreach($bookings as $booking)
                             <tr>
-                                <td>{{$slot->day_start}}</td>
-                                <td>{{$slot->hour_start}}</td>
-                                <td>{{$slot->hour_end}}</td>
+                                <td>{{$booking->day_start}}</td>
+                                <td>{{$booking->hour_start}}</td>
+                                <td>{{$booking->hour_end}}</td>
+                                <td><a href="{{route('nurseries.show', $booking->nursery)}}">{{$booking->nursery->name}}</a></td>
                                 <td>
-                                    @switch($slot->status)
+                                    @switch($booking->status)
                                         @case(\App\Booking::STATUS_PENDING)
                                         <span class="badge badge-info">En attente</span>
                                         @break
