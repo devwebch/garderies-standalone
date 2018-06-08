@@ -4,7 +4,7 @@
             <div class="card-body">
                 <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
                     <div class="row">
-                        <div class="form-group col">
+                        <div class="form-group col-md-3">
                             <label for="day_start">Jour :</label>
                             <flat-pickr
                                     v-model="search.day_start"
@@ -14,7 +14,7 @@
                                     name="day_start">
                             </flat-pickr>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-6 col-md-3">
                             <label for="hour_start">Heure de début:</label>
                             <flat-pickr
                                     v-model="search.hour_start"
@@ -24,7 +24,7 @@
                                     name="hour_start">
                             </flat-pickr>
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-6 col-md-3">
                             <label for="hour_end">Heure de fin :</label>
                             <flat-pickr
                                     v-model="search.hour_end"
@@ -34,7 +34,8 @@
                                     name="hour_end">
                             </flat-pickr>
                         </div>
-                        <div class="col" style="padding-top: 31px;">
+                        <div class="col" style="/*padding-top: 31px;*/">
+                            <label for="">&nbsp;</label>
                             <button class="btn btn-primary btn-block" type="submit">Rechercher</button>
                         </div>
                     </div>
@@ -62,7 +63,7 @@
                         <th>Date</th>
                         <th>Disponibilité</th>
                         <th class="d-none d-md-table-cell"><span data-toggle="tooltip" title="Réseau de travail">Réseaux</span></th>
-                        <th class="d-none d-md-table-cell">&nbsp;</th>
+                        <th class="d-none d-md-table-cell text-right">IC*</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -93,16 +94,17 @@
                     </tr>
                     </tbody>
                 </table>
+                <p class="text-muted">* Indice de Correspondance (partiel ou complet)</p>
             </div>
             <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">
-                <button class="btn btn-success btn-sm" v-on:click="contactPeopleValidation">Contacter les personnes
+                <button class="btn btn-primary" v-on:click="contactPeopleValidation">Contacter les personnes
                     sélectionnées
                 </button>
             </div>
         </div>
 
         <div class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Confirmation de contact</h5>
@@ -112,16 +114,15 @@
                     </div>
                     <div class="modal-body">
                         <p>Les personnes sélectionnées seront contactées dans les plus brefs délais afin de confirmer le
-                            remplacement de la plage horaire définie, merci de confirmer le remplacement ci-dessous
-                            :</p>
+                            remplacement de la plage horaire définie, merci de vérifier et compléter les informations ci-dessous :</p>
 
                         <div class="text-center">
-                            <h2>{{search.day_start}}</h2>
+                            <h2>Date : {{search.day_start}}</h2>
                             <p>De {{search.hour_start}} à {{search.hour_end}}</p>
                         </div>
 
                         <div class="form-group">
-                            <label for="nursery">Etablissement</label>
+                            <label for="nursery">Etablissement <span class="text-danger">*</span></label>
                             <select name="nursery" class="form-control" v-model="nursery">
                                 <option value="0">Sélectionner...</option>
                                 <option v-for="nursery in nurseries" :value="nursery.id">{{nursery.name}}</option>
@@ -129,8 +130,8 @@
                         </div>
                         <div class="form-group">
                             <label for="message">Message</label>
-                            <textarea name="message" cols="30" rows="5" class="form-control" v-model="message"></textarea>
                             <p class="text-muted">Communiquez à votre remplaçant les informations essentielles.</p>
+                            <textarea name="message" cols="30" rows="5" class="form-control" v-model="message"></textarea>
                         </div>
 
                     </div>
@@ -223,6 +224,7 @@
                 });
             },
             selectAll: function (event) {
+                // Handles the selection of substitutes
                 if (data.peopleSelected) {
                     data.selectedAvailabilities = [];
                 } else {
@@ -238,12 +240,13 @@
                    data.nurseries = response.data.data;
                 });
 
-                $('.modal').modal('show');
+                $('.modal').modal('show'); // Show the modal
             },
             contactPeople: function () {
-                $('.modal').modal('hide');
+                $('.modal').modal('hide'); // Hide the modal
 
                 axios.post('/api/booking-requests', {
+                    // Pass the request data to the API
                     availabilities: data.selectedAvailabilities,
                     date_start: data.search.day_start + " " + data.search.hour_start,
                     date_end: data.search.day_start + " " + data.search.hour_end,
@@ -251,6 +254,8 @@
                     message: data.message
                 }).then(function (response) {
                     console.log(response);
+
+                    // No error, show an alert
                     swal({
                         title: "Demandes envoyées",
                         text: "Les demandes de remplacements sont en cours d'envoi.",
