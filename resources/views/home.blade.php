@@ -54,7 +54,7 @@
         <div class="col-md-6">
             <div class="card card-default">
                 <div class="card-body">
-                    <div class="">{!! $topList->listOne() !!}</div>
+                    <div class="">{!! $topList->topReplacements() !!}</div>
                 </div>
             </div>
         </div>

@@ -34,6 +34,8 @@ Vue.component('nursery-show', require('./components/NurseryShowComponent'));
 Vue.component('network-show', require('./components/NetworkShowComponent'));
 
 
+Vue.component('my-vuetable', require('./components/MyVuetable.vue'));
+
 const app = new Vue({
     el: '#app'
 });

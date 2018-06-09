@@ -6,24 +6,19 @@
     <div class="card card-default">
         <div class="card-header bg-dark text-white">Réseaux</div>
         <div class="card-body">
-            <table class="table table-borderless table-striped table-responsive-lg">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Employés</th>
-                        <th>Administrateur</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach($networks as $network)
-                    <tr>
-                        <td><a href="{{route('networks.show', $network->id)}}">{{$network->name}}</a></td>
-                        <td>{{$network->users()->count()}}</td>
-                        <td><a href="{{route('users.show', $network->owner->id)}}">{{$network->owner->name}}</a></td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+            <my-vuetable :fields="[{
+              name: '__slot:linklabel',
+              sortField: 'networks.name',
+              title: 'Nom'
+            }, {
+              name: 'users_count',
+              sortField: 'users_count',
+              title: 'Employés'
+            }, {
+              name: '__slot:ownerlink',
+              sortField: 'users.name',
+              title: 'Administrateur'
+            }]"></my-vuetable>
         </div>
     </div>
 @endsection

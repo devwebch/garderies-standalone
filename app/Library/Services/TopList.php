@@ -11,7 +11,7 @@ use App\User;
 
 class TopList
 {
-    public function listOne()
+    public function topReplacements()
     {
         $topUsers = User::withCount('bookings')->latest('bookings_count')->take(10)->with('bookings')->get();
         return view('chart.list', ['topUsers' => $topUsers]);

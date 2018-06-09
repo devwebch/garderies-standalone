@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Network;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Network as NetworkResource;
 
 class NetworkController extends Controller
 {
@@ -13,9 +14,29 @@ class NetworkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->get('sort')) {
+            list($sortCol, $sortDir) = explode('|', $request->get('sort'));
+            $query = Network::with('owner')->orderBy($sortCol, $sortDir);
+        } else {
+            $query = Network::with('owner')->orderBy('networks.id', 'asc');
+        }
+
+        if ($request->exists('filter')) {
+            $query->join('users', 'users.id', '=', 'owner_id');
+            $query->where(function($q) use($request) {
+                $value = "%{$request->filter}%";
+                $q->where('networks.name', 'like', $value)
+                    ->orWhere('users.name', 'like', $value);
+            });
+        }
+
+        $perPage = $request->has('per_page') ? (int) $request->per_page : null;
+
+        $data = $query->withCount('users')->paginate($perPage);
+
+        return response()->json($data);
     }
 
     /**
