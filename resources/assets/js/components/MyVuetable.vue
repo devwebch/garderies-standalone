@@ -1,15 +1,13 @@
 <template>
     <div>
-        <filter-bar></filter-bar>
         <vuetable ref="vuetable"
-                  api-url="/api/networks"
+                  :api-url="this.apiUrl"
                   :fields="this.fields"
                   pagination-path=""
                   :css="css.table"
                   :multi-sort="true"
                   detail-row-component="my-detail-row"
                   :append-params="moreParams"
-                  @vuetable:cell-clicked="onCellClicked"
                   @vuetable:pagination-data="onPaginationData"
         >
             <template slot="linklabel" scope="props">
@@ -42,18 +40,19 @@
     import Vue from 'vue'
     import VueEvents from 'vue-events'
     import CustomActions from './CustomActions'
-    import DetailRow from './DetailRow'
     import FilterBar from './FilterBar'
 
     Vue.use(VueEvents)
     Vue.component('custom-actions', CustomActions)
-    Vue.component('my-detail-row', DetailRow)
     Vue.component('filter-bar', FilterBar)
 
     export default {
         props: {
             fields: {
                 type: Array
+            },
+            apiUrl: {
+                type: String
             }
         },
         components: {
@@ -115,10 +114,6 @@
             },
             onChangePage (page) {
                 this.$refs.vuetable.changePage(page)
-            },
-            onCellClicked (data, field, event) {
-                console.log('cellClicked: ', field.name)
-                this.$refs.vuetable.toggleDetailRow(data.id)
             },
         },
         events: {

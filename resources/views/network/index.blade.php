@@ -4,9 +4,9 @@
 
 @section('content')
     <div class="card card-default">
-        <div class="card-header bg-dark text-white">Réseaux</div>
+        <div class="card-header bg-dark text-white"><div class="row"><div class="col-md-6">Réseaux</div><div class="col-md-6"><filter-bar></filter-bar></div></div></div>
         <div class="card-body">
-            <my-vuetable :fields="[{
+            <my-vuetable api-url="/api/networks" :fields="[{
               name: '__slot:linklabel',
               sortField: 'networks.name',
               title: 'Nom'
