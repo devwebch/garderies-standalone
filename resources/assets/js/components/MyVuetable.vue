@@ -10,11 +10,11 @@
                   :append-params="moreParams"
                   @vuetable:pagination-data="onPaginationData"
         >
-            <template slot="linklabel" scope="props">
+            <template scope-slot="linklabel" slot-scope="props">
                 <a :href="'/networks/' + props.rowData.id">{{props.rowData.name}}</a>
             </template>
 
-            <template slot="ownerlink" scope="props">
+            <template scope-slot="ownerlink" slot-scope="props">
                 <a :href="'/users/' + props.rowData.owner.id">{{props.rowData.owner.name}}</a>
             </template>
 
