@@ -13,4 +13,9 @@ class Workgroup extends Model
     {
         return $this->belongsToMany('App\User');
     }
+
+    public function bookingRequests()
+    {
+        return $this->hasMany('App\BookingRequest');
+    }
 }

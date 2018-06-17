@@ -22,6 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('nurseries', 'API\NurseryController');
 Route::resource('users', 'API\UserController');
 Route::resource('networks', 'API\NetworkController');
+Route::resource('workgroups', 'API\WorkgroupController');
 
 Route::get('availabilities/search', 'API\AvailabilityController@search');
 Route::resource('availabilities', 'API\AvailabilityController');

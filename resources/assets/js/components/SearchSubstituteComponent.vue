@@ -129,6 +129,13 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="workgroup">Groupe de travail <span class="text-danger">*</span></label>
+                            <select name="workgroup" class="form-control" v-model="workgroup">
+                                <option value="0">Sélectionner...</option>
+                                <option v-for="workgroup in workgroups" :value="workgroup.id">{{workgroup.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="message">Message</label>
                             <p class="text-muted">Communiquez à votre remplaçant les informations essentielles.</p>
                             <textarea name="message" cols="30" rows="5" class="form-control" v-model="message"></textarea>
@@ -190,6 +197,8 @@
         },
         nurseries: [],
         nursery: 0,
+        workgroups: [],
+        workgroup: 0,
         message: null,
         loaded: true
     };
@@ -240,6 +249,12 @@
                    data.nurseries = response.data.data;
                 });
 
+                // Retrieve workgroups
+                axios.get('/api/workgroups').then(function (response) {
+                   data.workgroups = response.data;
+                });
+
+
                 $('.modal').modal('show'); // Show the modal
             },
             contactPeople: function () {
@@ -251,6 +266,7 @@
                     date_start: data.search.day_start + " " + data.search.hour_start,
                     date_end: data.search.day_start + " " + data.search.hour_end,
                     nursery: data.nursery,
+                    workgroup: data.workgroup,
                     message: data.message
                 }).then(function (response) {
                     console.log(response);

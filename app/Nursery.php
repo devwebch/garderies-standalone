@@ -22,6 +22,11 @@ class Nursery extends Model
         return $this->hasMany('App\Booking');
     }
 
+    public function bookingRequests()
+    {
+        return $this->hasMany('App\BookingRequests');
+    }
+
     public function network()
     {
         return $this->belongsTo('App\Network');

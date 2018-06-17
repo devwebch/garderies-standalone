@@ -48,6 +48,7 @@
                 <p><strong>Etablissement :</strong>
                     <a href="{{route('nurseries.show', $bookingRequest->nursery)}}">{{$bookingRequest->nursery->name}}</a>
                 </p>
+                <p><strong>Groupe de travail :</strong> {{$bookingRequest->workgroup->name}}</p>
                 <p><strong>Message pour le remplaçant :</strong></p>
                 <blockquote class="blockquote">
                     <p class="mb-0">{{$bookingRequest->message}}</p>

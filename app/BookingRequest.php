@@ -40,4 +40,9 @@ class BookingRequest extends Model
         return $this->belongsTo('App\Booking');
     }
 
+    public function workgroup()
+    {
+        return $this->belongsTo('App\Workgroup');
+    }
+
 }
