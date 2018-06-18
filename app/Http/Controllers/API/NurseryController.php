@@ -14,8 +14,28 @@ class NurseryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->get('sort')) {
+            list($sortCol, $sortDir) = explode('|', $request->get('sort'));
+            $query = Nursery::orderBy($sortCol, $sortDir);
+        } else {
+            $query = Nursery::orderBy('nurseries.id', 'asc');
+        }
+        
+        if ($request->exists('filter')) {
+            $query->where(function($q) use($request) {
+                $value = "%{$request->filter}%";
+                $q->where('nurseries.name', 'like', $value);
+            });
+        }
+    
+        $perPage = $request->has('per_page') ? (int) $request->per_page : null;
+    
+        $data = $query->withCount('users')->paginate($perPage);
+    
+        return response()->json($data);
+        
         return NurseryResource::collection(\App\Nursery::orderBy('name')->get());
     }
 

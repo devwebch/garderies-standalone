@@ -3,11 +3,9 @@
 @section('title', 'Réseaux')
 
 @section('content')
-    <div class="card card-default">
-        <div class="card-header bg-dark text-white"><div class="row"><div class="col-md-6">Réseaux</div><div class="col-md-6"><filter-bar></filter-bar></div></div></div>
-        <div class="card-body">
-            <my-vuetable api-url="/api/networks" :fields="[{
-              name: '__slot:linklabel',
+    
+            <my-vuetable title="Réseaux" api-url="/api/networks" :fields="[{
+              name: '__slot:networklink',
               sortField: 'networks.name',
               title: 'Nom'
             }, {
@@ -19,8 +17,7 @@
               sortField: 'users.name',
               title: 'Administrateur'
             }]"></my-vuetable>
-        </div>
-    </div>
+        
 @endsection
 
 @section('nav-lateral')

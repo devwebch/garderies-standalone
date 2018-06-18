@@ -1,32 +1,39 @@
 <template>
-    <div>
-        <vuetable ref="vuetable"
-                  :api-url="this.apiUrl"
-                  :fields="this.fields"
-                  pagination-path=""
-                  :css="css.table"
-                  :multi-sort="true"
-                  detail-row-component="my-detail-row"
-                  :append-params="moreParams"
-                  @vuetable:pagination-data="onPaginationData"
-        >
-            <template scope-slot="linklabel" slot-scope="props">
-                <a :href="'/networks/' + props.rowData.id">{{props.rowData.name}}</a>
-            </template>
+    <div class="card card-default">
+        <div class="card-header bg-dark text-white"><div class="row"><div class="col-md-6">{{this.title}}</div><div class="col-md-6"><filter-bar></filter-bar></div></div></div>
+        <div class="card-body">
+            <vuetable ref="vuetable"
+                      :api-url="this.apiUrl"
+                      :fields="this.fields"
+                      pagination-path=""
+                      :css="css.table"
+                      :multi-sort="true"
+                      detail-row-component="my-detail-row"
+                      :append-params="moreParams"
+                      @vuetable:pagination-data="onPaginationData"
+            >
+                <template slot="nurserylink" scope="props">
+                    <a :href="'/nurseries/' + props.rowData.id">{{props.rowData.name}}</a>
+                </template>
 
-            <template scope-slot="ownerlink" slot-scope="props">
-                <a :href="'/users/' + props.rowData.owner.id">{{props.rowData.owner.name}}</a>
-            </template>
+                <template slot="networklink" scope="props">
+                    <a :href="'/networks/' + props.rowData.id">{{props.rowData.name}}</a>
+                </template>
 
-        </vuetable>
-        <div class="vuetable-pagination">
-            <vuetable-pagination-info ref="paginationInfo"
-                                      info-class="pagination-info"
-            ></vuetable-pagination-info>
-            <vuetable-pagination ref="pagination"
-                                 :css="css.pagination"
-                                 @vuetable-pagination:change-page="onChangePage"
-            ></vuetable-pagination>
+                <template slot="ownerlink" scope="props">
+                    <a :href="'/users/' + props.rowData.owner.id">{{props.rowData.owner.name}}</a>
+                </template>
+
+            </vuetable>
+            <div class="vuetable-pagination">
+                <vuetable-pagination-info ref="paginationInfo"
+                                          info-class="pagination-info"
+                ></vuetable-pagination-info>
+                <vuetable-pagination ref="pagination"
+                                     :css="css.pagination"
+                                     @vuetable-pagination:change-page="onChangePage"
+                ></vuetable-pagination>
+            </div>
         </div>
     </div>
 </template>
@@ -52,6 +59,9 @@
                 type: Array
             },
             apiUrl: {
+                type: String
+            },
+            title: {
                 type: String
             }
         },

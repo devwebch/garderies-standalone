@@ -3,7 +3,15 @@
 @section('title', 'Home')
 
 @section('content')
-    <nurseries></nurseries>
+    <my-vuetable title="Etablissements" api-url="/api/nurseries" :fields="[{
+              name: '__slot:nurserylink',
+              sortField: 'nursery.name',
+              title: 'Nom'
+            }, {
+              name: 'users_count',
+              sortField: 'users_count',
+              title: 'Employés'
+            }]"></my-vuetable>
 @endsection
 
 @section('nav-lateral')

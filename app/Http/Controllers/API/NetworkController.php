@@ -22,9 +22,10 @@ class NetworkController extends Controller
         } else {
             $query = Network::with('owner')->orderBy('networks.id', 'asc');
         }
+    
+        $query->join('users', 'users.id', '=', 'owner_id');
 
         if ($request->exists('filter')) {
-            $query->join('users', 'users.id', '=', 'owner_id');
             $query->where(function($q) use($request) {
                 $value = "%{$request->filter}%";
                 $q->where('networks.name', 'like', $value)
