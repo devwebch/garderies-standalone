@@ -20,7 +20,7 @@ class NurseryController extends Controller
             list($sortCol, $sortDir) = explode('|', $request->get('sort'));
             $query = Nursery::orderBy($sortCol, $sortDir);
         } else {
-            $query = Nursery::orderBy('nurseries.id', 'asc');
+            $query = Nursery::orderBy('nurseries.name', 'asc');
         }
         
         if ($request->exists('filter')) {

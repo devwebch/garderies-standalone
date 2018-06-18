@@ -20,7 +20,7 @@ class NetworkController extends Controller
             list($sortCol, $sortDir) = explode('|', $request->get('sort'));
             $query = Network::with('owner')->orderBy($sortCol, $sortDir);
         } else {
-            $query = Network::with('owner')->orderBy('networks.id', 'asc');
+            $query = Network::with('owner')->orderBy('networks.name', 'asc');
         }
     
         $query->join('users', 'users.id', '=', 'owner_id');
