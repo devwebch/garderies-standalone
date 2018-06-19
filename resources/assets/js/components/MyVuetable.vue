@@ -12,15 +12,31 @@
                       :append-params="moreParams"
                       @vuetable:pagination-data="onPaginationData"
             >
-                <template slot="nurserylink" scope="props">
+                <template slot="nurserylink" slot-scope="props">
                     <a :href="'/nurseries/' + props.rowData.id">{{props.rowData.name}}</a>
                 </template>
 
-                <template slot="networklink" scope="props">
+                <template slot="networklink" slot-scope="props">
                     <a :href="'/networks/' + props.rowData.id">{{props.rowData.name}}</a>
                 </template>
 
-                <template slot="ownerlink" scope="props">
+                <template slot="userlink" slot-scope="props">
+                    <a :href="'/users/' + props.rowData.id">{{props.rowData.name}}</a>
+                </template>
+
+                <template slot="ownerlink" slot-scope="props">
+                    <a :href="'/users/' + props.rowData.owner.id">{{props.rowData.owner.name}}</a>
+                </template>
+
+                <template slot="networklinkrelation" slot-scope="props">
+                    <a :href="'/networks/' + props.rowData.networks[0].id">{{props.rowData.networks[0].name}}</a>
+                </template>
+
+                <template slot="nurserylinkrelation" slot-scope="props">
+                    <a :href="'/nurseries/' + props.rowData.nursery.id">{{props.rowData.nursery.name}}</a>
+                </template>
+
+                <template slot="ownerlink" slot-scope="props">
                     <a :href="'/users/' + props.rowData.owner.id">{{props.rowData.owner.name}}</a>
                 </template>
 
@@ -75,8 +91,8 @@
                 css: {
                     table: {
                         tableClass: 'table table-borderless table-striped table-responsive-lg',
-                        ascendingIcon: 'glyphicon glyphicon-chevron-up',
-                        descendingIcon: 'glyphicon glyphicon-chevron-down'
+                        ascendingIcon: 'fa fa-chevron-up',
+                        descendingIcon: 'fa fa-chevron-down'
                     },
                     pagination: {
                         wrapperClass: 'pagination',
@@ -85,16 +101,16 @@
                         pageClass: 'page',
                         linkClass: 'link',
                         icons: {
-                            first: '',
-                            prev: '',
-                            next: '',
-                            last: '',
+                            first: 'fa fa-step-backward',
+                            prev: 'fa fa-chevron-left',
+                            next: 'fa fa-chevron-right',
+                            last: 'fa fa-step-forward',
                         },
                     },
                     icons: {
                         first: 'glyphicon glyphicon-step-backward',
-                        prev: 'glyphicon glyphicon-chevron-left',
-                        next: 'glyphicon glyphicon-chevron-right',
+                        prev: 'fa fa-chevron-left',
+                        next: 'fa fa-chevron-right',
                         last: 'glyphicon glyphicon-step-forward',
                     },
                 },
@@ -140,40 +156,4 @@
         }
     }
 </script>
-<style>
-    .pagination {
-        margin: 0;
-        float: right;
-    }
-    .pagination a.page {
-        border: 1px solid lightgray;
-        border-radius: 3px;
-        padding: 5px 10px;
-        margin-right: 2px;
-    }
-    .pagination a.page.active {
-        color: white;
-        background-color: #337ab7;
-        border: 1px solid lightgray;
-        border-radius: 3px;
-        padding: 5px 10px;
-        margin-right: 2px;
-    }
-    .pagination a.btn-nav {
-        border: 1px solid lightgray;
-        border-radius: 3px;
-        padding: 5px 7px;
-        margin-right: 2px;
-    }
-    .pagination a.btn-nav.disabled {
-        color: lightgray;
-        border: 1px solid lightgray;
-        border-radius: 3px;
-        padding: 5px 7px;
-        margin-right: 2px;
-        cursor: not-allowed;
-    }
-    .pagination-info {
-        float: left;
-    }
-</style>
+

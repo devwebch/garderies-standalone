@@ -5,7 +5,7 @@
 @section('content')
     <my-vuetable title="Etablissements" api-url="/api/nurseries" :fields="[{
               name: '__slot:nurserylink',
-              sortField: 'nursery.name',
+              sortField: 'nurseries.name',
               title: 'Nom'
             }, {
               name: 'users_count',

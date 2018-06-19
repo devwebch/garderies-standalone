@@ -2,9 +2,9 @@
 
       <form class="form-inline float-right">
           <div class="form-group mb-2 mr-sm-2 mb-sm-0">
-              <input type="search" v-model="filterText" class="form-control" @keyup.enter="doFilter" placeholder="">
+              <input type="search" v-model="filterText" class="form-control form-control-sm" @keyup.enter="doFilter" placeholder="">
           </div>
-          <button class="btn btn-primary" @click.prevent="doFilter">Recherche</button>
+          <button class="btn btn-primary btn-sm" @click.prevent="doFilter">Recherche</button>
       </form>
 </template>
 

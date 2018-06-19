@@ -10,4 +10,44 @@
   .card-body {
     background: #f6f9fc;
   }
+
+  .pagination {
+    margin: 0;
+    float: right;
+
+    a {
+      cursor: pointer;
+    }
+
+    a.page {
+      color: #353a40;
+      line-height: 1;
+      padding: 7px 7px;
+    }
+
+    a.page.active {
+      z-index: 1;
+      color: #fff;
+      background-color: #343a40;
+      border-color: #343a40;
+      border-radius: 100%;
+      box-shadow: none;
+      outline: 0;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      padding: 7px 0px;
+    }
+
+    .btn-nav {
+      padding: 7px 7px;
+      font-size: 0.6rem;
+    }
+
+    .btn-nav.disabled {
+      color: lightgray;
+      padding: 7px 7px;
+      cursor: not-allowed;
+    }
+  }
 }

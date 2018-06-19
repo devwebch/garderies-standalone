@@ -20,16 +20,39 @@ class UserController extends Controller
     {
         $nursery = $request->nursery;
         $network = $request->network;
-
-        if ($nursery) {
-            $collection = UserResource::collection(Nursery::find($nursery)->users()->orderBy('name', 'ASC')->get());
-        } elseif ($network) {
-            $collection = UserResource::collection(Network::find($network)->users()->orderBy('name', 'ASC')->get());
+    
+        if ($request->get('sort')) {
+            list($sortCol, $sortDir) = explode('|', $request->get('sort'));
+            $query = User::with('nursery')->with('networks')->orderBy($sortCol, $sortDir);
         } else {
-            $collection = UserResource::collection(\App\User::orderBy('name', 'ASC')->get());
+            $query = User::with('nursery')->with('networks')->orderBy('users.name', 'asc');
         }
-
-        return response()->json($collection);
+    
+       /* $query->join('networks', 'users.id', '=', 'owner_id');
+        $query->join('nurseries', 'networks.id', '=', 'network_id');*/
+    
+        /*if ($nursery) {
+            $query->where('nurseries.id', '=', $nursery);
+        }
+        
+        if ($network) {
+            $query->where('networks.id', '=', $network);
+        }
+        
+        if ($request->exists('filter')) {
+            $query->where(function($q) use($request) {
+                $value = "%{$request->filter}%";
+                $q->where('networks.name', 'like', $value)
+                    ->orWhere('nurseries.name', 'like', $value)
+                    ->orWhere('users.name', 'like', $value);
+            });
+        }*/
+    
+        $perPage = $request->has('per_page') ? (int) $request->per_page : null;
+    
+        $data = $query->paginate($perPage);
+    
+        return response()->json($data);
     }
 
     /**

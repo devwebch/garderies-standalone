@@ -35,8 +35,6 @@ class NurseryController extends Controller
         $data = $query->withCount('users')->paginate($perPage);
     
         return response()->json($data);
-        
-        return NurseryResource::collection(\App\Nursery::orderBy('name')->get());
     }
 
     /**
