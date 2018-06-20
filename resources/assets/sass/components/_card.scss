@@ -9,6 +9,14 @@
   }
   .card-body {
     background: #f6f9fc;
+
+    .no-bullets {
+      padding: 10px 0;
+
+      li {
+        list-style: none;
+      }
+    }
   }
 
   .pagination {
