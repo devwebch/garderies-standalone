@@ -20,7 +20,23 @@
         </div>
     </network-show>
 
-    <users :network="{{$network->id}}"></users>
+    <my-vuetable title="Employés" api-url="/api/users?nursery=0&network={{$network->id}}" :fields="[{
+              name: '__slot:userlink',
+              sortField: 'users.name',
+              title: 'Nom et prénom'
+            }, {
+              name: 'phone',
+              sortField: 'phone',
+              title: 'Téléphone'
+            }, {
+              name: 'email',
+              sortField: 'email',
+              title: 'E-mail'
+            }, {
+              name: '__slot:nurserylinkrelation',
+              sortField: 'nurseries.name',
+              title: 'Etablissement'
+            }]"></my-vuetable>
 @endsection
 
 @section('nav-lateral')

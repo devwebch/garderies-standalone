@@ -29,6 +29,14 @@ class UserController extends Controller
             ->join('nurseries', 'nurseries.id', '=', 'nursery_id')
             ->where('users.id', '!=', 1);
     
+        if ($nursery) {
+            $users->where('nurseries.id', '=', $nursery);
+        }
+        
+        if ($network) {
+            $users->where('networks.id', '=', $network);
+        }
+        
         if ($request->exists('filter')) {
             $users->where(function($q) use($request) {
                 $value = "%{$request->filter}%";

@@ -1,5 +1,5 @@
 <template>
-    <div class="card card-default">
+    <div class="card card-default mb-4">
         <div class="card-header bg-dark text-white"><div class="row"><div class="col-md-6">{{this.title}}</div><div class="col-md-6"><filter-bar></filter-bar></div></div></div>
         <div class="card-body">
             <vuetable ref="vuetable"

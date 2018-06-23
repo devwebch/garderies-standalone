@@ -20,8 +20,24 @@
                     <p><strong>E-mail :</strong> {{$nursery->email}}</p>
                 </div>
             </div>
-
-            <users :nursery="{{$nursery->id}}"></users>
+    
+            <my-vuetable title="Employés" api-url="/api/users?nursery={{$nursery->id}}&network=0" :fields="[{
+              name: '__slot:userlink',
+              sortField: 'users.name',
+              title: 'Nom et prénom'
+            }, {
+              name: 'phone',
+              sortField: 'phone',
+              title: 'Téléphone'
+            }, {
+              name: 'email',
+              sortField: 'email',
+              title: 'E-mail'
+            }, {
+              name: '__slot:networklinkrelation',
+              sortField: 'networks.name',
+              title: 'Réseaux'
+            }]"></my-vuetable>
 
             <div class="card card-default">
                 <div class="card-header">Remplacements</div>
