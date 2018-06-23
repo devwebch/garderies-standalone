@@ -8,6 +8,7 @@ use App\Nursery;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -21,37 +22,34 @@ class UserController extends Controller
         $nursery = $request->nursery;
         $network = $request->network;
     
+        $users = DB::table('users')
+            ->select(DB::raw('users.*, networks.id as network_id, networks.name as network_name, nurseries.id as nursery_id, nurseries.name as nursery_name'))
+            ->join('network_user', 'users.id', '=', 'user_id')
+            ->join('networks', 'networks.id', '=', 'network_id')
+            ->join('nurseries', 'nurseries.id', '=', 'nursery_id')
+            ->where('users.id', '!=', 1);
+    
+        if ($request->exists('filter')) {
+            $users->where(function($q) use($request) {
+                $value = "%{$request->filter}%";
+                $q->where('users.name', 'like', $value)
+                    ->orWhere('users.email', 'like', $value)
+                    ->orWhere('users.phone', 'like', $value)
+                    ->orWhere('networks.name', 'like', $value)
+                    ->orWhere('nurseries.name', 'like', $value);
+            });
+        }
+    
         if ($request->get('sort')) {
             list($sortCol, $sortDir) = explode('|', $request->get('sort'));
-            $query = User::with('nursery')->with('networks')->orderBy($sortCol, $sortDir);
+            $users->orderBy($sortCol, $sortDir);
         } else {
-            $query = User::with('nursery')->with('networks')->orderBy('users.name', 'asc');
-        }
-    
-       /* $query->join('networks', 'users.id', '=', 'owner_id');
-        $query->join('nurseries', 'networks.id', '=', 'network_id');*/
-    
-        /*if ($nursery) {
-            $query->where('nurseries.id', '=', $nursery);
+            $users->orderBy('users.name', 'asc');
         }
         
-        if ($network) {
-            $query->where('networks.id', '=', $network);
-        }
-        
-        if ($request->exists('filter')) {
-            $query->where(function($q) use($request) {
-                $value = "%{$request->filter}%";
-                $q->where('networks.name', 'like', $value)
-                    ->orWhere('nurseries.name', 'like', $value)
-                    ->orWhere('users.name', 'like', $value);
-            });
-        }*/
-    
         $perPage = $request->has('per_page') ? (int) $request->per_page : null;
-    
-        $data = $query->paginate($perPage);
-    
+        $data = $users->paginate($perPage);
+        
         return response()->json($data);
     }
 

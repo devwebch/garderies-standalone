@@ -29,11 +29,11 @@
                 </template>
 
                 <template slot="networklinkrelation" slot-scope="props">
-                    <a :href="'/networks/' + props.rowData.networks[0].id">{{props.rowData.networks[0].name}}</a>
+                    <a :href="'/networks/' + props.rowData.networks_id">{{props.rowData.network_name}}</a>
                 </template>
 
                 <template slot="nurserylinkrelation" slot-scope="props">
-                    <a :href="'/nurseries/' + props.rowData.nursery.id">{{props.rowData.nursery.name}}</a>
+                    <a :href="'/nurseries/' + props.rowData.nursery_id">{{props.rowData.nursery_name}}</a>
                 </template>
 
                 <template slot="ownerlink" slot-scope="props">
