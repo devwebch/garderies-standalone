@@ -3,7 +3,7 @@
 @section('title', 'Logiciels de gestion de garderie')
 
 @section('content')
-    <div class="alert alert-primary alert-guided-tour">
+    <div class="alert alert-primary alert-guided-tour" style="display: none;">
         Nouvel utilisateur ? Suivez la visite guidée pour découvrir en quoi <em>Garderies</em> peut vous simplifier la gestion de vos structures d'accueil.
         <a href="{{config('app.url')}}/?{{str_random(5)}}#tour">Démarrer la visite</a>
     </div>
@@ -13,9 +13,9 @@
             <div class="card card-default">
                 <div class="card-body">
                     <div class="widget-count v-step-0">
-                        <h3>Garderies dans votre réseau</h3>
+                        <div class="icon"><i class="fas fa-sitemap"></i></div>
                         <div class="number">{{$count_nursery}}</div>
-                        <a href="{{route('nurseries.index')}}">Gérer les garderies</a>
+                        <h3 class="text-muted">Garderies dans votre réseau</h3>
                     </div>
                 </div>
             </div>
@@ -24,9 +24,9 @@
             <div class="card card-default">
                 <div class="card-body">
                     <div class="widget-count v-step-1">
-                        <h3>Nombre d'employés</h3>
+                        <div class="icon"><i class="fas fa-users"></i></div>
                         <div class="number">{{$count_user}}</div>
-                        <a href="{{route('users.index')}}">Gérer les employés</a>
+                        <h3 class="text-muted">Nombre d'employés</h3>
                     </div>
                 </div>
             </div>
@@ -35,26 +35,28 @@
             <div class="card card-default">
                 <div class="card-body">
                     <div class="widget-count v-step-2">
-                        <h3>Remplacements ce mois</h3>
+                        <div class="icon"><i class="fas fa-user-clock"></i></div>
                         <div class="number">{{$count_booking}}</div>
-                        <a href="{{route('bookings.index')}}">Gérer les remplacements</a>
+                        <h3 class="text-muted">Remplacements ce mois</h3>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-6 mb-4">
             <div class="card card-default">
+                <div class="card-header">Remplacements / disponibilités</div>
                 <div class="card-body">
                     <div class="v-step-3" style="height: 400px;">{!! $chartBookings->container() !!}</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <div class="card card-default">
+                <div class="card-header">Remplacements</div>
                 <div class="card-body">
-                    <div class="">{!! $topList->topReplacements() !!}</div>
+                    <div class="">{!! $topList->topReplacements(7) !!}</div>
                 </div>
             </div>
         </div>

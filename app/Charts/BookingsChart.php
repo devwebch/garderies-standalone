@@ -40,10 +40,10 @@ class BookingsChart extends Chart
 
         $this->dataset('Remplacements', 'line', $monthly_bookings_dataset)
             ->options([
-                'backgroundColor'       => '#33669959',
-                'borderColor'           => '#336699',
-                'pointBackgroundColor'  => '#336699',
-                'pointBorderColor'      => '#336699',
+                'backgroundColor'       => '#20aee390',
+                'borderColor'           => '#20aee3',
+                'pointBackgroundColor'  => '#20aee3',
+                'pointBorderColor'      => '#20aee3',
                 'pointStyle'            => 'circle',
                 'borderWidth'           => 3,
                 'lineTension'           => 0.3
@@ -61,7 +61,7 @@ class BookingsChart extends Chart
             ]);
 
         $this->options([
-            'animation' => ['duration' => 0],
+            'animation' => ['duration' => 1000],
             'layout'    => [
                 'padding' => [
                     'top'       => 10,
@@ -72,8 +72,8 @@ class BookingsChart extends Chart
             ],
             'elements' => [
                 'point' => [
-                    'radius' => 5,
-                    'hoverRadius' => 8,
+                    'radius' => 2,
+                    'hoverRadius' => 5,
                     'hitRadius' => 10,
                 ]
             ],
