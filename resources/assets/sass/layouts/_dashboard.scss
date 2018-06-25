@@ -20,6 +20,19 @@
       line-height: 1.4em;
     }
   }
+
+  .card--nurseries {
+    border-bottom: 4px solid #24d2b5;
+    .icon { color: #24d2b5; }
+  }
+  .card--employees {
+    border-bottom: 4px solid #6772e5;
+    .icon { color: #6772e5; }
+  }
+  .card--substitutes {
+    border-bottom: 4px solid #ff5c6c;
+    .icon { color: #ff5c6c; }
+  }
 }
 
 // Small devices (landscape phones, 576px and up)

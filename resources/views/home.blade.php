@@ -10,7 +10,7 @@
 
     <div class="row mb-4 dashboard__summary">
         <div class="col-md-4">
-            <div class="card card-default">
+            <div class="card card--nurseries card-default">
                 <div class="card-body">
                     <div class="widget-count v-step-0">
                         <div class="icon"><i class="fas fa-sitemap"></i></div>
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card card-default">
+            <div class="card card--employees card-default">
                 <div class="card-body">
                     <div class="widget-count v-step-1">
                         <div class="icon"><i class="fas fa-users"></i></div>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card card-default">
+            <div class="card card--substitutes card-default">
                 <div class="card-body">
                     <div class="widget-count v-step-2">
                         <div class="icon"><i class="fas fa-user-clock"></i></div>
