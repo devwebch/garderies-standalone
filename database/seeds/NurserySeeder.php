@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
 
 class NurserySeeder extends Seeder
 {
@@ -9,7 +10,7 @@ class NurserySeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
         $nurseries = [
             "Croquelune",
@@ -43,7 +44,12 @@ class NurserySeeder extends Seeder
         for ($i = 1; $i <= 15; $i++) {
             DB::table('nurseries')->insert([
                 'name'          => $nurseries[$i],
-                'created_at'    => \Carbon\Carbon::now()
+                'created_at'    => \Carbon\Carbon::now(),
+                'address'       => $faker->streetAddress,
+                'post_code'     => rand(1000, 1500),
+                'city'          => $faker->city,
+                'email'         => $faker->companyEmail,
+                'phone'         => $faker->phoneNumber
             ]);
         }
     }
