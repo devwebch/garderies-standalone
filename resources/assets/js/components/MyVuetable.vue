@@ -101,7 +101,7 @@
             return {
                 css: {
                     table: {
-                        tableClass: 'table table-borderless table-striped table-responsive-lg',
+                        tableClass: 'table table-borderless table-striped table-responsive-xs',
                         ascendingIcon: 'fa fa-chevron-up',
                         descendingIcon: 'fa fa-chevron-down'
                     },
