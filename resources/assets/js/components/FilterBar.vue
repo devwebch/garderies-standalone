@@ -1,10 +1,12 @@
 <template>
 
       <form class="form-inline float-right">
-          <div class="form-group mb-2 mr-sm-2 mb-sm-0">
-              <input type="search" v-model="filterText" class="form-control form-control-sm" @keyup.enter="doFilter" placeholder="">
+          <div class="input-group form-group">
+              <input type="search" v-model="filterText" class="form-control form-control-sm" aria-describedby="basic-addon2" @keyup.enter="doFilter">
+              <div class="input-group-append">
+                  <button class="btn btn-sm btn-outline-secondary" type="button" @click.prevent="doFilter"><i class="fa fa-search text-light"></i></button>
+              </div>
           </div>
-          <button class="btn btn-primary btn-sm" @click.prevent="doFilter">Recherche</button>
       </form>
 </template>
 

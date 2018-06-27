@@ -1,6 +1,6 @@
 <template>
     <div class="card card-default mb-4">
-        <div class="card-header bg-dark text-white"><div class="row"><div class="col-md-6">{{this.title}}</div><div class="col-md-6"><filter-bar></filter-bar></div></div></div>
+        <div class="card-header bg-dark text-white"><div class="row"><div class="col-sm-12 col-md-6">{{this.title}}</div><div class="col-sm-12 col-md-6"><filter-bar></filter-bar></div></div></div>
         <div class="card-body">
             <vuetable ref="vuetable"
                       :api-url="this.apiUrl"
@@ -24,6 +24,18 @@
                     <a :href="'/users/' + props.rowData.id">{{props.rowData.name}}</a>
                 </template>
 
+                <template slot="userbookinglink" slot-scope="props">
+                    <a :href="'/users/' + props.rowData.user_id">{{props.rowData.user_name}}</a>
+                </template>
+
+                <template slot="substitutelink" slot-scope="props">
+                    <a :href="'/users/' + props.rowData.substitute_id">{{props.rowData.substitute_name}}</a>
+                </template>
+
+                <template slot="bookinglink" slot-scope="props">
+                    <a :href="'/bookings/' + props.rowData.id">{{formatDate(props.rowData.start)}}</a>
+                </template>
+
                 <template slot="ownerlink" slot-scope="props">
                     <a :href="'/users/' + props.rowData.owner.id">{{props.rowData.owner.name}}</a>
                 </template>
@@ -34,10 +46,6 @@
 
                 <template slot="nurserylinkrelation" slot-scope="props">
                     <a :href="'/nurseries/' + props.rowData.nursery_id">{{props.rowData.nursery_name}}</a>
-                </template>
-
-                <template slot="ownerlink" slot-scope="props">
-                    <a :href="'/users/' + props.rowData.owner.id">{{props.rowData.owner.name}}</a>
                 </template>
 
             </vuetable>
@@ -79,6 +87,9 @@
             },
             title: {
                 type: String
+            },
+            statuses: {
+                type: Object
             }
         },
         components: {
@@ -121,18 +132,30 @@
             allcap (value) {
                 return value.toUpperCase()
             },
-            genderLabel (value) {
-                return value === 'M'
-                    ? '<span class="label label-success"><i class="glyphicon glyphicon-star"></i> Male</span>'
-                    : '<span class="label label-danger"><i class="glyphicon glyphicon-heart"></i> Female</span>'
+            statusLabel (value) {
+                console.log(this.statuses['approved']);
+                switch (value) {
+                    case this.statuses['pending']:
+                        return '<span class="badge badge-info">En attente</span>'
+                    case this.statuses['approved']:
+                        return '<span class="badge badge-success">Validé</span>'
+                    case this.statuses['archived']:
+                        return '<span class="badge badge-dark">Archivé</span>'
+                }
+
             },
             formatNumber (value) {
                 return accounting.formatNumber(value, 2)
             },
-            formatDate (value, fmt = 'D MMM YYYY') {
+            formatDate (value, fmt = 'DD.MM.YYYY') {
                 return (value == null)
                     ? ''
                     : moment(value, 'YYYY-MM-DD').format(fmt)
+            },
+            formatTime (value, fmt = 'HH:mm') {
+                return (value == null)
+                    ? ''
+                    : moment(value, 'YYYY-MM-DD HH:mm:ss').format(fmt)
             },
             onPaginationData (paginationData) {
                 this.$refs.pagination.setPaginationData(paginationData)

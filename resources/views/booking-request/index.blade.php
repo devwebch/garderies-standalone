@@ -3,6 +3,7 @@
 @section('title', 'Bookings requests')
 
 @section('content')
+    
     <div class="card card-default mb-4">
         <div class="card-header bg-dark text-white">Demandes de remplaçements</div>
         <div class="card-body">
