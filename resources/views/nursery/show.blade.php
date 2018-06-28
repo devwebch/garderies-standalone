@@ -18,6 +18,7 @@
                     <p><strong>Localité :</strong> {{$nursery->post_code . ', ' ?? ''}}{{$nursery->city}}</p>
                     <p><strong>Téléphone :</strong> {{$nursery->phone}}</p>
                     <p><strong>E-mail :</strong> {{$nursery->email}}</p>
+                    <p><strong>Réseau :</strong> {{$nursery->network->name ?? '-'}}</p>
                 </div>
             </div>
     

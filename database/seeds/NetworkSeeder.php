@@ -13,11 +13,13 @@ class NetworkSeeder extends Seeder
     {
         DB::table('networks')->insert([
             'name'      => 'Ajerco',
-            'owner_id'  => 1
+            'owner_id'  => 1,
+            'color'     => '#2196F3',
         ]);
         DB::table('networks')->insert([
             'name'      => 'Ajoval',
-            'owner_id'  => 1
+            'owner_id'  => 1,
+            'color'     => '#8BC34A',
         ]);
 
         // Seeds the network_user table

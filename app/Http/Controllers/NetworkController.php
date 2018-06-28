@@ -77,7 +77,8 @@ class NetworkController extends Controller
      */
     public function update(Request $request, Network $network)
     {
-        $network->name = $request->name;
+        $network->name      = $request->name;
+        $network->color     = strtolower($request->color);
         $network->save();
 
         return redirect()->route('networks.index');

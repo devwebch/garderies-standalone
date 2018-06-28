@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Network;
 use App\Nursery;
 use Illuminate\Http\Request;
 
@@ -73,7 +74,8 @@ class NurseryController extends Controller
      */
     public function edit(Nursery $nursery)
     {
-        return view('nursery.edit', ['nursery' => $nursery]);
+        $networks = Network::all();
+        return view('nursery.edit', ['nursery' => $nursery, 'networks' => $networks]);
     }
 
     /**
@@ -87,12 +89,13 @@ class NurseryController extends Controller
     {
         // TODO: Add validation
 
-        $nursery->name      = $request->name;
-        $nursery->address   = $request->address;
-        $nursery->post_code = $request->post_code;
-        $nursery->city      = $request->city;
-        $nursery->email     = $request->email;
-        $nursery->phone     = $request->phone;
+        $nursery->name          = $request->name;
+        $nursery->address       = $request->address;
+        $nursery->post_code     = $request->post_code;
+        $nursery->city          = $request->city;
+        $nursery->email         = $request->email;
+        $nursery->phone         = $request->phone;
+        $nursery->network_id    = $request->network;
         $nursery->save();
 
         return redirect()->route('nurseries.index')->with('status', 'Nursery mise à jour.');

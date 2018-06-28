@@ -30,6 +30,7 @@
     "fullcalendar": "^3.9.0",
     "sweetalert2": "^7.20.10",
     "vue-flatpickr-component": "^7.0.2",
+    "vue-swatches": "^1.0.1",
     "vue-tour": "^1.0.1"
   }
 }

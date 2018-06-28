@@ -37,6 +37,17 @@
                         <input type="text" class="form-control" name="phone" value="{{$nursery->phone}}">
                     </div>
                 </div>
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="network">Réseau :</label>
+                        <select name="network" class="form-control">
+                            <option value="">Sélectionner...</option>
+                            @foreach($networks as $network)
+                                <option value="{{$network->id}}" {{(optional($nursery->network)->id == $network->id) ? 'selected' : ''}}>{{$network->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
 
                 <button class="btn btn-primary" type="submit">Enregistrer</button>
             </form>

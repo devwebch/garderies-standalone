@@ -11,7 +11,8 @@
               name: 'users_count',
               sortField: 'users_count',
               title: 'Employés'
-            }]"></my-vuetable>
+            }]">
+    </my-vuetable>
 @endsection
 
 @section('nav-lateral')

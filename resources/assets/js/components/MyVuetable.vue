@@ -11,6 +11,7 @@
                       detail-row-component="my-detail-row"
                       :append-params="moreParams"
                       @vuetable:pagination-data="onPaginationData"
+                      no-data-template="Aucune donnée disponible"
             >
                 <template slot="nurserylink" slot-scope="props">
                     <a :href="'/nurseries/' + props.rowData.id">{{props.rowData.name}}</a>
@@ -50,9 +51,7 @@
 
             </vuetable>
             <div class="vuetable-pagination">
-                <vuetable-pagination-info ref="paginationInfo"
-                                          info-class="pagination-info"
-                ></vuetable-pagination-info>
+                <vuetable-pagination-info ref="paginationInfo" info-class="pagination-info" info-template="Affichage des données de {from} à {to} sur un total de {total}."></vuetable-pagination-info>
                 <vuetable-pagination ref="pagination"
                                      :css="css.pagination"
                                      @vuetable-pagination:change-page="onChangePage"
@@ -128,6 +127,7 @@
                 moreParams: {}
             }
         },
+        mounted() {},
         methods: {
             allcap (value) {
                 return value.toUpperCase()
@@ -169,11 +169,11 @@
             'filter-set' (filterText) {
                 this.moreParams = {
                     filter: filterText
-                }
+                };
                 Vue.nextTick( () => this.$refs.vuetable.refresh() )
             },
             'filter-reset' () {
-                this.moreParams = {}
+                this.moreParams = {};
                 Vue.nextTick( () => this.$refs.vuetable.refresh() )
             }
         }

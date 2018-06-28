@@ -32,6 +32,7 @@ Vue.component('booking-request-show', require('./components/BookingRequestShowCo
 Vue.component('user-show', require('./components/UserShowComponent'));
 Vue.component('nursery-show', require('./components/NurseryShowComponent'));
 Vue.component('network-show', require('./components/NetworkShowComponent'));
+Vue.component('network-edit', require('./components/NetworkEditComponent'));
 
 
 Vue.component('my-vuetable', require('./components/MyVuetable.vue'));

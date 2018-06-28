@@ -17,6 +17,7 @@ class CreateNetworksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('owner_id');
+            $table->string('color', 7)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
