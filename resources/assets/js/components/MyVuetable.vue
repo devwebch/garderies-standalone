@@ -145,6 +145,8 @@
                         return '<span class="badge badge-info">En attente</span>'
                     case this.statuses['approved']:
                         return '<span class="badge badge-success">Validé</span>'
+                    case this.statuses['denied']:
+                        return '<span class="badge badge-danger">Refusé</span>'
                     case this.statuses['archived']:
                         return '<span class="badge badge-dark">Archivé</span>'
                 }

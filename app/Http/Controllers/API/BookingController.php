@@ -18,21 +18,19 @@ class BookingController extends Controller
      */
     public function index(Request $request)
     {
+        $status = $request->status;
+        
         $bookings = DB::table('bookings')
             ->select(DB::raw('DATE_FORMAT(bookings.start, \'%H:%i\') as start_time, DATE_FORMAT(bookings.end, \'%H:%i\') as end_time, bookings.*, users.id as user_id, users.name as user_name, substitutes.id as substitute_id, substitutes.name as substitute_name, nurseries.id as nursery_id, nurseries.name as nursery_name'))
             ->join('users', 'users.id', '=', 'user_id')
             ->join('users as substitutes', 'substitutes.id', '=', 'substitute_id')
             ->join('nurseries', 'nurseries.id', '=', 'bookings.nursery_id');
     
-        /*if ($nursery) {
-            $users->where('nurseries.id', '=', $nursery);
+        if ($status) {
+            $bookings->where('bookings.status', '=', $status);
+        } else {
+            $bookings->where('start', '>=', now());
         }
-    
-        if ($network) {
-            $users->where('networks.id', '=', $network);
-        }*/
-    
-        $bookings->where('start', '>=', now());
     
         if ($request->exists('filter')) {
             $bookings->where(function($q) use($request) {
