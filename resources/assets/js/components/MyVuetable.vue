@@ -41,8 +41,14 @@
                     <a :href="'/users/' + props.rowData.owner.id">{{props.rowData.owner.name}}</a>
                 </template>
 
-                <template slot="networklinkrelation" slot-scope="props">
+                <template slot="networkslinkrelation" slot-scope="props">
                     <a :href="'/networks/' + props.rowData.networks_id">{{props.rowData.network_name}}</a>
+                </template>
+
+                <template slot="networklinkrelation" slot-scope="props" v-if="props.rowData.network">
+                    <a :href="'/networks/' + props.rowData.network_id">
+                        {{props.rowData.network.name}}
+                    </a>
                 </template>
 
                 <template slot="nurserylinkrelation" slot-scope="props">

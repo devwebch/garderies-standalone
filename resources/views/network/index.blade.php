@@ -11,7 +11,9 @@
             }, {
               name: 'users_count',
               sortField: 'users_count',
-              title: 'Employés'
+              title: 'Employés',
+              titleClass: 'text-right',
+              dataClass: 'text-right'
             }, {
               name: '__slot:ownerlink',
               sortField: 'users.name',

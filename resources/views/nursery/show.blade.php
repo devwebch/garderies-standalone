@@ -35,7 +35,7 @@
               sortField: 'email',
               title: 'E-mail'
             }, {
-              name: '__slot:networklinkrelation',
+              name: '__slot:networkslinkrelation',
               sortField: 'networks.name',
               title: 'Réseaux'
             }]"></my-vuetable>

@@ -20,7 +20,7 @@
               sortField: 'nurseries.name',
               title: 'Etablissement'
             }, {
-              name: '__slot:networklinkrelation',
+              name: '__slot:networkslinkrelation',
               sortField: 'networks.name',
               title: 'Réseaux'
             }]"></my-vuetable>

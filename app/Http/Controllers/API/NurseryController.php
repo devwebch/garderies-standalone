@@ -12,15 +12,16 @@ class NurseryController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
         if ($request->get('sort')) {
             list($sortCol, $sortDir) = explode('|', $request->get('sort'));
-            $query = Nursery::orderBy($sortCol, $sortDir);
+            $query = Nursery::with('network')->orderBy($sortCol, $sortDir);
         } else {
-            $query = Nursery::orderBy('nurseries.name', 'asc');
+            $query = Nursery::with('network')->orderBy('nurseries.name', 'asc');
         }
         
         if ($request->exists('filter')) {
