@@ -9,7 +9,7 @@
     </div>
 
     <div class="row mb-4 dashboard__summary">
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2 mb-sm-0">
             <div class="card card--nurseries card-default">
                 <div class="card-body">
                     <div class="widget-count v-step-0">
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2 mb-sm-0">
             <div class="card card--employees card-default">
                 <div class="card-body">
                     <div class="widget-count v-step-1">
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2 mb-sm-0">
             <div class="card card--substitutes card-default">
                 <div class="card-body">
                     <div class="widget-count v-step-2">

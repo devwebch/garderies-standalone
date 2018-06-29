@@ -36,10 +36,40 @@
 }
 
 // Small devices (landscape phones, 576px and up)
-@include media-breakpoint-up(sm) {}
+@include media-breakpoint-up(sm) {
+  .dashboard__summary {
+    .widget-count {
+      h3 {
+        font-size: .8em;
+      }
+      .icon {
+        font-size: 15px;
+        margin-right: 10px;
+      }
+      .number {
+        font-size: 1.3em;
+      }
+    }
+  }
+}
 // Medium devices (tablets, 768px and up)
 @include media-breakpoint-up(md) {}
 // Large devices (desktops, 992px and up)
-@include media-breakpoint-up(lg) {}
+@include media-breakpoint-up(lg) {
+  .dashboard__summary {
+    .widget-count {
+      h3 {
+        font-size: 1em;
+      }
+      .icon {
+        font-size: 25px;
+        margin-right: 20px;
+      }
+      .number {
+        font-size: 1.4em;
+      }
+    }
+  }
+}
 // Extra large devices (large desktops, 1200px and up)
 @include media-breakpoint-up(xl) {}
