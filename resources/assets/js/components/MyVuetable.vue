@@ -51,9 +51,7 @@
                 </template>
 
                 <template slot="networklinkrelation" slot-scope="props" v-if="props.rowData.network">
-                    <a :href="'/networks/' + props.rowData.network_id">
-                        {{props.rowData.network.name}}
-                    </a>
+                    <a :href="'/networks/' + props.rowData.network_id">{{props.rowData.network.name}}</a>
                 </template>
 
                 <template slot="nurserylinkrelation" slot-scope="props">
@@ -78,34 +76,24 @@
     import Vuetable from 'vuetable-2/src/components/Vuetable'
     import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
     import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
-    import Vue from 'vue'
     import VueEvents from 'vue-events'
     import CustomActions from './CustomActions'
     import FilterBar from './FilterBar'
 
-    Vue.use(VueEvents)
-    Vue.component('custom-actions', CustomActions)
-    Vue.component('filter-bar', FilterBar)
-
     export default {
         props: {
-            fields: {
-                type: Array
-            },
-            apiUrl: {
-                type: String
-            },
-            title: {
-                type: String
-            },
-            statuses: {
-                type: Object
-            }
+            fields: Array,
+            apiUrl:  String,
+            title: String,
+            statuses: Object
         },
         components: {
             Vuetable,
             VuetablePagination,
             VuetablePaginationInfo,
+            VueEvents,
+            'custom-actions': CustomActions,
+            'filter-bar': FilterBar
         },
         data () {
             return {
@@ -147,18 +135,18 @@
                 console.log(this.statuses['approved']);
                 switch (value) {
                     case this.statuses['pending']:
-                        return '<span class="badge badge-info">En attente</span>'
+                        return '<span class="badge badge-info">En attente</span>';
                     case this.statuses['approved']:
-                        return '<span class="badge badge-success">Validé</span>'
+                        return '<span class="badge badge-success">Validé</span>';
                     case this.statuses['denied']:
-                        return '<span class="badge badge-danger">Refusé</span>'
+                        return '<span class="badge badge-danger">Refusé</span>';
                     case this.statuses['archived']:
-                        return '<span class="badge badge-dark">Archivé</span>'
+                        return '<span class="badge badge-dark">Archivé</span>';
                 }
 
             },
             formatNumber (value) {
-                return accounting.formatNumber(value, 2)
+                return accounting.formatNumber(value, 2);
             },
             formatDate (value, fmt = 'DD.MM.YYYY') {
                 return (value == null)
@@ -171,11 +159,11 @@
                     : moment(value, 'YYYY-MM-DD HH:mm:ss').format(fmt)
             },
             onPaginationData (paginationData) {
-                this.$refs.pagination.setPaginationData(paginationData)
-                this.$refs.paginationInfo.setPaginationData(paginationData)
+                this.$refs.pagination.setPaginationData(paginationData);
+                this.$refs.paginationInfo.setPaginationData(paginationData);
             },
             onChangePage (page) {
-                this.$refs.vuetable.changePage(page)
+                this.$refs.vuetable.changePage(page);
             },
         },
         events: {
