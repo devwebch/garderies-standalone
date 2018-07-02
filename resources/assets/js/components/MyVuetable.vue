@@ -107,8 +107,8 @@
                         wrapperClass: 'pagination',
                         activeClass: 'active',
                         disabledClass: 'disabled',
-                        pageClass: 'page',
-                        linkClass: 'link',
+                        pageClass: 'btn btn-light',
+                        linkClass: 'btn btn-light',
                         icons: {
                             first: 'fa fa-step-backward',
                             prev: 'fa fa-chevron-left',
