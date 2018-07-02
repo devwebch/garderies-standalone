@@ -99,7 +99,7 @@
             return {
                 css: {
                     table: {
-                        tableClass: 'table table-borderless table-striped table-responsive-xs',
+                        tableClass: 'table table-borderless table-striped table-responsive-sm',
                         ascendingIcon: 'fa fa-chevron-up',
                         descendingIcon: 'fa fa-chevron-down'
                     },
