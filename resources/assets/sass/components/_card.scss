@@ -22,8 +22,7 @@
   }
 
   .pagination {
-    margin: 0;
-    float: right;
+    margin: 0 auto;
     display: table;
 
     a {
@@ -35,3 +34,19 @@
     }
   }
 }
+
+// Small devices (landscape phones, 576px and up)
+@include media-breakpoint-up(sm) {}
+// Medium devices (tablets, 768px and up)
+@include media-breakpoint-up(md) {
+  .card {
+    .pagination {
+      float: right;
+      margin: 0;
+    }
+  }
+}
+// Large devices (desktops, 992px and up)
+@include media-breakpoint-up(lg) {}
+// Extra large devices (large desktops, 1200px and up)
+@include media-breakpoint-up(xl) {}
