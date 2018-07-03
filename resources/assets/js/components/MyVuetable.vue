@@ -61,10 +61,10 @@
             </vuetable>
             <div class="vuetable-pagination">
                 <vuetable-pagination-info ref="paginationInfo" info-class="pagination-info" info-template="Affichage des données de {from} à {to} sur un total de {total}."></vuetable-pagination-info>
-                <vuetable-pagination ref="pagination"
+                <vuetable-pagination-bootstrap ref="pagination"
                                      :css="css.pagination"
                                      @vuetable-pagination:change-page="onChangePage"
-                ></vuetable-pagination>
+                ></vuetable-pagination-bootstrap>
             </div>
         </div>
     </div>
@@ -74,7 +74,7 @@
     import accounting from 'accounting'
     import moment from 'moment'
     import Vuetable from 'vuetable-2/src/components/Vuetable'
-    import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
+    import VuetablePaginationBootstrap from './VuetablePaginationBootstrap'
     import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
     import VueEvents from 'vue-events'
     import CustomActions from './CustomActions'
@@ -89,7 +89,7 @@
         },
         components: {
             Vuetable,
-            VuetablePagination,
+            VuetablePaginationBootstrap,
             VuetablePaginationInfo,
             VueEvents,
             'custom-actions': CustomActions,
@@ -107,8 +107,8 @@
                         wrapperClass: 'pagination',
                         activeClass: 'active',
                         disabledClass: 'disabled',
-                        pageClass: 'btn btn-light',
-                        linkClass: 'btn btn-light',
+                        pageClass: 'btn btn-sm btn-light',
+                        linkClass: 'btn btn-sm btn-light',
                         icons: {
                             first: 'fa fa-step-backward',
                             prev: 'fa fa-chevron-left',
