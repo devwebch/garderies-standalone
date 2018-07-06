@@ -20,10 +20,18 @@
                             <a href="#" v-on:click.prevent="deleteUser({{$user->id}})" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Supprimer</a>
                         </div>
                         <ul class="list-group list-group-flush text-left">
-                            <li class="list-group-item text-muted"><strong>Téléphone :</strong><span class="m-l-15">{{$user->phone}}</span></li>
-                            <li class="list-group-item text-muted"><strong>E-mail :</strong> <span class="m-l-15">{{$user->email}}</span></li>
-                            <li class="list-group-item text-muted"><strong>Garderie :</strong> <span class="m-l-15">{{$user->nursery->name ?? '-'}}</span></li>
-                            <li class="list-group-item text-muted"><strong>Diplôme :</strong> <span class="m-l-15">{{$user->diploma->name}}</span></li>
+                            <li class="list-group-item text-muted">
+                                <strong>Téléphone :</strong> <span>{{$user->phone}}</span>
+                            </li>
+                            <li class="list-group-item text-muted">
+                                <strong>E-mail :</strong> <span>{{$user->email}}</span>
+                            </li>
+                            <li class="list-group-item text-muted">
+                                <strong>Garderie :</strong> <span>{{$user->nursery->name ?? '-'}}</span>
+                            </li>
+                            <li class="list-group-item text-muted">
+                                <strong>Diplôme :</strong> <span>{{$user->diploma->name ?? '-'}}</span>
+                            </li>
                         </ul>
                         <div class="card-body">
                             <p class="text-left"><strong>Groupes de travail :</strong>
@@ -105,7 +113,7 @@
                                     <td>{{$booking->start->format('d.m.Y')}}</td>
                                     <td>{{$booking->start->format('H\hi')}}</td>
                                     <td>{{$booking->end->format('H\hi')}}</td>
-                                    <td><a href="{{route('nurseries.show', $booking->nursery)}}">{{$booking->nursery->name}}</a></td>
+                                    <td><a href="{{route('nurseries.show', $booking->nursery ?? 0)}}">{{$booking->nursery->name ?? '-'}}</a></td>
                                     <td>
                                         @switch($booking->status)
                                             @case(\App\Booking::STATUS_PENDING)

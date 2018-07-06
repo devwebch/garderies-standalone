@@ -56,8 +56,8 @@
                         </thead>
                         @forelse($bookings as $booking)
                             <tr>
-                                <td><a href="{{route('users.show', $booking->user->id)}}">{{$booking->user->name}}</a></td>
-                                <td><a href="{{route('users.show', $booking->substitute->id)}}">{{$booking->substitute->name}}</a></td>
+                                <td><a href="{{route('users.show', $booking->user ?? 0)}}">{{$booking->user->name ?? '-'}}</a></td>
+                                <td><a href="{{route('users.show', $booking->substitute ?? 0)}}">{{$booking->substitute->name ?? '-'}}</a></td>
                                 <td>{{$booking->start->format('d.m.Y')}}</td>
                                 <td>{{$booking->start->format('H:i')}}</td>
                                 <td>{{$booking->end->format('H:i')}}</td>

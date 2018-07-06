@@ -38,7 +38,7 @@
                     <tr>
                         <td>
                             <a href="{{route('booking-requests.show', $request)}}">
-                                {{$request->user->name}}
+                                {{$request->user->name ?? '-'}}
                             </a>
                         </td>
                         <td>
@@ -47,12 +47,14 @@
                             {{$request->start->format('H\hi')}} <i class="fas fa-arrow-right"></i> {{$request->end->format('H\hi')}}
                         </td>
                         <td>
-                            {{$request->substitute->name}}
+                            {{$request->substitute->name ?? '-'}}
                         </td>
                         <td>
-                            {{$request->availability->start->format('H\hi')}}
-                            <i class="fas fa-arrow-right"></i>
-                            {{$request->availability->end->format('H\hi')}}
+                            @if ($request->availability)
+                                {{$request->availability->start->format('H\hi')}}
+                                <i class="fas fa-arrow-right"></i>
+                                {{$request->availability->end->format('H\hi')}}
+                            @endif
                         </td>
                         <td>
                             @switch($request->status)
