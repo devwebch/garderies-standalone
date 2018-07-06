@@ -69,7 +69,10 @@
                     <tbody>
                     <tr v-for="item in availabilities">
                         <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
-                        <td><a :href="item.user.link" target="_blank">{{item.user.name}}</a></td>
+                        <td>
+                            <a v-if="item.user" :href="item.user.link" target="_blank">{{item.user.name}}</a>
+                            <span v-if="!item.user" class="text-muted">Aucun</span>
+                        </td>
                         <td><i class="fas fa-calendar d-none d-sm-inline"></i> {{item.start}}</td>
                         <td class="text-truncate">{{item.start_hour}} <i class="fas fa-arrow-right"></i>
                             {{item.end_hour}}
@@ -80,6 +83,7 @@
                                     <span class="badge badge-info">{{network.name}}</span>
                                 </li>
                             </ul>
+                            <span v-if="!item.networks" class="text-muted">-</span>
                         </td>
                         <td class="d-none d-md-table-cell text-right">
                             <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>

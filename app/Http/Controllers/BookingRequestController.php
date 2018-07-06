@@ -14,7 +14,8 @@ class BookingRequestController extends Controller
      */
     public function index()
     {
-        $bookingRequests = BookingRequest::orderBy('start')
+        $bookingRequests = BookingRequest::with('user')
+            ->orderBy('start')
             ->orderBy('status')
             ->get();
         return view('booking-request.index', ['bookingRequests' => $bookingRequests]);

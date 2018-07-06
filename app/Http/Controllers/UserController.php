@@ -56,6 +56,7 @@ class UserController extends Controller
             ->get();
 
         $bookings = $user->bookings()
+            ->with('nursery')
             ->where('start', '>=', now())
             ->orderBy('start')
             ->get();

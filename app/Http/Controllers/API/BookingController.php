@@ -19,29 +19,35 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         $status = $request->status;
-        
-        $bookings = DB::table('bookings')
-            ->select(DB::raw('DATE_FORMAT(bookings.start, \'%H:%i\') as start_time, DATE_FORMAT(bookings.end, \'%H:%i\') as end_time, bookings.*, users.id as user_id, users.name as user_name, substitutes.id as substitute_id, substitutes.name as substitute_name, nurseries.id as nursery_id, nurseries.name as nursery_name'))
-            ->join('users', 'users.id', '=', 'user_id')
-            ->join('users as substitutes', 'substitutes.id', '=', 'substitute_id')
-            ->join('nurseries', 'nurseries.id', '=', 'bookings.nursery_id');
-    
+
+        // Retrieve bookings and their relations
+        $bookings = Booking::select(
+                'bookings.*',
+                DB::raw("DATE_FORMAT(bookings.start, '%H:%i') as start_time"),
+                DB::raw("DATE_FORMAT(bookings.end, '%H:%i') as end_time")
+            )
+            ->join('users', 'users.id', 'bookings.user_id')->with('user')
+            ->join('users as substitutes', 'substitutes.id', 'bookings.substitute_id')->with('substitute')
+            ->join('nurseries', 'nurseries.id', 'bookings.nursery_id')->with('nursery');
+
+        // Filter by status
         if ($status) {
             $bookings->where('bookings.status', '=', $status);
         } else {
             $bookings->where('start', '>=', now());
         }
-    
+
+        // Handle user search
         if ($request->exists('filter')) {
             $bookings->where(function($q) use($request) {
                 $value = "%{$request->filter}%";
-                $q->whereDate('bookings.start', Carbon::parse($request->filter))
-                    ->orWhere('users.name', 'like', $value)
+                $q->orWhere('users.name', 'like', $value)
                     ->orWhere('substitutes.name', 'like', $value)
                     ->orWhere('nurseries.name', 'like', $value);
             });
         }
-    
+
+        // Handle column sorting
         if ($request->get('sort')) {
             list($sortCol, $sortDir) = explode('|', $request->get('sort'));
             switch ($sortCol) {
@@ -58,10 +64,13 @@ class BookingController extends Controller
         } else {
             $bookings->orderBy('start', 'asc');
         }
-    
-        $perPage = $request->has('per_page') ? (int) $request->per_page : null;
-        $data = $bookings->paginate($perPage);
-    
+
+        // Pagination
+        $perPage    = $request->has('per_page') ? (int) $request->per_page : null;
+
+        // Paginate data
+        $data       = $bookings->paginate($perPage);
+
         return response()->json($data);
     }
 

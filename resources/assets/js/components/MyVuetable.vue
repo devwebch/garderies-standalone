@@ -31,11 +31,13 @@
                 </template>
 
                 <template slot="userbookinglink" slot-scope="props">
-                    <a :href="'/users/' + props.rowData.user_id">{{props.rowData.user_name}}</a>
+                    <a v-if="props.rowData.user" :href="'/users/' + props.rowData.user.id">{{props.rowData.user.name}}</a>
+                    <span v-if="!props.rowData.user" class="text-muted">Aucun</span>
                 </template>
 
                 <template slot="substitutelink" slot-scope="props">
-                    <a :href="'/users/' + props.rowData.substitute_id">{{props.rowData.substitute_name}}</a>
+                    <a v-if="props.rowData.substitute" :href="'/users/' + props.rowData.substitute.id">{{props.rowData.substitute.name}}</a>
+                    <span v-if="!props.rowData.substitute" class="text-muted">Aucun</span>
                 </template>
 
                 <template slot="bookinglink" slot-scope="props">
@@ -43,19 +45,31 @@
                 </template>
 
                 <template slot="ownerlink" slot-scope="props">
-                    <a :href="'/users/' + props.rowData.owner.id">{{props.rowData.owner.name}}</a>
+                    <a v-if="props.rowData.owner" :href="'/users/' + props.rowData.owner.id">{{props.rowData.owner.name}}</a>
+                    <span v-if="!props.rowData.owner" class="text-muted">Aucun</span>
                 </template>
 
                 <template slot="networkslinkrelation" slot-scope="props">
-                    <a :href="'/networks/' + props.rowData.networks_id">{{props.rowData.network_name}}</a>
+                    <ul class="list-inline m-0" v-if="props.rowData.networks">
+                        <li class="list-inline-item" v-for="network in props.rowData.networks">
+                            <a :href="'/networks/' + network.id">
+                                <span class="badge badge-info">{{network.name}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <span v-if="!props.rowData.networks" class="text-muted">Aucun</span>
                 </template>
 
-                <template slot="networklinkrelation" slot-scope="props" v-if="props.rowData.network">
-                    <a :href="'/networks/' + props.rowData.network_id">{{props.rowData.network.name}}</a>
+                <template slot="networklinkrelation" slot-scope="props">
+                    <a :href="'/networks/' + props.rowData.network.id" v-if="props.rowData.network">
+                        <span class="badge badge-info">{{props.rowData.network.name}}</span>
+                    </a>
+                    <span v-if="!props.rowData.network" class="text-muted">Aucun</span>
                 </template>
 
                 <template slot="nurserylinkrelation" slot-scope="props">
-                    <a :href="'/nurseries/' + props.rowData.nursery_id">{{props.rowData.nursery_name}}</a>
+                    <a v-if="props.rowData.nursery" :href="'/nurseries/' + props.rowData.nursery.id">{{props.rowData.nursery.name}}</a>
+                    <span v-if="!props.rowData.nursery" class="text-muted">Aucun</span>
                 </template>
 
             </vuetable>
@@ -132,11 +146,10 @@
                 return value.toUpperCase()
             },
             statusLabel (value) {
-                console.log(this.statuses['approved']);
                 switch (value) {
-                    case this.statuses['pending']:
+                    case this.statuses.pending:
                         return '<span class="badge badge-info">En attente</span>';
-                    case this.statuses['approved']:
+                    case this.statuses.approved:
                         return '<span class="badge badge-success">Validé</span>';
                     case this.statuses['denied']:
                         return '<span class="badge badge-danger">Refusé</span>';

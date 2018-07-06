@@ -19,14 +19,14 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        // filters to restrict users to a nursery or network
         $nursery = $request->nursery;
         $network = $request->network;
-    
-        $users = DB::table('users')
-            ->select(DB::raw('users.*, networks.id as network_id, networks.name as network_name, nurseries.id as nursery_id, nurseries.name as nursery_name'))
+
+        $users = User::select('users.*')
             ->join('network_user', 'users.id', '=', 'user_id')
-            ->join('networks', 'networks.id', '=', 'network_id')
-            ->join('nurseries', 'nurseries.id', '=', 'nursery_id')
+            ->join('networks', 'networks.id', '=', 'network_id')->with('networks')
+            ->join('nurseries', 'nurseries.id', '=', 'nursery_id')->with('nursery')
             ->where('users.id', '!=', 1);
     
         if ($nursery) {
@@ -103,6 +103,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $user->availabilities()->delete();
         $user->delete();
 
         return response()->json([

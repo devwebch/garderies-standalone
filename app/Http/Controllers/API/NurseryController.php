@@ -17,17 +17,20 @@ class NurseryController extends Controller
      */
     public function index(Request $request)
     {
+        $query = Nursery::join('networks', 'networks.id', 'nurseries.network_id')->with('network');
+
         if ($request->get('sort')) {
             list($sortCol, $sortDir) = explode('|', $request->get('sort'));
-            $query = Nursery::with('network')->orderBy($sortCol, $sortDir);
+            $query->orderBy($sortCol, $sortDir);
         } else {
-            $query = Nursery::with('network')->orderBy('nurseries.name', 'asc');
+            $query->orderBy('nurseries.name', 'asc');
         }
         
         if ($request->exists('filter')) {
             $query->where(function($q) use($request) {
                 $value = "%{$request->filter}%";
-                $q->where('nurseries.name', 'like', $value);
+                $q->where('nurseries.name', 'like', $value)
+                ->orWhere('networks.name', 'like', $value);
             });
         }
     

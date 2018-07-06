@@ -27,7 +27,8 @@
       color: #20aee3;
     }
 
-    .disabled {
+    .disabled,
+    .disabled .page-link {
       color: lightgray;
     }
   }

@@ -17,7 +17,8 @@
             }, {
               name: '__slot:ownerlink',
               sortField: 'users.name',
-              title: 'Administrateur'
+              title: 'Administrateur',
+              width: '200px'
             }]"></my-vuetable>
         
 @endsection
