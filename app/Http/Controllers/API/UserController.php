@@ -55,8 +55,8 @@ class UserController extends Controller
             $users->orderBy('users.name', 'asc');
         }
         
-        $perPage = $request->has('per_page') ? (int) $request->per_page : null;
-        $data = $users->paginate($perPage);
+        $perPage    = $request->has('per_page') ? (int) $request->per_page : null;
+        $data       = $users->paginate($perPage);
         
         return response()->json($data);
     }

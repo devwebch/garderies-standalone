@@ -17,7 +17,7 @@ class NurseryController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Nursery::join('networks', 'networks.id', 'nurseries.network_id')->with('network');
+        $query = Nursery::leftJoin('networks', 'networks.id', 'nurseries.network_id')->with('network');
 
         if ($request->get('sort')) {
             list($sortCol, $sortDir) = explode('|', $request->get('sort'));
