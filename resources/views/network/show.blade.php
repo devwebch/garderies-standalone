@@ -15,7 +15,7 @@
             </div>
             <div class="card-body">
                 <p><strong>Nom :</strong> {{$network->name}}</p>
-                <p><strong>Administrateur :</strong> <a href="{{route('users.show', $network->owner->id)}}">{{$network->owner->name}}</a></p>
+                <p><strong>Administrateur :</strong> <a href="{{route('users.show', $network->owner->id ?? 0)}}">{{$network->owner->name ?? '-'}}</a></p>
             </div>
         </div>
     </network-show>
