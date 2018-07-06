@@ -3,7 +3,7 @@
         <div class="card-header bg-dark text-white">
             <div class="row">
                 <div class="col-sm-12 col-md-6">{{this.title}}</div>
-                <div class="col-sm-12 col-md-6"><filter-bar></filter-bar></div>
+                <div class="col-sm-12 col-md-6"><filter-bar v-on:filter="setFilter"></filter-bar></div>
             </div>
         </div>
         <div class="card-body">
@@ -90,7 +90,6 @@
     import Vuetable from 'vuetable-2/src/components/Vuetable'
     import VuetablePaginationBootstrap from './VuetablePaginationBootstrap'
     import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
-    import VueEvents from 'vue-events'
     import CustomActions from './CustomActions'
     import FilterBar from './FilterBar'
 
@@ -105,7 +104,6 @@
             Vuetable,
             VuetablePaginationBootstrap,
             VuetablePaginationInfo,
-            VueEvents,
             'custom-actions': CustomActions,
             'filter-bar': FilterBar
         },
@@ -145,6 +143,10 @@
             allcap (value) {
                 return value.toUpperCase()
             },
+            setFilter (text) {
+                this.moreParams.filter = text;
+                Vue.nextTick( () => this.$refs.vuetable.refresh() );
+            },
             statusLabel (value) {
                 switch (value) {
                     case this.statuses.pending:
@@ -178,18 +180,6 @@
             onChangePage (page) {
                 this.$refs.vuetable.changePage(page);
             },
-        },
-        events: {
-            'filter-set' (filterText) {
-                this.moreParams = {
-                    filter: filterText
-                };
-                Vue.nextTick( () => this.$refs.vuetable.refresh() )
-            },
-            'filter-reset' () {
-                this.moreParams = {};
-                Vue.nextTick( () => this.$refs.vuetable.refresh() )
-            }
         }
     }
 </script>
