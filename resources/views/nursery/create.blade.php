@@ -18,21 +18,21 @@
                     <input type="text" class="form-control" name="address">
                 </div>
                 <div class="row">
-                    <div class="form-group col-3">
+                    <div class="form-group col-md-3">
                         <label for="name">Code postal :</label>
                         <input type="text" class="form-control" name="post_code">
                     </div>
-                    <div class="form-group col-9">
+                    <div class="form-group col-md-9">
                         <label for="name">Ville :</label>
                         <input type="text" class="form-control" name="city">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col">
+                    <div class="form-group col-md-6">
                         <label for="name">E-mail :</label>
                         <input type="text" class="form-control" name="email">
                     </div>
-                    <div class="form-group col">
+                    <div class="form-group col-md-6">
                         <label for="name">Téléphone :</label>
                         <input type="text" class="form-control" name="phone">
                     </div>
