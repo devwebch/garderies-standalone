@@ -75,10 +75,7 @@
             </vuetable>
             <div class="vuetable-pagination">
                 <vuetable-pagination-info ref="paginationInfo" info-class="pagination-info" info-template="Affichage des données de {from} à {to} sur un total de {total}."></vuetable-pagination-info>
-                <vuetable-pagination-bootstrap ref="pagination"
-                                     :css="css.pagination"
-                                     @vuetable-pagination:change-page="onChangePage"
-                ></vuetable-pagination-bootstrap>
+                <vuetable-pagination-bootstrap ref="pagination" :css="css.pagination" @vuetable-pagination:change-page="onChangePage" :on-each-side="1"></vuetable-pagination-bootstrap>
             </div>
         </div>
     </div>
@@ -111,7 +108,7 @@
             return {
                 css: {
                     table: {
-                        tableClass: 'table table-borderless table-striped table-responsive-sm',
+                        tableClass: 'table table-borderless table-striped table-responsive-lg',
                         ascendingIcon: 'fa fa-chevron-up',
                         descendingIcon: 'fa fa-chevron-down'
                     },
@@ -184,3 +181,8 @@
     }
 </script>
 
+<style lang="scss">
+    .vuetable-pagination-info {
+        margin-bottom: 20px;
+    }
+</style>
