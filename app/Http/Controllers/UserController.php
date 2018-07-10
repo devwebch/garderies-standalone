@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Diploma;
 use App\Network;
 use App\Nursery;
 use App\User;
@@ -83,6 +84,7 @@ class UserController extends Controller
         $nurseries          = Nursery::orderBy('name', 'asc')->get();
         $managedNetworks    = Network::all();
         $workgroups         = Workgroup::all();
+        $diplomas           = Diploma::all();
 
         $currentNetworksKeys    = array_values(array_flatten((array)$user->networks->keyBy('id')->keys()));
         $currentWorkgroups      = array_values(array_flatten((array)$user->workgroups->keyBy('id')->keys()));
@@ -94,6 +96,7 @@ class UserController extends Controller
             'currentNetworksKeys'   => $currentNetworksKeys,
             'workgroups'            => $workgroups,
             'currentWorkgroups'     => $currentWorkgroups,
+            'diplomas'              => $diplomas,
         ]);
     }
 
@@ -110,6 +113,7 @@ class UserController extends Controller
         $user->email        = $request->email;
         $user->phone        = $request->phone;
         $user->nursery_id   = $request->nursery;
+        $user->diploma_id   = $request->diploma;
         $user->save();
 
         // networks

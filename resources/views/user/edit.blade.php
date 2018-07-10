@@ -11,7 +11,7 @@
                 {{method_field('PUT')}}
 
                 <div class="row">
-                    <div class="col-7">
+                    <div class="col-md-7">
                         <div class="form-group">
                             <label for="name">Nom :</label>
                             <input type="text" class="form-control" name="name" value="{{$user->name}}">
@@ -30,13 +30,13 @@
                             <label for="nursery">Nursery :</label>
                             <select name="nursery" class="form-control">
                                 <option value="0">Sélectionnez...</option>
-                                @foreach($nurseries as $nursery)
-                                    <option value="{{$nursery->id}}" {{($nursery->id == ($user->nursery->id ?? 0)) ? 'selected' : ''}}>{{$nursery->name}}</option>
-                                @endforeach
+                                    @foreach($nurseries as $nursery)
+                                        <option value="{{$nursery->id}}" {{($nursery->id == ($user->nursery->id ?? 0)) ? 'selected' : ''}}>{{$nursery->name}}</option>
+                                    @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="col-5">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label>Réseaux :</label>
                             @foreach($managedNetworks as $network)
@@ -54,6 +54,14 @@
                                     <label for="workgroup-{{$workgroup->id}}" class="form-check-label">{{$workgroup->name}}</label>
                                 </div>
                             @endforeach
+                        </div>
+                        <div class="form-group">
+                            <label for="diploma">Diplôme :</label>
+                            <select name="diploma" class="form-control">
+                                @foreach($diplomas as $diploma)
+                                    <option value="{{$diploma->id}}" {{($diploma->id == $user->diploma->id) ? 'selected' : ''}}>{{$diploma->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
