@@ -82,7 +82,7 @@
             vm = this;
 
             $('.modal-event').on('shown.bs.modal', function () {
-                console.log('modal opened');
+
             });
 
             // Instantiate the calendar
@@ -145,7 +145,6 @@
                         }
                     })
                     .then(function(response){
-                        console.log(response);
                         // Assign the created ID to the event object
                         newEvent.id = response.data.id;
                         // Render the event on the calendar
@@ -161,7 +160,6 @@
                         }
                     })
                     .then(function(response){
-                        console.log(response);
                     });
                 },
                 eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
@@ -173,7 +171,6 @@
                         }
                     })
                     .then(function(response){
-                        console.log(response);
                     });
                 },
                 eventClick: function(event, jsEvent, view) {
@@ -203,8 +200,6 @@
         },
         methods: {
             userUpdateEvent: function () {
-                console.log('Update event');
-
                 if (data.editEvent.event) {
                     // Format dates
                     let start   = data.editEvent.date_start + ' ' + data.editEvent.hour_start;
@@ -244,7 +239,8 @@
                             position: 'top-end',
                             toast: true,
                             title: 'Disponibilité supprimée',
-                            showConfirmButton: false
+                            showConfirmButton: false,
+                            timer: 3000
                         });
 
                     });
