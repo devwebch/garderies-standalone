@@ -80,7 +80,7 @@
                         <td class="d-none d-md-table-cell">
                             <ul class="list-inline m-0">
                                 <li v-for="network in item.networks" class="list-inline-item">
-                                    <span class="badge badge-info">{{network.name}}</span>
+                                    <span class="badge text-white" :style="'background-color: ' + network.color + ';'">{{network.name}}</span>
                                 </li>
                             </ul>
                             <span v-if="!item.networks" class="text-muted">-</span>

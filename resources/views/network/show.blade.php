@@ -16,9 +16,34 @@
             <div class="card-body">
                 <p><strong>Nom :</strong> {{$network->name}}</p>
                 <p><strong>Administrateur :</strong> <a href="{{route('users.show', $network->owner->id ?? 0)}}">{{$network->owner->name ?? '-'}}</a></p>
+                <p>
+                    <strong>Couleur :</strong>
+                    <span class="badge badge-pill" style="background-color: {{$network->color}};">
+                        &nbsp;
+                    </span>
+                </p>
             </div>
         </div>
     </network-show>
+
+    <my-vuetable title="Etablissements" api-url="/api/nurseries?network={{$network->id}}" :fields="[{
+            name: '__slot:nurserylink',
+            sortField: 'nurseries.name',
+            title: 'Nom',
+            width: '50%'
+        }, {
+            name: 'users_count',
+            sortField: 'users_count',
+            title: 'Employés',
+            titleClass: 'text-right',
+            dataClass: 'text-right',
+        }, {
+            name: '__slot:networklinkrelation',
+            sortField: 'networks.name',
+            title: 'Réseau',
+            width: '200px'
+        }]">
+    </my-vuetable>
 
     <my-vuetable title="Employés" api-url="/api/users?nursery=0&network={{$network->id}}" :fields="[{
               name: '__slot:userlink',

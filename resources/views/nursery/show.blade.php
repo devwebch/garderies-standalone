@@ -18,7 +18,10 @@
                     <p><strong>Localité :</strong> {{$nursery->post_code . ', ' ?? ''}}{{$nursery->city}}</p>
                     <p><strong>Téléphone :</strong> {{$nursery->phone}}</p>
                     <p><strong>E-mail :</strong> {{$nursery->email}}</p>
-                    <p><strong>Réseau :</strong> {{$nursery->network->name ?? '-'}}</p>
+                    <p>
+                        <strong>Réseau :</strong>
+                        <span class="badge text-white" style="background-color: {{$nursery->network->color}};">{{$nursery->network->name ?? '-'}}</span>
+                    </p>
                 </div>
             </div>
     

@@ -16,8 +16,7 @@
                       detail-row-component="my-detail-row"
                       :append-params="moreParams"
                       @vuetable:pagination-data="onPaginationData"
-                      no-data-template="Aucune donnée disponible"
-            >
+                      no-data-template="Aucune donnée disponible">
                 <template slot="nurserylink" slot-scope="props">
                     <a :href="'/nurseries/' + props.rowData.id">{{props.rowData.name}}</a>
                 </template>
@@ -53,7 +52,7 @@
                     <ul class="list-inline m-0" v-if="props.rowData.networks">
                         <li class="list-inline-item" v-for="network in props.rowData.networks">
                             <a :href="'/networks/' + network.id">
-                                <span class="badge badge-info">{{network.name}}</span>
+                                <span class="badge text-white" :style="'background-color: ' + network.color + ';'">{{network.name}}</span>
                             </a>
                         </li>
                     </ul>
@@ -62,7 +61,8 @@
 
                 <template slot="networklinkrelation" slot-scope="props">
                     <a :href="'/networks/' + props.rowData.network.id" v-if="props.rowData.network">
-                        <span class="badge badge-info">{{props.rowData.network.name}}</span>
+                        <span class="badge text-white" :style="'background-color: ' + props.rowData.network.color + ';'">
+                            {{props.rowData.network.name}}</span>
                     </a>
                     <span v-if="!props.rowData.network" class="text-muted">Aucun</span>
                 </template>
@@ -74,7 +74,11 @@
 
             </vuetable>
             <div class="vuetable-pagination">
-                <vuetable-pagination-info ref="paginationInfo" info-class="pagination-info" info-template="Affichage des données de {from} à {to} sur un total de {total}."></vuetable-pagination-info>
+                <vuetable-pagination-info
+                        ref="paginationInfo"
+                        info-class="pagination-info"
+                        info-template="Affichage des données de {from} à {to} sur un total de {total}."
+                no-data-template="Aucune donnée disponible"></vuetable-pagination-info>
                 <vuetable-pagination-bootstrap ref="pagination" :css="css.pagination" @vuetable-pagination:change-page="onChangePage" :on-each-side="1"></vuetable-pagination-bootstrap>
             </div>
         </div>
