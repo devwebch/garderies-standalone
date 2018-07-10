@@ -108,7 +108,7 @@
         </div>
 
         <div class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Confirmation de contact</h5>
@@ -125,19 +125,21 @@
                             <p>De {{search.hour_start}} à {{search.hour_end}}</p>
                         </div>
 
-                        <div class="form-group">
-                            <label for="nursery">Etablissement <span class="text-danger">*</span></label>
-                            <select name="nursery" class="form-control" v-model="nursery">
-                                <option value="0">Sélectionner...</option>
-                                <option v-for="nursery in nurseries" :value="nursery.id">{{nursery.name}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="workgroup">Groupe de travail <span class="text-danger">*</span></label>
-                            <select name="workgroup" class="form-control" v-model="workgroup">
-                                <option value="0">Sélectionner...</option>
-                                <option v-for="workgroup in workgroups" :value="workgroup.id">{{workgroup.name}}</option>
-                            </select>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="nursery">Etablissement <span class="text-danger">*</span></label>
+                                <select name="nursery" class="form-control" v-model="nursery">
+                                    <option value="0">Sélectionner...</option>
+                                    <option v-for="nursery in nurseries" :value="nursery.id">{{nursery.name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="workgroup">Groupe de travail <span class="text-danger">*</span></label>
+                                <select name="workgroup" class="form-control" v-model="workgroup">
+                                    <option value="0">Sélectionner...</option>
+                                    <option v-for="workgroup in workgroups" :value="workgroup.id">{{workgroup.name}}</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="message">Message</label>
