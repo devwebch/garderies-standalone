@@ -20,7 +20,7 @@
                     <p><strong>E-mail :</strong> {{$nursery->email}}</p>
                     <p>
                         <strong>Réseau :</strong>
-                        <span class="badge text-white" style="background-color: {{$nursery->network->color}};">{{$nursery->network->name ?? '-'}}</span>
+                        <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">{{$nursery->network->name ?? '-'}}</span>
                     </p>
                 </div>
             </div>
