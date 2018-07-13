@@ -11,9 +11,10 @@
                 <thead>
                 <tr>
                     <th>Employé</th>
-                    <th>Date</th>
+                    <th>Horaire</th>
                     <th>Remplaçant</th>
                     <th>Disponibilité</th>
+                    <th></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -26,7 +27,7 @@
 
                     @if ($last_timestamp != $request->start->timestamp)
                         <tr class="bg-dark text-white small">
-                            <td colspan="5" class="p-2">
+                            <td colspan="6" class="p-2">
                                 <strong>{{$request->start->format('d.m.Y')}}</strong>
                             </td>
                         </tr>
@@ -37,17 +38,17 @@
                     @endphp
                     <tr>
                         <td>
-                            <a href="{{route('booking-requests.show', $request)}}">
-                                {{$request->user->name ?? '-'}}
+                            <a href="{{route('users.show', $request->user->id ?? 0)}}">
+                                {{$request->user->name ?? 'Aucun'}}
                             </a>
                         </td>
                         <td>
-                            {{$request->start->format('d.m.Y')}}
-                            -
                             {{$request->start->format('H\hi')}} <i class="fas fa-arrow-right"></i> {{$request->end->format('H\hi')}}
                         </td>
                         <td>
-                            {{$request->substitute->name ?? '-'}}
+                            <a href="{{route('users.show', $request->substitute->id ?? 0)}}" target="_blank">
+                                {{$request->substitute->name ?? 'Aucun'}}
+                            </a>
                         </td>
                         <td>
                             @if ($request->availability)
@@ -68,6 +69,9 @@
                                 <span class="badge badge-danger">Refusé</span>
                                 @break
                             @endswitch
+                        </td>
+                        <td>
+                            <a href="{{route('booking-requests.show', $request)}}">Voir</a>
                         </td>
                     </tr>
                 @endforeach
