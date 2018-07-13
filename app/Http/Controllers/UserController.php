@@ -130,7 +130,7 @@ class UserController extends Controller
         }
         $user->workgroups()->sync($workgroup_ids);
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.show', $user);
     }
 
     /**
