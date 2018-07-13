@@ -62,12 +62,18 @@ class UserController extends Controller
             ->orderBy('start')
             ->get();
 
+        $bookingRequests = $user->bookingRequests()
+            ->with('nursery')
+            ->orderBy('start')
+            ->get();
+
         $avatars = ['img/dummy_avatar_1.jpg', 'img/dummy_avatar_2.jpg', 'img/dummy_avatar_3.jpg'];
 
         return view('user.show', [
             'user'              => $user,
             'availabilities'    => $availabilities,
             'bookings'          => $bookings,
+            'bookingRequests'   => $bookingRequests,
             'avatar'            => $avatars[rand(0, count($avatars) - 1)]
         ]);
     }
