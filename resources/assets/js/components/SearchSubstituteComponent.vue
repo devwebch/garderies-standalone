@@ -91,13 +91,9 @@
                             <span class="badge badge-warning" v-if="item.matching=='partial'">Partiel</span>
                         </td>
                     </tr>
-                    <tr v-if="!availabilities.length">
-                        <td colspan="6">
-                            <div class="alert alert-info mb-0">Aucune disponibilité</div>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
+                <div class="alert alert-info mb-0" v-if="!availabilities.length">Aucune disponibilité</div>
                 <p class="text-muted">* Indice de Correspondance (partiel ou complet)</p>
             </div>
             <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">
