@@ -27,3 +27,4 @@ Route::resource('availabilities', 'AvailabilityController');
 Route::resource('bookings', 'BookingController');
 Route::resource('booking-requests', 'BookingRequestController');
 Route::resource('networks', 'NetworkController');
+Route::resource('feedbacks', 'FeedbackController');
