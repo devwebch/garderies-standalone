@@ -49,6 +49,7 @@
     import flatPickr from 'vue-flatpickr-component';
     import 'flatPickr/dist/flatpickr.css';
     import {French} from 'flatPickr/dist/l10n/fr';
+    import moment from 'moment'
 
     import swal from 'sweetalert2';
     import 'sweetalert2/dist/sweetalert2.min.css';
@@ -103,6 +104,7 @@
                     list: "Vue liste"
                 },
                 weekends: false,
+                eventOverlap: false,
                 allDaySlot: false,
                 columnHeaderFormat: 'ddd DD.MM',
                 timeFormat: 'HH:mm',
@@ -145,10 +147,21 @@
                         }
                     })
                     .then(function(response){
-                        // Assign the created ID to the event object
-                        newEvent.id = response.data.id;
-                        // Render the event on the calendar
-                        calendar.fullCalendar('renderEvent', newEvent);
+                        if (!response.data.isOverlapping) {
+                            // Assign the created ID to the event object
+                            newEvent.id = response.data.id;
+                            // Render the event on the calendar
+                            calendar.fullCalendar('renderEvent', newEvent);
+                        } else {
+                            swal({
+                                type: 'error',
+                                position: 'top-end',
+                                toast: true,
+                                title: 'Disponibilités se chevauchent',
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+                        }
                     });
                 },
                 eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {

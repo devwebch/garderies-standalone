@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="nursery">Nursery :</label>
+                            <label for="nursery">Garderie :</label>
                             <select name="nursery" class="form-control">
                                 <option value="0">Sélectionnez...</option>
                                     @foreach($nurseries as $nursery)

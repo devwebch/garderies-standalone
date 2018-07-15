@@ -4,9 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Availability;
 use App\Http\Resources\Availability as AvailabilityResource;
+use App\Http\Resources\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 
 class AvailabilityController extends Controller
 {
@@ -20,7 +22,7 @@ class AvailabilityController extends Controller
         $availabilities = Availability::all();
         return $availabilities; //TODO: check where this is called, must change the return value
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -29,30 +31,58 @@ class AvailabilityController extends Controller
      */
     public function store(Request $request)
     {
-        $userID     = $request->params['userID'];
-        $event      = $request->params['event'];
-
-        $start      = Carbon::parse($event['start']);
-        $end        = Carbon::parse($event['end']);
-
+        $userID = $request->params['userID'];
+        $event = $request->params['event'];
+        
+        $start = Carbon::parse($event['start']);
+        $end = Carbon::parse($event['end']);
+        
         // if no starting hour is passed (thanks momentJS), set it to 8
         if (!$start->hour) {
             $start->hour(8);
             $end->hour($start->hour + 2);
         }
-
-        $availability = new Availability();
-        $availability->start    = $start;
-        $availability->end      = $end;
-        $availability->user_id  = $userID;
-        $availability->save();
-
+        
+        $user = \App\User::where('id', $userID)->first();
+        
+        $availabilities = $user->availabilities;
+        $isOverlapping = false;
+        //$isToday = true;
+        
+        
+        
+        foreach ($availabilities as $avail) {
+            if (($start->gte($avail->start) && $start->lt($avail->end)) || ($end->gt($avail->start) && $end->lte($avail->end))) {
+                $isOverlapping = true;
+            }
+            
+            /*while((($start->gte($avail->start) && $start->lt($avail->end)) || ($end->gt($avail->start) && $end->lte($avail->end))) && $isToday) {
+                $isToday = $start->isSameDay($avail->start) && $end->isSameDay($avail->end);
+                $isOverlapping = true;
+    
+                $start->addHour();
+                $end->addHour();
+            }*/
+        }
+        
+        if (!$isOverlapping) {
+            $availability = new Availability();
+            $availability->start = $start;
+            $availability->end = $end;
+            $availability->user_id = $userID;
+            $availability->save();
+        }
+        
         return response()->json([
-            'status'    => 'Availability created',
-            'id'        => $availability->id
+            'status' => 'Availability created',
+            'isOverlapping' => $isOverlapping,
+            /*'isToday' => $isToday,
+            'start' => $start->toAtomString(),
+            'end' => $end->toAtomString(),*/
+            'id' => isset($availability) ? $availability->id : null
         ]);
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -63,7 +93,7 @@ class AvailabilityController extends Controller
     {
         //
     }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -75,16 +105,16 @@ class AvailabilityController extends Controller
     {
         $start = Carbon::parse($request->params['start']);
         $end = Carbon::parse($request->params['end']);
-
+        
         //TODO: add constraint check
-
+        
         $availability->start = $start;
         $availability->end = $end;
         $availability->save();
-
+        
         return response('Availability updated');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -98,10 +128,10 @@ class AvailabilityController extends Controller
             $availability->delete();
             return response('Availability destroyed');
         }
-
+        
         return response('Availability not destroyed');
     }
-
+    
     /**
      * Show availabilities for a specific user
      *
@@ -116,31 +146,31 @@ class AvailabilityController extends Controller
             ->where('start', '>=', $request->start)
             ->where('end', '<=', $request->end)
             ->get();
-
+        
         // New array for formatted data
         $availabilities_formatted = [];
-
+        
         $colors = ['#3a87ad', '#666666'];
-
+        
         // Loop through each object
         foreach ($availabilities as $availability) {
-
+            
             // See fullcalendar doc for format
             $availabilities_formatted[] = [
-                'id'        => $availability->id,
-                'title'     => 'Disponible',
-                'start'     => $availability->start->toDateTimeString(),
-                'end'       => $availability->end->toDateTimeString(),
-                'status'    => $availability->status,
-                'color'     => $colors[$availability->status],
+                'id' => $availability->id,
+                'title' => 'Disponible',
+                'start' => $availability->start->toDateTimeString(),
+                'end' => $availability->end->toDateTimeString(),
+                'status' => $availability->status,
+                'color' => $colors[$availability->status],
                 'rendering' => ($availability->status == Availability::STATUS_UNTOUCHED) ? '' : 'background',
-                'type'      => 'availability'
+                'type' => 'availability'
             ];
         }
-
+        
         return $availabilities_formatted;
     }
-
+    
     /**
      * Search for availabilities
      *
@@ -150,10 +180,10 @@ class AvailabilityController extends Controller
     public function search(Request $request)
     {
         global $date_start, $date_end;
-
+        
         $date_start = null;
         $date_end = null;
-
+        
         // check if all the inputs are presents
         if ($request->input('day_start') && $request->input('hour_start') && $request->input('hour_end')) {
             // retrieve the starting day
@@ -162,17 +192,17 @@ class AvailabilityController extends Controller
             $hour_start = Carbon::parse($request->input('hour_start'), 'Europe/Zurich')->format('H:i');
             // ending hour
             $hour_end = Carbon::parse($request->input('hour_end'), 'Europe/Zurich')->format('H:i');
-
+            
             // recompose the date object through Carbon, extends the search perimeter for flexibility
             //$date_start = Carbon::parse($day_start . ' ' . $hour_start)->subHour(1);
             //$date_end   = Carbon::parse($day_start . ' ' . $hour_end)->addHour(1);
             $date_start = Carbon::parse($day_start . ' ' . $hour_start);
             $date_end = Carbon::parse($day_start . ' ' . $hour_end);
         }
-
+        
         // if the search perimeter is correctly defined, proceed
         if ($date_start && $date_end) {
-
+            
             // availabilities request
             $collection = Availability::where([
                 ['start', '<=', $date_start], ['end', '>=', $date_end] // complete
@@ -183,11 +213,11 @@ class AvailabilityController extends Controller
             ])->orWhere([
                 ['start', '>', $date_start], ['end', '<', $date_end] // partial
             ])->get();
-
+            
             // determine the matching between the slot and the request
             $collection->each(function ($item, $key) {
                 global $date_start, $date_end;
-
+                
                 if ($item->start <= $date_start && $item->end >= $date_end) {
                     $item->matching = 'complete';
                 } elseif ($item->start <= $date_start && $item->end < $date_end && $item->end > $date_start) {
@@ -200,11 +230,11 @@ class AvailabilityController extends Controller
                     $item->matching = 'none';
                 }
             });
-
+            
         } else {
             $collection = Availability::all();
         }
-
+        
         return AvailabilityResource::collection($collection);
     }
 }
