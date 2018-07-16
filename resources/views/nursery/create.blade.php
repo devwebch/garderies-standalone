@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="form-group col-md-3">
                         <label for="name">Code postal :</label>
-                        <input type="text" class="form-control" name="post_code">
+                        <input type="text" class="form-control" name="post_code" v-mask="'####'">
                     </div>
                     <div class="form-group col-md-9">
                         <label for="name">Ville :</label>
@@ -30,11 +30,11 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="name">E-mail :</label>
-                        <input type="text" class="form-control" name="email">
+                        <input type="email" class="form-control" name="email">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="name">Téléphone :</label>
-                        <input type="text" class="form-control" name="phone">
+                        <input type="text" class="form-control" name="phone" v-mask="'+41 ## ### ## ##'">
                     </div>
                 </div>
 

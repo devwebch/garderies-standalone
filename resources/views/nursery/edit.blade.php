@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="form-group col">
                             <label for="name">E-mail :</label>
-                            <input type="text" class="form-control" name="email" value="{{$nursery->email}}">
+                            <input type="email" class="form-control" name="email" value="{{$nursery->email}}">
                         </div>
                         <div class="form-group col">
                             <label for="name">Téléphone :</label>
