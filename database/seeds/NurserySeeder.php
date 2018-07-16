@@ -49,7 +49,7 @@ class NurserySeeder extends Seeder
                 'post_code'     => rand(1000, 1500),
                 'city'          => $faker->city,
                 'email'         => $faker->companyEmail,
-                'phone'         => $faker->phoneNumber,
+                'phone'         => '+41 ' . rand(21,22) . ' ' . rand(300, 500) . ' ' . rand(20, 90) . ' ' . rand(20, 90),
                 'network_id'    => rand(1,2)
             ]);
         }

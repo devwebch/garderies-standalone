@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
         // Create network admin
         DB::table('users')->insert([
             'id'            => 1,
-            'name'          => 'Network admin',
+            'name'          => 'Gestionnaire',
             'email'         => 'admin@ajerco.ch',
             'phone'         => '+41211234567',
             'password'      => bcrypt('123456'),
