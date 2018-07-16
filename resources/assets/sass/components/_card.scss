@@ -27,6 +27,12 @@
       color: #20aee3;
     }
 
+    .active {
+      a:hover {
+        color: #fff
+      }
+    }
+
     .disabled,
     .disabled .page-link {
       color: lightgray;
