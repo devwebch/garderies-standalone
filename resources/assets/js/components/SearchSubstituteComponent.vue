@@ -55,46 +55,48 @@
                     </div>
                 </div>
 
-                <table class="table table-borderless table-striped table-sm table-responsive-sm">
-                    <thead v-show="availabilities.length">
-                    <tr>
-                        <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>
-                        <th>Remplaçant</th>
-                        <th>Date</th>
-                        <th>Disponibilité</th>
-                        <th class="d-none d-md-table-cell"><span data-toggle="tooltip" title="Réseau de travail">Réseaux</span></th>
-                        <th class="d-none d-md-table-cell text-right">IC*</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="item in availabilities">
-                        <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
-                        <td>
-                            <a v-if="item.user" :href="item.user.link" target="_blank">{{item.user.name}}</a>
-                            <span v-if="!item.user" class="text-muted">Aucun</span>
-                        </td>
-                        <td><i class="fas fa-calendar d-none d-sm-inline"></i> {{item.start}}</td>
-                        <td class="text-truncate">{{item.start_hour}} <i class="fas fa-arrow-right"></i>
-                            {{item.end_hour}}
-                        </td>
-                        <td class="d-none d-md-table-cell">
-                            <ul class="list-inline m-0">
-                                <li v-for="network in item.networks" class="list-inline-item">
-                                    <span class="badge text-white" :style="'background-color: ' + network.color + ';'">{{network.name}}</span>
-                                </li>
-                            </ul>
-                            <span v-if="!item.networks" class="text-muted">-</span>
-                        </td>
-                        <td class="d-none d-md-table-cell text-right">
-                            <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
-                            <span class="badge badge-success" v-if="item.matching=='complete'">Complet</span>
-                            <span class="badge badge-warning" v-if="item.matching=='partial'">Partiel</span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div v-show="availabilities.length">
+                    <table class="table table-borderless table-striped table-sm table-responsive-sm">
+                        <thead>
+                        <tr>
+                            <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>
+                            <th>Remplaçant</th>
+                            <th>Date</th>
+                            <th>Disponibilité</th>
+                            <th class="d-none d-md-table-cell"><span data-toggle="tooltip" title="Réseau de travail">Réseaux</span></th>
+                            <th class="d-none d-md-table-cell text-right">IC*</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in availabilities">
+                            <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
+                            <td>
+                                <a v-if="item.user" :href="item.user.link" target="_blank">{{item.user.name}}</a>
+                                <span v-if="!item.user" class="text-muted">Aucun</span>
+                            </td>
+                            <td><i class="fas fa-calendar d-none d-sm-inline"></i> {{item.start}}</td>
+                            <td class="text-truncate">{{item.start_hour}} <i class="fas fa-arrow-right"></i>
+                                {{item.end_hour}}
+                            </td>
+                            <td class="d-none d-md-table-cell">
+                                <ul class="list-inline m-0">
+                                    <li v-for="network in item.networks" class="list-inline-item">
+                                        <span class="badge text-white" :style="'background-color: ' + network.color + ';'">{{network.name}}</span>
+                                    </li>
+                                </ul>
+                                <span v-if="!item.networks" class="text-muted">-</span>
+                            </td>
+                            <td class="d-none d-md-table-cell text-right">
+                                <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
+                                <span class="badge badge-success" v-if="item.matching=='complete'">Complet</span>
+                                <span class="badge badge-warning" v-if="item.matching=='partial'">Partiel</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-muted">* Indice de Correspondance (partiel ou complet)</p>
+                </div>
                 <div class="alert alert-info mb-0" v-if="!availabilities.length">Aucune disponibilité</div>
-                <p class="text-muted">* Indice de Correspondance (partiel ou complet)</p>
             </div>
             <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">
                 <button class="btn btn-primary" v-on:click="contactPeopleValidation">Contacter les personnes
