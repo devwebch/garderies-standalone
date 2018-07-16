@@ -26,7 +26,7 @@
         </div>
     </network-show>
 
-    <my-vuetable title="Etablissements" api-url="/api/nurseries?network={{$network->id}}" :fields="[{
+    <vue-table title="Etablissements" api-url="/api/nurseries?network={{$network->id}}" :fields="[{
             name: '__slot:nurserylink',
             sortField: 'nurseries.name',
             title: 'Nom',
@@ -43,9 +43,9 @@
             title: 'Réseau',
             width: '200px'
         }]">
-    </my-vuetable>
+    </vue-table>
 
-    <my-vuetable title="Employés" api-url="/api/users?nursery=0&network={{$network->id}}" :fields="[{
+    <vue-table title="Employés" api-url="/api/users?nursery=0&network={{$network->id}}" :fields="[{
               name: '__slot:userlink',
               sortField: 'users.name',
               title: 'Nom et prénom'
@@ -61,7 +61,7 @@
               name: '__slot:nurserylinkrelation',
               sortField: 'nurseries.name',
               title: 'Etablissement'
-            }]"></my-vuetable>
+            }]"></vue-table>
 @endsection
 
 @section('nav-lateral')

@@ -3,7 +3,7 @@
 @section('title', 'Home')
 
 @section('content')
-    <my-vuetable title="Etablissements" api-url="/api/nurseries" :fields="[{
+    <vue-table title="Etablissements" api-url="/api/nurseries" :fields="[{
             name: '__slot:nurserylink',
             sortField: 'nurseries.name',
             title: 'Nom',
@@ -20,7 +20,7 @@
             title: 'Réseau',
             width: '200px'
         }]">
-    </my-vuetable>
+    </vue-table>
 @endsection
 
 @section('nav-lateral')

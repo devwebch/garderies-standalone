@@ -4,7 +4,7 @@
 
 @section('content')
     
-            <my-vuetable title="Réseaux" api-url="/api/networks" :fields="[{
+            <vue-table title="Réseaux" api-url="/api/networks" :fields="[{
               name: '__slot:networklink',
               sortField: 'networks.name',
               title: 'Nom'
@@ -19,7 +19,7 @@
               sortField: 'users.name',
               title: 'Administrateur',
               width: '200px'
-            }]"></my-vuetable>
+            }]"></vue-table>
         
 @endsection
 

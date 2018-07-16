@@ -4,7 +4,7 @@
 
 @section('content')
     
-    <my-vuetable title="Remplaçements" api-url="/api/bookings" :statuses="{
+    <vue-table title="Remplaçements" api-url="/api/bookings" :statuses="{
         pending: {{ \App\Booking::STATUS_PENDING }},
         approved: {{ \App\Booking::STATUS_APPROVED }},
         denied: {{ \App\Booking::STATUS_DENIED }},
@@ -40,10 +40,10 @@
               sortField: 'status',
               title: 'Status',
               callback: 'statusLabel'
-            }]"></my-vuetable>
+            }]"></vue-table>
 
 
-    <my-vuetable title="Remplacements archivés" api-url="/api/bookings?status=3" :statuses="{
+    <vue-table title="Remplacements archivés" api-url="/api/bookings?status=3" :statuses="{
         pending: {{ \App\Booking::STATUS_PENDING }},
         approved: {{ \App\Booking::STATUS_APPROVED }},
         denied: {{ \App\Booking::STATUS_DENIED }},
@@ -79,7 +79,7 @@
               sortField: 'status',
               title: 'Status',
               callback: 'statusLabel'
-            }]"></my-vuetable>
+            }]"></vue-table>
 @endsection
 
 @section('nav-lateral')

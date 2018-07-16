@@ -2,6 +2,10 @@
 
 @section('title', $user->name)
 
+@section('scripts')
+    <script src="{{asset('js/users.js')}}"></script>
+@endsection
+
 @section('content')
     <user-show inline-template>
         <div>

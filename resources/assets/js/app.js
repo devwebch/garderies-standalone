@@ -16,26 +16,22 @@ window.fullcalendar = require('fullcalendar');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('home', require('./components/HomeComponent'));
 Vue.component('tour', require('./components/TourComponent'));
-Vue.component('nurseries', require('./components/NurseriesComponent'));
-Vue.component('users', require('./components/UsersComponent'));
 Vue.component('user-availabilities', require('./components/UserAvailabilitiesComponent'));
 Vue.component('search-substitute', require('./components/SearchSubstituteComponent'));
-
 Vue.component('availability-edit', require('./components/AvailabilityEditComponent'));
 Vue.component('booking-show', require('./components/BookingShowComponent'));
 Vue.component('booking-edit', require('./components/BookingEditComponent'));
 Vue.component('booking-create', require('./components/BookingCreateComponent'));
 Vue.component('booking-request-show', require('./components/BookingRequestShowComponent'));
 Vue.component('user-show', require('./components/UserShowComponent'));
+Vue.component('user-edit', require('./components/UserEditComponent'));
 Vue.component('nursery-show', require('./components/NurseryShowComponent'));
 Vue.component('network-show', require('./components/NetworkShowComponent'));
 Vue.component('network-edit', require('./components/NetworkEditComponent'));
 
-
-Vue.component('my-vuetable', require('./components/MyVuetable.vue'));
+Vue.component('vue-table', require('./components/VueTable'));
 
 const app = new Vue({
     el: '#app'

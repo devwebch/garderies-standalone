@@ -25,7 +25,7 @@
                 </div>
             </div>
     
-            <my-vuetable title="Employés" api-url="/api/users?nursery={{$nursery->id}}&network=0" :fields="[{
+            <vue-table title="Employés" api-url="/api/users?nursery={{$nursery->id}}&network=0" :fields="[{
               name: '__slot:userlink',
               sortField: 'users.name',
               title: 'Nom et prénom'
@@ -41,7 +41,7 @@
               name: '__slot:networkslinkrelation',
               sortField: 'networks.name',
               title: 'Réseaux'
-            }]"></my-vuetable>
+            }]"></vue-table>
 
             <div class="card card-default">
                 <div class="card-header">Remplacements</div>

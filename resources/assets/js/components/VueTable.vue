@@ -91,8 +91,8 @@
     import Vuetable from 'vuetable-2/src/components/Vuetable'
     import VuetablePaginationBootstrap from './VuetablePaginationBootstrap'
     import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
+    import VueTableFilterBar from './VueTableFilterBar'
     import CustomActions from './CustomActions'
-    import FilterBar from './FilterBar'
 
     export default {
         props: {
@@ -106,7 +106,7 @@
             VuetablePaginationBootstrap,
             VuetablePaginationInfo,
             'custom-actions': CustomActions,
-            'filter-bar': FilterBar
+            'filter-bar': VueTableFilterBar
         },
         data () {
             return {
