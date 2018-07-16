@@ -42,44 +42,53 @@ class AvailabilityController extends Controller
             $start->hour(8);
             $end->hour($start->hour + 2);
         }
-        
-        $user = \App\User::where('id', $userID)->first();
-        
-        $availabilities = $user->availabilities;
+
+        $availabilities = Availability::whereYear('start', $start->format('Y'))
+            ->whereMonth('start', $start->format('m'))
+            ->whereDay('start', $start->format('d'))
+            ->where('user_id', $userID)
+            ->get();
+
         $isOverlapping = false;
-        //$isToday = true;
-        
-        
-        
-        foreach ($availabilities as $avail) {
-            if (($start->gte($avail->start) && $start->lt($avail->end)) || ($end->gt($avail->start) && $end->lte($avail->end))) {
+        $overlapStart   = null;
+        $overlapEnd     = null;
+
+        foreach ($availabilities as $availability) {
+            if (($start->gte($availability->start) && $start->lt($availability->end)) || ($end->gt($availability->start) && $end->lte($availability->end))) {
                 $isOverlapping = true;
+                $overlapStart   = $availability->start;
+                $overlapEnd     = $availability->end;
             }
-            
-            /*while((($start->gte($avail->start) && $start->lt($avail->end)) || ($end->gt($avail->start) && $end->lte($avail->end))) && $isToday) {
-                $isToday = $start->isSameDay($avail->start) && $end->isSameDay($avail->end);
-                $isOverlapping = true;
-    
-                $start->addHour();
-                $end->addHour();
-            }*/
         }
-        
+
+        // set the start and end date depending on the overlap type
+        // TODO: determine open slots amongst the availabilities
+        if ($isOverlapping) {
+            if ($start->lte($overlapStart)) {
+                $start  = $overlapStart->copy()->subHours(2);
+                $end    = $start->copy()->addHours(2);
+            } else {
+                $start  = $overlapEnd->copy();
+                $end    = $start->copy()->addHours(2);
+            }
+
+            $isOverlapping = false;
+        }
+
+        $availability = null;
         if (!$isOverlapping) {
             $availability = new Availability();
-            $availability->start = $start;
-            $availability->end = $end;
-            $availability->user_id = $userID;
+            $availability->start    = $start;
+            $availability->end      = $end;
+            $availability->user_id  = $userID;
             $availability->save();
         }
-        
+
         return response()->json([
-            'status' => 'Availability created',
+            'status'        => 'Availability created',
             'isOverlapping' => $isOverlapping,
-            /*'isToday' => $isToday,
-            'start' => $start->toAtomString(),
-            'end' => $end->toAtomString(),*/
-            'id' => isset($availability) ? $availability->id : null
+            'event'         => $availability,
+            'id'            => isset($availability) ? $availability->id : null
         ]);
     }
     

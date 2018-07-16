@@ -147,9 +147,15 @@
                         }
                     })
                     .then(function(response){
+                        console.log(response);
+
                         if (!response.data.isOverlapping) {
                             // Assign the created ID to the event object
                             newEvent.id = response.data.id;
+
+                            newEvent.start = response.data.event.start;
+                            newEvent.end = response.data.event.end;
+
                             // Render the event on the calendar
                             calendar.fullCalendar('renderEvent', newEvent);
                         } else {
