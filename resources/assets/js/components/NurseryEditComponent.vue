@@ -8,7 +8,7 @@
             return data;
         },
         mounted() {
-            console.log('User edit component mounted.');
+            console.log('Nursery edit component mounted.');
         },
         methods: {},
         directives: {mask}

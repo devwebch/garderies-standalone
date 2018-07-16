@@ -28,6 +28,7 @@ Vue.component('booking-request-show', require('./components/BookingRequestShowCo
 Vue.component('user-show', require('./components/UserShowComponent'));
 Vue.component('user-edit', require('./components/UserEditComponent'));
 Vue.component('nursery-show', require('./components/NurseryShowComponent'));
+Vue.component('nursery-edit', require('./components/NurseryEditComponent'));
 Vue.component('network-show', require('./components/NetworkShowComponent'));
 Vue.component('network-edit', require('./components/NetworkEditComponent'));
 
