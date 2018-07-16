@@ -49,7 +49,8 @@ class NurserySeeder extends Seeder
                 'post_code'     => rand(1000, 1500),
                 'city'          => $faker->city,
                 'email'         => $faker->companyEmail,
-                'phone'         => $faker->phoneNumber
+                'phone'         => $faker->phoneNumber,
+                'network_id'    => rand(1,2)
             ]);
         }
     }
