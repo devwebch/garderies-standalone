@@ -56,7 +56,7 @@ class UserController extends Controller
         }
         
         $perPage    = $request->has('per_page') ? (int) $request->per_page : null;
-        $data       = $users->paginate($perPage);
+        $data       = $users->distinct()->paginate($perPage);
         
         return response()->json($data);
     }
