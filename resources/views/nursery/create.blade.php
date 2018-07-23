@@ -1,10 +1,10 @@
 @extends('layouts.two-columns')
 
-@section('title', 'Créer une nursery')
+@section('title', 'Créer une garderie')
 
 @section('content')
     <div class="card card-default">
-        <div class="card-header">Ajouter un établissement</div>
+        <div class="card-header">Ajouter une garderie</div>
         <div class="card-body">
             <form action="{{route('nurseries.store')}}" method="post">
                 {{csrf_field()}}

@@ -1,6 +1,6 @@
 @extends('layouts.two-columns')
 
-@section('title', 'Bookings requests')
+@section('title', 'Demandes de remplacement')
 
 @section('content')
     

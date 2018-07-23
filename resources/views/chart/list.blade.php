@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>Nom et prénom</th>
-            <th>Etablissement</th>
+            <th>Garderie</th>
             <th class="text-right">Remplacements</th>
         </tr>
     </thead>

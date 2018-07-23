@@ -1,9 +1,9 @@
 @extends('layouts.two-columns')
 
-@section('title', 'Home')
+@section('title', 'Vos garderies')
 
 @section('content')
-    <vue-table title="Etablissements" api-url="/api/nurseries" :fields="[{
+    <vue-table title="Garderies" api-url="/api/nurseries" :fields="[{
             name: '__slot:nurserylink',
             sortField: 'nurseries.name',
             title: 'Nom',

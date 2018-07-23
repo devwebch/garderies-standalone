@@ -126,7 +126,7 @@
                                         <th>Jour</th>
                                         <th>Début</th>
                                         <th>Fin</th>
-                                        <th>Etablissement</th>
+                                        <th>Garderie</th>
                                         <th width="120">Status</th>
                                         <th width="50"></th>
                                     </tr>
@@ -169,7 +169,7 @@
                                         <th>Jour</th>
                                         <th>Début</th>
                                         <th>Fin</th>
-                                        <th>Etablissement</th>
+                                        <th>Garderie</th>
                                         <th width="120">Status</th>
                                         <th width="50"></th>
                                     </tr>

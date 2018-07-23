@@ -23,7 +23,7 @@
                         <p><strong>Fin :</strong> {{$booking->end->format('H\hi')}}</p>
                         <p><strong>Employé :</strong> <a href="{{route('users.show', $booking->user ?? 0)}}">{{$booking->user->name ?? '-'}}</a></p>
                         <p><strong>Remplaçant :</strong> <a href="{{route('users.show', $booking->substitute ?? 0)}}">{{$booking->substitute->name ?? '-'}}</a></p>
-                        <p><strong>Etablissement :</strong> <a href="{{route('nurseries.show', $booking->nursery ?? 0)}}">{{$booking->nursery->name ?? '-'}}</a></p>
+                        <p><strong>Garderie :</strong> <a href="{{route('nurseries.show', $booking->nursery ?? 0)}}">{{$booking->nursery->name ?? '-'}}</a></p>
                         <p><strong>Status :</strong>
                             @switch($booking->status)
                                 @case(\App\Booking::STATUS_PENDING)

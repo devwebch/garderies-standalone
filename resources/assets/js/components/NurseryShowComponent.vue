@@ -17,7 +17,7 @@
                 if (!nursery) { return; }
                 swal({
                     title: 'Attention !',
-                    text: "Vous êtes sur le point de supprimer définitivement cette nursery.",
+                    text: "Vous êtes sur le point de supprimer définitivement cette garderie.",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Supprimer',

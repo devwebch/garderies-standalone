@@ -12,7 +12,7 @@
                     <th>Jour</th>
                     <th>Début</th>
                     <th>Fin</th>
-                    <th>Etablissement</th>
+                    <th>Garderie</th>
                 </tr>
                 </thead>
                 @foreach($bookings as $slot)

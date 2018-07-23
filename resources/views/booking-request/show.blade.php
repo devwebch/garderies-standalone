@@ -69,7 +69,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <p><strong>Etablissement :</strong>
+                        <p><strong>Garderie :</strong>
                             <a href="{{route('nurseries.show', $bookingRequest->nursery ?? 0)}}">{{$bookingRequest->nursery->name ?? '-'}}</a>
                         </p>
                         <p><strong>Groupe de travail :</strong> {{$bookingRequest->workgroup->name ?? '-'}}</p>

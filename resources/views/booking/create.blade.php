@@ -32,7 +32,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col">
-                            <label for="nursery">Etablissement</label>
+                            <label for="nursery">Garderie</label>
                             <select name="nursery" class="form-control">
                                 <option value="">Sélectionner...</option>
                                 @foreach($nurseries as $nursery)

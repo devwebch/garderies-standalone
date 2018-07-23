@@ -45,7 +45,7 @@
                     },
                     {
                         target: '.v-step-0',  // We're using document.querySelector() under the hood
-                        content: "Gardez un oeil sur tous vos établissements"
+                        content: "Gardez un oeil sur tous vos garderies"
                     },
                     {
                         target: '.v-step-1',
@@ -64,7 +64,7 @@
                     },
                     {
                         target: '.link-networks',
-                        content: "Vous gérez plusieurs établissements ? Organisez-les en réseaux pour plus de clareté !"
+                        content: "Vous gérez plusieurs garderies ? Organisez-les en réseaux pour plus de clareté !"
                     },
                     {
                         target: '.link-nurseries',

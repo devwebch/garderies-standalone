@@ -16,7 +16,7 @@
                         <a class="nav-link" href="{{route('networks.index')}}"><i class="fas fa-sitemap"></i> Réseaux</a>
                     </li>
                     <li class="nav-item link-nurseries">
-                        <a class="nav-link" href="{{route('nurseries.index')}}"><i class="fas fa-building"></i> Etablissements</a>
+                        <a class="nav-link" href="{{route('nurseries.index')}}"><i class="fas fa-building"></i> Garderies</a>
                     </li>
                     <li class="nav-item link-users">
                         <a class="nav-link" href="{{route('users.index')}}"><i class="fas fa-users"></i> Employés</a>

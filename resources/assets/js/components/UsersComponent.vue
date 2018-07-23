@@ -8,7 +8,7 @@
                     <th>Nom et prénom</th>
                     <th>Téléphone</th>
                     <th class="d-none d-lg-table-cell">E-mail</th>
-                    <th v-if="!nursery">Etablissement</th>
+                    <th v-if="!nursery">Garderie</th>
                     <th class="d-none d-lg-table-cell">Réseaux</th>
                 </tr>
                 </thead>

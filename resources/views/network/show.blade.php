@@ -26,7 +26,7 @@
         </div>
     </network-show>
 
-    <vue-table title="Etablissements" api-url="/api/nurseries?network={{$network->id}}" :fields="[{
+    <vue-table title="Garderies" api-url="/api/nurseries?network={{$network->id}}" :fields="[{
             name: '__slot:nurserylink',
             sortField: 'nurseries.name',
             title: 'Nom',
@@ -60,7 +60,7 @@
             }, {
               name: '__slot:nurserylinkrelation',
               sortField: 'nurseries.name',
-              title: 'Etablissement'
+              title: 'Garderie'
             }]"></vue-table>
 @endsection
 

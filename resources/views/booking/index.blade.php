@@ -1,6 +1,6 @@
 @extends('layouts.two-columns')
 
-@section('title', 'Bookings')
+@section('title', 'Remplacements')
 
 @section('content')
     
@@ -24,7 +24,7 @@
             }, {
               name: '__slot:nurserylinkrelation',
               sortField: 'nurseries.name',
-              title: 'Etablissement'
+              title: 'Garderie'
             }, {
               name: 'start',
               sortField: 'start',
@@ -63,7 +63,7 @@
             }, {
               name: '__slot:nurserylinkrelation',
               sortField: 'nurseries.name',
-              title: 'Etablissement'
+              title: 'Garderie'
             }, {
               name: 'start',
               sortField: 'start',

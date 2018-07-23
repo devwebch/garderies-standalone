@@ -18,7 +18,7 @@
             }, {
               name: '__slot:nurserylinkrelation',
               sortField: 'nurseries.name',
-              title: 'Etablissement'
+              title: 'Garderie'
             }, {
               name: '__slot:networkslinkrelation',
               sortField: 'networks.name',

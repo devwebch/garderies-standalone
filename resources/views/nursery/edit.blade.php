@@ -1,11 +1,11 @@
 @extends('layouts.two-columns')
 
-@section('title', 'Edition Etablissement')
+@section('title', 'Edition Garderie')
 
 @section('content')
     <nursery-edit inline-template>
         <div class="card card-default">
-            <div class="card-header">Edition établissement</div>
+            <div class="card-header">Edition garderie</div>
             <div class="card-body">
                 <form action="{{route('nurseries.update', [$nursery->id])}}" method="post">
                     {{csrf_field()}}
