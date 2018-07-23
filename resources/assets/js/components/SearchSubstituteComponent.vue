@@ -39,11 +39,24 @@
                             <button class="btn btn-primary btn-block" type="submit">Rechercher</button>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="extended_search" name="extended_search"  v-model="search.extended">
+                                <label class="form-check-label" for="extended_search">Recherche étendue</label>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
         <div class="card card-default">
-            <div class="card-header bg-dark text-white">Résultats de recherche</div>
+            <div class="card-header bg-dark text-white">
+                Résultats de recherche
+                <div class="float-right" v-if="selectedAvailabilities.length">
+                    <button class="btn btn-success btn-sm" v-on:click="contactPeopleValidation">Contacter les personnes sélectionnées</button>
+                </div>
+            </div>
             <div class="card-body">
 
                 <div class="loading-overlay" v-show="!loaded">
@@ -56,15 +69,15 @@
                 </div>
 
                 <div v-show="availabilities.length">
-                    <table class="table table-borderless table-striped table-sm table-responsive-sm">
+                    <table class="table table-borderless table-striped table-smf table-responsive-sm">
                         <thead>
                         <tr>
                             <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>
                             <th>Remplaçant</th>
-                            <th>Date</th>
-                            <th>Disponibilité</th>
-                            <th class="d-none d-md-table-cell"><span data-toggle="tooltip" title="Réseau de travail">Réseaux</span></th>
-                            <th class="d-none d-md-table-cell text-right">IC*</th>
+                            <th class="d-none d-lg-table-cell">Date</th>
+                            <th><span data-toggle="tooltip" title="Horaire libre">Disponibilité</span></th>
+                            <th class="d-none d-md-table-cell"><span data-toggle="tooltip" title="Réseau dans lequel le remplacant est disponible">Réseaux</span></th>
+                            <th class="d-none d-md-table-cell text-right"><span data-toggle="tooltip" title="Indice de correspondance">IC<span>*</span></span></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -74,7 +87,7 @@
                                 <a v-if="item.user" :href="item.user.link" target="_blank">{{item.user.name}}</a>
                                 <span v-if="!item.user" class="text-muted">Aucun</span>
                             </td>
-                            <td><i class="fas fa-calendar d-none d-sm-inline"></i> {{item.start}}</td>
+                            <td class="d-none d-lg-table-cell"><i class="fas fa-calendar d-none d-sm-inline"></i> {{item.start}}</td>
                             <td class="text-truncate">{{item.start_hour}} <i class="fas fa-arrow-right"></i>
                                 {{item.end_hour}}
                             </td>
@@ -99,9 +112,7 @@
                 <div class="alert alert-info mb-0" v-if="!availabilities.length">Aucune disponibilité</div>
             </div>
             <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">
-                <button class="btn btn-primary" v-on:click="contactPeopleValidation">Contacter les personnes
-                    sélectionnées
-                </button>
+                <button class="btn btn-success" v-on:click="contactPeopleValidation">Contacter les personnes sélectionnées</button>
             </div>
         </div>
 
@@ -125,7 +136,7 @@
 
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label for="nursery">Etablissement <span class="text-danger">*</span></label>
+                                <label for="nursery">Garderie <span class="text-danger">*</span></label>
                                 <select name="nursery" class="form-control" v-model="nursery">
                                     <option value="0">Sélectionner...</option>
                                     <option v-for="nursery in nurseries" :value="nursery.id">{{nursery.name}}</option>
@@ -197,7 +208,8 @@
         search: {
             day_start: formattedDate(today),
             hour_start: formattedHour(today),
-            hour_end: formattedHour(later)
+            hour_end: formattedHour(later),
+            extended: false
         },
         nurseries: [],
         nursery: 0,
@@ -229,6 +241,7 @@
                         'day_start': data.search.day_start,
                         'hour_start': data.search.hour_start,
                         'hour_end': data.search.hour_end,
+                        'extended': data.search.extended
                     }
                 })
                 .then(function (response) {

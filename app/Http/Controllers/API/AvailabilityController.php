@@ -189,9 +189,10 @@ class AvailabilityController extends Controller
     public function search(Request $request)
     {
         global $date_start, $date_end;
-        
-        $date_start = null;
-        $date_end = null;
+
+        $ext_search     = ($request->input('extended') == 'true') ? true : false ;
+        $date_start     = null;
+        $date_end       = null;
         
         // check if all the inputs are presents
         if ($request->input('day_start') && $request->input('hour_start') && $request->input('hour_end')) {
@@ -211,20 +212,31 @@ class AvailabilityController extends Controller
         
         // if the search perimeter is correctly defined, proceed
         if ($date_start && $date_end) {
+
+            $date_start_extended    = $date_start->copy()->addMinutes(30);
+            $date_end_extended      = $date_end->copy()->subMinutes(30);
             
             // availabilities request
-            $collection = Availability::where([
-                ['start', '<=', $date_start], ['end', '>=', $date_end] // complete
-            ])->orWhere([
-                ['start', '<=', $date_start], ['end', '<', $date_end], ['end', '>', $date_start] // partial
-            ])->orWhere([
-                ['start', '>', $date_start], ['end', '>=', $date_end], ['start', '<', $date_end] // partial
-            ])->orWhere([
-                ['start', '>', $date_start], ['end', '<', $date_end] // partial
-            ])
-            ->orderBy('start')
-            ->get();
-            
+            if (!$ext_search) {
+                $collection = Availability::where([
+                    ['start', '<=', $date_start_extended], ['end', '>=', $date_end_extended] // complete
+                ])
+                ->orderBy('start')
+                ->get();
+            } else {
+                $collection = Availability::where([
+                    ['start', '<=', $date_start], ['end', '>=', $date_end] // complete
+                ])->orWhere([
+                    ['start', '<=', $date_start], ['end', '<', $date_end], ['end', '>', $date_start] // partial
+                ])->orWhere([
+                    ['start', '>', $date_start], ['end', '>=', $date_end], ['start', '<', $date_end] // partial
+                ])->orWhere([
+                    ['start', '>', $date_start], ['end', '<', $date_end] // partial
+                ])
+                ->orderBy('start')
+                ->get();
+            }
+
             // determine the matching between the slot and the request
             $collection->each(function ($item, $key) {
                 global $collection, $date_start, $date_end;
