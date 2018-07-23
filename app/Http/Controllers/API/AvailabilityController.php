@@ -221,11 +221,13 @@ class AvailabilityController extends Controller
                 ['start', '>', $date_start], ['end', '>=', $date_end], ['start', '<', $date_end] // partial
             ])->orWhere([
                 ['start', '>', $date_start], ['end', '<', $date_end] // partial
-            ])->get();
+            ])
+            ->orderBy('start')
+            ->get();
             
             // determine the matching between the slot and the request
             $collection->each(function ($item, $key) {
-                global $date_start, $date_end;
+                global $collection, $date_start, $date_end;
                 
                 if ($item->start <= $date_start && $item->end >= $date_end) {
                     $item->matching = 'complete';
@@ -243,7 +245,9 @@ class AvailabilityController extends Controller
         } else {
             $collection = Availability::all();
         }
-        
+
+        $collection = $collection->sortBy('matching');
+
         return AvailabilityResource::collection($collection);
     }
 }

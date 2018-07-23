@@ -7,3 +7,4 @@ vendor
 /public/img/
 /public/js/
 !/resources/assets/sass/vendor/
+/public/mix-manifest.json

@@ -30,31 +30,36 @@
                                 <a href="#" v-on:click.prevent="deleteUser({{$user->id}})" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Supprimer</a>
                             </div>
                             <ul class="list-group list-group-flush text-left">
-                                <li class="list-group-item text-muted">
-                                    <strong>Téléphone :</strong> <span>{{$user->phone}}</span>
+                                <li class="list-group-item">
+                                    <strong>Téléphone :</strong> <span class="text-muted">{{$user->phone}}</span>
                                 </li>
-                                <li class="list-group-item text-muted">
-                                    <strong>E-mail :</strong> <span>{{$user->email}}</span>
+                                <li class="list-group-item">
+                                    <strong>E-mail :</strong> <span class="text-muted">{{$user->email}}</span>
                                 </li>
-                                <li class="list-group-item text-muted">
-                                    <strong>Garderie :</strong> <span>{{$user->nursery->name ?? '-'}}</span>
+                                <li class="list-group-item">
+                                    <strong>Garderie :</strong> <span class="text-muted">{{$user->nursery->name ?? '-'}}</span>
                                 </li>
-                                <li class="list-group-item text-muted">
-                                    <strong>Diplôme :</strong> <span>{{$user->diploma->name ?? '-'}}</span>
+                                <li class="list-group-item">
+                                    <strong>Diplôme :</strong> <span class="text-muted">{{$user->diploma->name ?? '-'}}</span>
                                 </li>
-                            </ul>
-                            <div class="card-body">
-                                <p class="text-left"><strong>Groupes de travail :</strong>
+                                <li class="list-group-item">
+                                    <strong>Préférences de contact :</strong>
+                                    <span class="text-muted p-1" data-toggle="tooltip" title="Téléphone"><i class="fas fa-phone"></i></span>
+                                    <span class="text-muted p-1" data-toggle="tooltip" title="E-mail"><i class="fas fa-envelope"></i></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Groupes de travail :</strong>
                                     @foreach($user->workgroups as $workgroup)
                                         <span class="badge badge-warning">{{$workgroup->name}}</span>
                                     @endforeach
-                                </p>
-                                <p class="text-left"><strong>Réseaux :</strong>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Réseaux :</strong>
                                     @foreach($user->networks as $network)
                                         <span class="badge badge-info">{{$network->name}}</span>
                                     @endforeach
-                                </p>
-                            </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
