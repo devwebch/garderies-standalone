@@ -82,7 +82,7 @@ class UserController extends Controller
             'availabilities'    => $availabilities,
             'bookings'          => $bookings,
             'bookingRequests'   => $bookingRequests,
-            'avatar'            => $avatars[rand(0, count($avatars) - 1)]
+            'avatar'            => $avatars[$user->id % 3]
         ]);
     }
 

@@ -71,30 +71,49 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
+        /**
+         * Calculate the difference between the original booking request and the availability
+         */
         $request_start          = $booking->request->start;
         $request_end            = $booking->request->end;
         $availability_start     = $booking->request->availability->start;
         $availability_end       = $booking->request->availability->end;
 
+        // Durations
         $booking_duration       = $request_start->diffInMinutes($request_end);
         $availability_duration  = $availability_start->diffInMinutes($availability_end);
 
+        // Differences between starting and ending hours
         $booking_delay_start    = ($request_start->lte($availability_start)) ? $request_start->diffInMinutes($availability_start) : 0;
         $booking_delay_end      = ($request_end->gte($availability_end)) ? $request_end->diffInMinutes($availability_end) : 0;
 
+        // Percentages calculation
         $completion_pct     = ($availability_duration * 100) / $booking_duration;
         $start_delay_pct    = ($booking_delay_start * 100) / $booking_duration;
         $end_delay_pct      = ($booking_delay_end * 100) / $booking_duration;
 
+        /**
+         * User avatars
+         * select an avatar based on the user ID, randomize it enough to get 2 different images
+         */
         $avatars = ['img/dummy_avatar_1.jpg', 'img/dummy_avatar_2.jpg', 'img/dummy_avatar_3.jpg'];
+        $user_avatar_id_1 = $booking->user->id % 3;
+        $user_avatar_id_2 = $booking->substitute->id % 3;
+        $avatar_1 = $avatars[$user_avatar_id_1];
+        $avatar_2 = $avatars[$user_avatar_id_2];
+
+        if ($user_avatar_id_1 == $user_avatar_id_2) {
+            $others = array_values(array_except($avatars, $user_avatar_id_1)); // remove the same avatar from the array
+            $avatar_2 = head($others); // retrieve the first one
+        }
 
         return view('booking.show', [
             'booking'           => $booking,
             'completion_pct'    => $completion_pct,
             'start_pct'         => $start_delay_pct,
             'end_pct'           => $end_delay_pct,
-            'avatar1'           => $avatars[0],
-            'avatar2'           => $avatars[2],
+            'avatar1'           => $avatar_1,
+            'avatar2'           => $avatar_2,
         ]);
     }
 
