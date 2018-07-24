@@ -19,6 +19,7 @@ class CreateBookingsTable extends Migration
             $table->integer('user_id'); // person asking for substitution
             $table->integer('substitute_id'); // person filling the substitution
             $table->integer('nursery_id'); // nursery in which the substitution is occuring
+            $table->integer('purpose_id')->nullable();
             $table->dateTime('start');
             $table->dateTime('end');
             $table->integer('status')->default(0);

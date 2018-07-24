@@ -17,9 +17,12 @@ $factory->define(App\User::class, function (Faker $faker) {
 
     $diplomas = \App\Diploma::count();
 
+    $first_name = $faker->firstName('female');
+    $last_name  = $faker->lastName;
+
     return [
-        'name'              => $faker->firstName('female') . ' ' . $faker->lastName,
-        'email'             => $faker->unique()->safeEmail,
+        'name'              => $first_name . ' ' . $last_name,
+        'email'             => strtolower($first_name) . '.' . strtolower($last_name) . '@example.org',
         'phone'             => '+41 79 ' . rand(300, 500) . ' ' . rand(20, 90) . ' ' . rand(20, 90),
         'nursery_id'        => rand(1, 15),
         'diploma_id'        => rand(1, $diplomas),

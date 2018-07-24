@@ -20,6 +20,7 @@ class CreateBookingRequestsTable extends Migration
             $table->integer('availability_id'); // requested availability
             $table->integer('nursery_id'); // nursery where the booking is needed
             $table->integer('workgroup_id')->nullable();
+            $table->integer('purpose_id')->nullable();
             $table->dateTime('start');
             $table->dateTime('end');
             $table->string('message')->nullable();

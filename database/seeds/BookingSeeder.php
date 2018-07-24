@@ -38,6 +38,7 @@ class BookingSeeder extends Seeder
                     'user_id'           => rand(2, $users),
                     'substitute_id'     => rand(2, $users),
                     'nursery_id'        => rand(1, $nurseries),
+                    'purpose_id'        => rand(1, 4),
                     'start'             => $start,
                     'end'               => $end,
                     'status'            => $status,

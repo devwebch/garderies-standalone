@@ -19,7 +19,7 @@ class BookingRequestController extends Controller
      */
     public function index()
     {
-        return 'Lol wut';
+        //
     }
 
     /**
@@ -109,8 +109,15 @@ class BookingRequestController extends Controller
             $booking->user_id           = $bookingRequest->user->id;
             $booking->substitute_id     = $bookingRequest->substitute->id;
             $booking->nursery_id        = $bookingRequest->nursery->id;
-            $booking->start             = $bookingRequest->availability->start;
-            $booking->end               = $bookingRequest->availability->end;
+
+            $booking->start = ($bookingRequest->start->gte($bookingRequest->availability->start))
+                ? $bookingRequest->start
+                : $bookingRequest->availability->start;
+
+            $booking->end = ($bookingRequest->end->gte($bookingRequest->availability->end))
+                ? $bookingRequest->availability->end
+                : $bookingRequest->end;
+
             $booking->status            = Booking::STATUS_APPROVED; //TODO: will depends on the process
             $booking->save();
 

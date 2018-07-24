@@ -71,7 +71,29 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        return view('booking.show', ['booking' => $booking]);
+        $request_start          = $booking->request->start;
+        $request_end            = $booking->request->end;
+        $availability_start     = $booking->request->availability->start;
+        $availability_end       = $booking->request->availability->end;
+
+        $booking_duration       = $request_start->diffInMinutes($request_end);
+        $availability_duration  = $availability_start->diffInMinutes($availability_end);
+
+        $booking_delay_start    = ($request_start->lte($availability_start)) ? $request_start->diffInMinutes($availability_start) : 0;
+        $booking_delay_end      = ($request_end->gte($availability_end)) ? $request_end->diffInMinutes($availability_end) : 0;
+
+        $completion_pct     = ($availability_duration * 100) / $booking_duration;
+        $start_delay_pct    = ($booking_delay_start * 100) / $booking_duration;
+        $end_delay_pct      = ($booking_delay_end * 100) / $booking_duration;
+
+        echo $booking_delay_start;
+
+        return view('booking.show', [
+            'booking'           => $booking,
+            'completion_pct'    => $completion_pct,
+            'start_pct'         => $start_delay_pct,
+            'end_pct'           => $end_delay_pct,
+        ]);
     }
 
     /**
