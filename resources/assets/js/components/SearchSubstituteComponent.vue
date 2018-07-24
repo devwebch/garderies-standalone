@@ -271,7 +271,6 @@
                    data.workgroups = response.data;
                 });
 
-
                 $('.modal').modal('show'); // Show the modal
             },
             contactPeople: function () {
@@ -286,7 +285,6 @@
                     workgroup: data.workgroup,
                     message: data.message
                 }).then(function (response) {
-                    console.log(response);
 
                     // No error, show an alert
                     swal({
@@ -297,6 +295,7 @@
                         data.peopleSelected = false;
                         data.selectedAvailabilities = [];
                         data.nursery = 0;
+                        data.workgroup = 0;
                         data.message = null;
                     });
                 });
