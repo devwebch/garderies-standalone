@@ -13,8 +13,7 @@
                     <div class="row">
                         <div class="form-group col">
                             <label for="user">Employé :</label>
-                            <select name="user" class="form-control">
-                                <option value="">Sélectionner...</option>
+                            <select name="user" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary">
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
@@ -22,8 +21,7 @@
                         </div>
                         <div class="form-group col">
                             <label for="substitute">Remplaçant :</label>
-                            <select name="substitute" class="form-control">
-                                <option value="">Sélectionner...</option>
+                            <select name="substitute" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary">
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
@@ -33,8 +31,7 @@
                     <div class="row">
                         <div class="form-group col">
                             <label for="nursery">Garderie</label>
-                            <select name="nursery" class="form-control">
-                                <option value="">Sélectionner...</option>
+                            <select name="nursery" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary">
                                 @foreach($nurseries as $nursery)
                                     <option value="{{$nursery->id}}">{{$nursery->name}}</option>
                                 @endforeach

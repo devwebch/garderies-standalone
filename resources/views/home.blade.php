@@ -13,9 +13,9 @@
             <div class="card card--nurseries card-default">
                 <div class="card-body">
                     <div class="widget-count v-step-0">
-                        <div class="icon"><i class="fas fa-sitemap"></i></div>
-                        <div class="number">{{$count_nursery}}</div>
-                        <h3 class="text-muted">Garderies dans votre réseau</h3>
+                        <div class="icon"><i class="fas fa-building"></i></div>
+                        <div class="number"><a href="/nurseries" class="text-secondary">{{$count_nursery}}</a></div>
+                        <h3 class="text-muted"><a href="/nurseries" class="text-secondary">Garderies dans vos réseaux</a></h3>
                     </div>
                 </div>
             </div>
@@ -25,8 +25,8 @@
                 <div class="card-body">
                     <div class="widget-count v-step-1">
                         <div class="icon"><i class="fas fa-users"></i></div>
-                        <div class="number">{{$count_user}}</div>
-                        <h3 class="text-muted">Nombre d'employés</h3>
+                        <div class="number"><a href="/users" class="text-secondary">{{$count_user}}</a></div>
+                        <h3 class="text-muted"><a href="/users" class="text-secondary">Nombre d'employés</a></h3>
                     </div>
                 </div>
             </div>
@@ -36,8 +36,8 @@
                 <div class="card-body">
                     <div class="widget-count v-step-2">
                         <div class="icon"><i class="fas fa-user-clock"></i></div>
-                        <div class="number">{{$count_booking}}</div>
-                        <h3 class="text-muted">Remplacements ce mois</h3>
+                        <div class="number"><a href="/booking-requests" class="text-secondary">{{$count_booking}}</a></div>
+                        <h3 class="text-muted"><a href="/booking-requests" class="text-secondary">Remplacements ce mois</a></h3>
                     </div>
                 </div>
             </div>

@@ -43,7 +43,11 @@
                                 <li class="list-group-item">
                                     <strong>Garderie :</strong>
                                     <span class="text-muted">
-                                        <a href="{{route('nurseries.show', $user->nursery)}}">{{$user->nursery->name ?? '-'}}</a>
+                                        @if ($user->nursery)
+                                            <a href="{{route('nurseries.show', $user->nursery)}}">{{$user->nursery->name ?? '-'}}</a>
+                                        @else
+                                            -
+                                        @endif
                                     </span>
                                 </li>
                                 <li class="list-group-item">
@@ -56,15 +60,19 @@
                                 </li>
                                 <li class="list-group-item">
                                     <strong>Groupes de travail :</strong>
-                                    @foreach($user->workgroups as $workgroup)
+                                    @forelse($user->workgroups as $workgroup)
                                         <span class="badge badge-warning">{{$workgroup->name}}</span>
-                                    @endforeach
+                                    @empty
+                                        -
+                                    @endforelse
                                 </li>
                                 <li class="list-group-item">
                                     <strong>Réseaux :</strong>
-                                    @foreach($user->networks as $network)
+                                    @forelse ($user->networks as $network)
                                         <span class="badge badge-info">{{$network->name}}</span>
-                                    @endforeach
+                                    @empty
+                                        -
+                                    @endforelse
                                 </li>
                             </ul>
                         </div>

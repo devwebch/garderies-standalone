@@ -4,6 +4,9 @@
     import 'flatPickr/dist/flatpickr.css';
     import {French} from 'flatPickr/dist/l10n/fr';
 
+    import selectpicker  from 'bootstrap-select';
+    import 'bootstrap-select/dist/css/bootstrap-select.min.css';
+
     let data = {
         flatPickrConfig: {
             wrap: true,
