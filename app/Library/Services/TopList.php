@@ -13,7 +13,7 @@ class TopList
 {
     public function topReplacements($count = 10)
     {
-        $topUsers = User::withCount('bookings')->latest('bookings_count')->take($count)->with('bookings')->get();
+        $topUsers = User::where('id', '!=', 1)->withCount('bookings')->latest('bookings_count')->take($count)->with('bookings')->get();
         return view('chart.list', ['topUsers' => $topUsers]);
     }
 }

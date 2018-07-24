@@ -14,7 +14,7 @@ class HomeController extends Controller
     {
         $count_nursery  = Nursery::all()->count();
         $count_user     = User::all()->count();
-        $count_booking  = Booking::whereMonth('start', date('m'))->count();
+        $count_booking  = Booking::where('user_id', '!=', 1)->whereMonth('start', date('m'))->count();
 
         $bookingsChart = new BookingsChart();
 
