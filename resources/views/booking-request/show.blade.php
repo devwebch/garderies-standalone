@@ -30,17 +30,9 @@
                     @break
                 @endswitch
 
-                @switch($bookingRequest->availability->status)
-                    @case(\App\Availability::STATUS_UNTOUCHED)
-                    <div class="alert alert-success">Toujours disponible</div>
-                    @break
-                    @case(\App\Availability::STATUS_BOOKED)
-                    <div class="alert alert-warning">Le remplacant n'est plus disponible pour cet horaire</div>
-                    @break
-                    @case(\App\Availability::STATUS_ARCHIVED)
-                    <div class="alert alert-danger">Archive</div>
-                    @break
-                @endswitch
+                @if ($bookingRequest->availability->status == \App\Availability::STATUS_BOOKED || $bookingRequest->availability->status == \App\Availability::STATUS_ARCHIVED)
+                        <div class="alert alert-warning">Le remplacant n'est plus disponible pour cet horaire</div>
+                @endif
 
                 <div class="row">
                     <div class="col-md-6 mb-4 mb-sm-0">
