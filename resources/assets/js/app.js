@@ -32,6 +32,7 @@ Vue.component('nursery-create', require('./components/NurseryCreateComponent'));
 Vue.component('nursery-edit', require('./components/NurseryEditComponent'));
 Vue.component('network-show', require('./components/NetworkShowComponent'));
 Vue.component('network-edit', require('./components/NetworkEditComponent'));
+Vue.component('notifications', require('./components/NotificationsComponent'));
 
 Vue.component('vue-table', require('./components/VueTable'));
 

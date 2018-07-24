@@ -29,11 +29,8 @@
                     </li>
                 </ul>
             </div>
-            <div class="float-right text-white d-none d-lg-block">
-                <a href="#" class="btn btn-link text-white" data-toggle="popover" data-placement="bottom" data-content="Il n'y a pas de notifications pour le moment." title="Vos notifications">
-                    <i class="fas fa-bell"></i>
-                </a>
-            </div>
+
+            <notifications></notifications>
         </div>
     </nav>
 </header>

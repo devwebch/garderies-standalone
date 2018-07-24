@@ -41,10 +41,13 @@ if (token) {
 // Initialize bootstrap plugins
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
-    $('[data-toggle="popover"]').popover({
-        trigger: 'focus hover'
-    });
+    /*$('[data-toggle="popover"]').popover({
+        trigger: 'click',
+        content: $('#notification-content').html(),
+        html: true
+    });*/
 });
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
