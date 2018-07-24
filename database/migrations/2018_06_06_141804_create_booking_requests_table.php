@@ -23,7 +23,7 @@ class CreateBookingRequestsTable extends Migration
             $table->integer('purpose_id')->nullable();
             $table->dateTime('start');
             $table->dateTime('end');
-            $table->string('message')->nullable();
+            $table->text('message')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
