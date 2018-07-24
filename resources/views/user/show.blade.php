@@ -20,24 +20,35 @@
                         <div class="profile-card text-center">
                             <div class="card-body">
 
-                                <div class="thumb-xl member-thumb m-b-10 center-block">
+                                <div class="thumb-xl member-thumb mb-2 center-block">
                                     <img src="{{asset($avatar)}}" class="rounded-circle img-thumbnail" alt="User profile picture">
                                 </div>
-                                <div class="">
-                                    <h5 class="m-b-5">{{$user->name}}</h5>
+                                <div>
+                                    <h5>{{$user->name}}</h5>
                                 </div>
-                                <a href="{{route('users.edit', [$user->id])}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-edit"></i> Editer</a>
-                                <a href="#" v-on:click.prevent="deleteUser({{$user->id}})" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Supprimer</a>
+                                <div class="actions pt-2">
+                                    <a href="{{route('users.edit', [$user->id])}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-edit"></i> Editer</a>
+                                    <a href="#" v-on:click.prevent="deleteUser({{$user->id}})" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Supprimer</a>
+                                </div>
                             </div>
                             <ul class="list-group list-group-flush text-left">
                                 <li class="list-group-item">
-                                    <strong>Téléphone :</strong> <span class="text-muted">{{$user->phone}}</span>
+                                    <strong>Téléphone :</strong>
+                                    <span class="text-muted">
+                                        <a href="tel:{{$user->phone}}">{{$user->phone}}</a>
+                                    </span>
                                 </li>
                                 <li class="list-group-item">
-                                    <strong>E-mail :</strong> <span class="text-muted">{{$user->email}}</span>
+                                    <strong>E-mail :</strong>
+                                    <span class="text-muted">
+                                        <a href="mailto:{{$user->email}}">{{$user->email}}</a>
+                                    </span>
                                 </li>
                                 <li class="list-group-item">
-                                    <strong>Garderie :</strong> <span class="text-muted">{{$user->nursery->name ?? '-'}}</span>
+                                    <strong>Garderie :</strong>
+                                    <span class="text-muted">
+                                        <a href="{{route('nurseries.show', $user->nursery)}}">{{$user->nursery->name ?? '-'}}</a>
+                                    </span>
                                 </li>
                                 <li class="list-group-item">
                                     <strong>Diplôme :</strong> <span class="text-muted">{{$user->diploma->name ?? '-'}}</span>

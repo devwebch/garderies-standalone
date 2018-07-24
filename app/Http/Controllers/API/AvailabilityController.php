@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Availability;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Availability as AvailabilityResource;
-use App\Http\Resources\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\App;
 
 class AvailabilityController extends Controller
 {
@@ -219,23 +217,36 @@ class AvailabilityController extends Controller
             // availabilities request
             if (!$ext_search) {
                 $collection = Availability::where([
-                    ['start', '<=', $date_start_extended], ['end', '>=', $date_end_extended] // complete
+                    ['start', '<=', $date_start_extended],
+                    ['end', '>=', $date_end_extended],
+                    ['status', Availability::STATUS_UNTOUCHED]// complete
                 ])
                 ->orderBy('start')
                 ->get();
             } else {
                 $collection = Availability::where([
-                    ['start', '<=', $date_start], ['end', '>=', $date_end] // complete
+                    ['start', '<=', $date_start],
+                    ['end', '>=', $date_end],
+                    ['status', Availability::STATUS_UNTOUCHED] // complete
                 ])->orWhere([
-                    ['start', '<=', $date_start], ['end', '<', $date_end], ['end', '>', $date_start] // partial
+                    ['start', '<=', $date_start],
+                    ['end', '<', $date_end],
+                    ['end', '>', $date_start],
+                    ['status', Availability::STATUS_UNTOUCHED] // partial
                 ])->orWhere([
-                    ['start', '>', $date_start], ['end', '>=', $date_end], ['start', '<', $date_end] // partial
+                    ['start', '>', $date_start],
+                    ['end', '>=', $date_end],
+                    ['start', '<', $date_end],
+                    ['status', Availability::STATUS_UNTOUCHED] // partial
                 ])->orWhere([
-                    ['start', '>', $date_start], ['end', '<', $date_end] // partial
+                    ['start', '>', $date_start],
+                    ['end', '<', $date_end],
+                    ['status', Availability::STATUS_UNTOUCHED] // partial
                 ])
                 ->orderBy('start')
                 ->get();
             }
+
 
             // determine the matching between the slot and the request
             $collection->each(function ($item, $key) {

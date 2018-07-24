@@ -86,13 +86,15 @@ class BookingController extends Controller
         $start_delay_pct    = ($booking_delay_start * 100) / $booking_duration;
         $end_delay_pct      = ($booking_delay_end * 100) / $booking_duration;
 
-        echo $booking_delay_start;
+        $avatars = ['img/dummy_avatar_1.jpg', 'img/dummy_avatar_2.jpg', 'img/dummy_avatar_3.jpg'];
 
         return view('booking.show', [
             'booking'           => $booking,
             'completion_pct'    => $completion_pct,
             'start_pct'         => $start_delay_pct,
             'end_pct'           => $end_delay_pct,
+            'avatar1'           => $avatars[0],
+            'avatar2'           => $avatars[2],
         ]);
     }
 

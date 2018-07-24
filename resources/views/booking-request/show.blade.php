@@ -9,7 +9,7 @@
                 Demande de remplaçement pour le {{$bookingRequest->start->format('d.m.Y')}}
 
                 <div class="actions float-right">
-                    @if ($bookingRequest->status == \App\BookingRequest::STATUS_PENDING)
+                    @if ($bookingRequest->status == \App\BookingRequest::STATUS_PENDING && $bookingRequest->availability->status == \App\Availability::STATUS_UNTOUCHED)
                         <a href="#" v-on:click.prevent="validateBookingRequest({{$bookingRequest->id}})" class="btn btn-success btn-sm mr-2"><i class="fas fa-check"></i> Valider</a>
                     @endif
                     <a href="#" v-on:click.prevent="deleteBookingRequest({{$bookingRequest->id}})" class="btn btn-danger btn-sm"><i class="fas fa-edit"></i> Supprimer</a>
@@ -27,6 +27,18 @@
                     @break
                     @case(\App\BookingRequest::STATUS_DENIED)
                     <div class="alert alert-danger">Demande refusée</div>
+                    @break
+                @endswitch
+
+                @switch($bookingRequest->availability->status)
+                    @case(\App\Availability::STATUS_UNTOUCHED)
+                    <div class="alert alert-success">Toujours disponible</div>
+                    @break
+                    @case(\App\Availability::STATUS_BOOKED)
+                    <div class="alert alert-warning">Le remplacant n'est plus disponible pour cet horaire</div>
+                    @break
+                    @case(\App\Availability::STATUS_ARCHIVED)
+                    <div class="alert alert-danger">Archive</div>
                     @break
                 @endswitch
 

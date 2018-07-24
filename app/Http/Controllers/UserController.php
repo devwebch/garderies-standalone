@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Booking;
+use App\BookingRequest;
 use App\Diploma;
 use App\Network;
 use App\Nursery;
@@ -51,18 +53,24 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        // Get future availabilities
         $availabilities = $user->availabilities()
             ->where('start', '>=', now())
             ->orderBy('start')
             ->get();
 
+        // Get approved future bookings
         $bookings = $user->bookings()
             ->with('nursery')
             ->where('start', '>=', now())
+            ->where('status', '=', Booking::STATUS_APPROVED)
             ->orderBy('start')
             ->get();
 
+        // Get pending future booking requests
         $bookingRequests = $user->bookingRequests()
+            ->where('start', '>=', now())
+            ->where('status', '=', BookingRequest::STATUS_PENDING)
             ->with('nursery')
             ->orderBy('start')
             ->get();
