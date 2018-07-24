@@ -40,6 +40,9 @@
               sortField: 'status',
               title: 'Status',
               callback: 'statusLabel'
+            }, {
+              name: '__slot:bookingShowlink',
+              title: ''
             }]"></vue-table>
 
 

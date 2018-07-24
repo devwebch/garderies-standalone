@@ -30,16 +30,14 @@
                     @break
                 @endswitch
 
-                @if ($bookingRequest->availability->status == \App\Availability::STATUS_BOOKED || $bookingRequest->availability->status == \App\Availability::STATUS_ARCHIVED)
+                @if (($bookingRequest->availability->status == \App\Availability::STATUS_BOOKED || $bookingRequest->availability->status == \App\Availability::STATUS_ARCHIVED))
                         <div class="alert alert-warning">Le remplacant n'est plus disponible pour cet horaire</div>
                 @endif
 
                 <div class="row">
                     <div class="col-md-6 mb-4 mb-sm-0">
                         <div class="card border">
-                            <div class="card-header bg-secondary text-white">
-                                Employé
-                            </div>
+                            <div class="card-header bg-secondary text-white">Employé</div>
                             <div class="card-body">
                                 <h4>{{$bookingRequest->user->name ?? '-'}}</h4>
                                 <hr>
@@ -52,17 +50,29 @@
                     </div>
                     <div class="col-md-6">
                         <div class="card border">
-                            <div class="card-header bg-primary text-white">
-                                Remplaçant
-                            </div>
+                            <div class="card-header bg-primary text-white">Remplaçant</div>
                             <div class="card-body">
                                 <h4>{{$bookingRequest->substitute->name ?? '-'}}</h4>
                                 <hr>
                                 @if ($bookingRequest->availability)
                                     <p class="text-muted">Disponibilité proposée par le remplacant.</p>
-                                    <p><strong>Date :</strong> {{$bookingRequest->availability->start->format('d.m.Y')}}</p>
-                                    <p><strong>Dès :</strong> {{$bookingRequest->availability->start->format('H\hi')}}</p>
-                                    <p><strong>Jusqu'à :</strong> {{$bookingRequest->availability->end->format('H\hi')}}</p>
+                                    <p><strong>Date :</strong> {{$availability->start->format('d.m.Y')}}</p>
+                                    <p>
+                                        <strong>Dès :</strong>
+                                        @if (!$conflict_start)
+                                            <span class="text-success">{{$availability->start->format('H\hi')}}</span>
+                                        @else
+                                            <span class="text-danger" data-toggle="tooltip" title="Le remplacant n'est pas disponible dès l'heure de début">{{$availability->start->format('H\hi')}}</span>
+                                        @endif
+                                    </p>
+                                    <p>
+                                        <strong>Jusqu'à :</strong>
+                                        @if (!$conflict_end)
+                                            <span class="text-success">{{$availability->end->format('H\hi')}}</span>
+                                        @else
+                                            <span class="text-danger" data-toggle="tooltip" title="Le remplacant n'est pas disponible jusqu'à l'heure de fin">{{$availability->end->format('H\hi')}}</span>
+                                        @endif
+                                    </p>
                                 @endif
                             </div>
                         </div>
@@ -80,9 +90,7 @@
                     </div>
                     <div class="col-md-6">
                         <p><strong>Message pour le remplaçant :</strong></p>
-                        <blockquote class="blockquote">
-                            <p class="mb-0">{{$bookingRequest->message}}</p>
-                        </blockquote>
+                        <p class="mb-0">{{$bookingRequest->message}}</p>
                     </div>
                 </div>
 

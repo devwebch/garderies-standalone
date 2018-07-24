@@ -3,7 +3,7 @@
         <div class="card card-default mb-4">
             <div class="card-body">
                 <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
-                    <div class="row">
+                    <div class="row mb-4 mb-md-0">
                         <div class="form-group col-md-3">
                             <label for="day_start">Jour :</label>
                             <flat-pickr
@@ -35,13 +35,13 @@
                             </flat-pickr>
                         </div>
                         <div class="col" style="/*padding-top: 31px;*/">
-                            <label for="">&nbsp;</label>
+                            <label for="" class="d-none d-md-block">&nbsp;</label>
                             <button class="btn btn-primary btn-block" type="submit">Rechercher</button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="form-group form-check">
+                            <div class="form-group form-check m-0">
                                 <input type="checkbox" class="form-check-input" id="extended_search" name="extended_search"  v-model="search.extended">
                                 <label class="form-check-label" for="extended_search">Recherche étendue</label>
                             </div>

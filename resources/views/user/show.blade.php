@@ -110,11 +110,6 @@
                                                     @break
                                                 @endswitch
                                             </td>
-                                            <td>
-                                                @if ($availability->request)
-                                                    <a href="{{route('booking-requests.show', $availability->request)}}">Voir</a>
-                                                @endif
-                                            </td>
                                         </tr>
                                     @endforeach
                                 </table>

@@ -15,6 +15,7 @@ class BookingRequestController extends Controller
     public function index()
     {
         $bookingRequests = BookingRequest::with('user')
+            ->where('start', '>=', now())
             ->orderBy('start')
             ->orderBy('status')
             ->get();
@@ -50,7 +51,17 @@ class BookingRequestController extends Controller
      */
     public function show(BookingRequest $bookingRequest)
     {
-        return view('booking-request.show', ['bookingRequest' => $bookingRequest]);
+        $conflict_start = $bookingRequest->start->lt($bookingRequest->availability->start);
+        $conflict_end   = $bookingRequest->end->gt($bookingRequest->availability->end);
+
+        $availability   = $bookingRequest->availability;
+
+        return view('booking-request.show', [
+            'bookingRequest'    => $bookingRequest,
+            'availability'      => $availability,
+            'conflict_start'    => $conflict_start,
+            'conflict_end'      => $conflict_end,
+        ]);
     }
 
     /**

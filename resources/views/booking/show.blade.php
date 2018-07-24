@@ -16,7 +16,11 @@
             </div>
             <div class="card-body">
 
-                <div class="booking-hours text-center pt-2" style="font-size: 2em;">
+                <div class="text-center">
+                    <p class="m-0">{{$booking->start->format('d.m.Y')}}</p>
+                </div>
+
+                <div class="booking-hours text-center" style="font-size: 2em;">
                     <span class="start">{{$booking->start->format('H:i')}}</span>
                     <span class="operator"><i class="fas fa-arrow-right"></i></span>
                     <span class="end">{{$booking->end->format('H:i')}}</span>
@@ -69,9 +73,7 @@
                     </div>
                     <div class="col-md-6">
                         <p><strong>Message pour le remplaçant :</strong></p>
-                        <blockquote class="blockquote">
-                            <p class="mb-0">{{$booking->request->message}}</p>
-                        </blockquote>
+                        <p class="mb-0">{{$booking->request->message}}</p>
                     </div>
                 </div>
 

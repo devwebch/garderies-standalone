@@ -37,7 +37,7 @@ class BookingRequest extends Model
 
     public function booking()
     {
-        return $this->belongsTo('App\Booking');
+        return $this->hasOne('App\Booking', 'request_id');
     }
 
     public function workgroup()

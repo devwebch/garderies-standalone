@@ -104,9 +104,6 @@ class BookingRequestController extends Controller
 
     public function approve(BookingRequest $bookingRequest)
     {
-        $bookingRequest->status = BookingRequest::STATUS_APPROVED;
-        $bookingRequest->save();
-
         // If we have a booking request
         if ($bookingRequest->id) {
 
@@ -133,6 +130,10 @@ class BookingRequestController extends Controller
             $availability->status = Availability::STATUS_BOOKED;
             $availability->save();
         }
+
+        $bookingRequest->status = BookingRequest::STATUS_APPROVED;
+        $bookingRequest->save();
+
 
         return response()->json([
             'status'    => 'Booking request approved'

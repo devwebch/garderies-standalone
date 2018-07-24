@@ -43,6 +43,10 @@
                     <a :href="'/bookings/' + props.rowData.id">{{formatDate(props.rowData.start)}}</a>
                 </template>
 
+                <template slot="bookingShowlink" slot-scope="props">
+                    <a :href="'/bookings/' + props.rowData.id">Voir</a>
+                </template>
+
                 <template slot="ownerlink" slot-scope="props">
                     <a v-if="props.rowData.owner" :href="'/users/' + props.rowData.owner.id">{{props.rowData.owner.name}}</a>
                     <span v-if="!props.rowData.owner" class="text-muted">Aucun</span>
