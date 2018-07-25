@@ -1,6 +1,6 @@
 @extends('layouts.two-columns')
 
-@section('title', 'Retour de remplaçement')
+@section('title', 'Retour de remplacement')
 
 @section('content')
     <div class="card card-default">
@@ -24,8 +24,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="user">Employé</label>
-                            <select name="user" class="form-control">
-                                <option value="">Sélectionner...</option>
+                            <select name="user" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary">
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
@@ -35,8 +34,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="substitute">Remplacant</label>
-                            <select name="substitute" class="form-control">
-                                <option value="">Sélectionner...</option>
+                            <select name="substitute" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary">
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
@@ -48,8 +46,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="booking">Remplacement</label>
-                            <select name="booking" class="form-control">
-                                <option value="">Sélectionner...</option>
+                            <select name="booking" class="form-control selectpicker" title="Sélectionner..." data-style="btn-link border text-secondary">
                                 @foreach($bookings as $booking)
                                     <option value="{{$booking->id}}">{{$booking->start->format('d.m.Y')}}</option>
                                 @endforeach

@@ -28,8 +28,7 @@
 
                             <div class="form-group">
                                 <label for="nursery">Garderie :</label>
-                                <select name="nursery" class="form-control">
-                                    <option value="0">Sélectionnez...</option>
+                                <select name="nursery" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary">
                                     @foreach($nurseries as $nursery)
                                         <option value="{{$nursery->id}}" {{($nursery->id == ($user->nursery->id ?? 0)) ? 'selected' : ''}}>{{$nursery->name}}</option>
                                     @endforeach
@@ -57,7 +56,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="diploma">Diplôme :</label>
-                                <select name="diploma" class="form-control">
+                                <select name="diploma" class="form-control selectpicker" title="Sélectionner..." data-style="btn-link border text-secondary">
                                     @foreach($diplomas as $diploma)
                                         <option value="{{$diploma->id}}" {{($diploma->id == $user->diploma->id) ? 'selected' : ''}}>{{$diploma->name}}</option>
                                     @endforeach

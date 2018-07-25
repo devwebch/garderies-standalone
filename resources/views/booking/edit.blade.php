@@ -5,7 +5,7 @@
 @section('content')
     <booking-edit inline-template>
         <div class="card card-default">
-            <div class="card-header">Editer remplaçement</div>
+            <div class="card-header">Editer remplacement</div>
             <div class="card-body">
                 <form action="{{route('bookings.update', [$booking->id])}}" method="post">
                     {{csrf_field()}}

@@ -1,6 +1,6 @@
 @extends('layouts.two-columns')
 
-@section('title', 'Retour de remplaçement')
+@section('title', 'Retour de remplacement')
 
 @section('content')
     <div class="card card-default">

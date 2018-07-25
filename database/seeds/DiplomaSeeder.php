@@ -11,7 +11,6 @@ class DiplomaSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('diplomas')->insert(['name' => 'Non diplômé']);
         DB::table('diplomas')->insert(['name' => 'Auxiliaire']);
         DB::table('diplomas')->insert(['name' => 'ASE']);
         DB::table('diplomas')->insert(['name' => 'Educatrice ES']);

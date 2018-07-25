@@ -76,7 +76,7 @@
                             <th>Remplaçant</th>
                             <th class="d-none d-lg-table-cell">Date</th>
                             <th><span data-toggle="tooltip" title="Horaire libre">Disponibilité</span></th>
-                            <th class="d-none d-md-table-cell"><span data-toggle="tooltip" title="Réseau dans lequel le remplacant est disponible">Réseaux</span></th>
+                            <th class="d-none d-md-table-cell"><span data-toggle="tooltip" title="Réseau dans lequel le remplaçant est disponible">Réseaux</span></th>
                             <th class="d-none d-md-table-cell text-right"><span data-toggle="tooltip" title="Indice de correspondance">IC<span>*</span></span></th>
                         </tr>
                         </thead>
@@ -137,15 +137,13 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="nursery">Garderie <span class="text-danger">*</span></label>
-                                <select name="nursery" class="form-control" v-model="nursery">
-                                    <option value="0">Sélectionner...</option>
+                                <select name="nursery" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary" v-model="nursery">
                                     <option v-for="nursery in nurseries" :value="nursery.id">{{nursery.name}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="workgroup">Groupe de travail <span class="text-danger">*</span></label>
-                                <select name="workgroup" class="form-control" v-model="workgroup">
-                                    <option value="0">Sélectionner...</option>
+                                <select name="workgroup" class="form-control selectpicker" title="Sélectionner..." data-style="btn-link border text-secondary" v-model="workgroup">
                                     <option v-for="workgroup in workgroups" :value="workgroup.id">{{workgroup.name}}</option>
                                 </select>
                             </div>
@@ -175,6 +173,9 @@
 
     import swal from 'sweetalert2';
     import 'sweetalert2/dist/sweetalert2.min.css';
+
+    import selectpicker  from 'bootstrap-select';
+    import 'bootstrap-select/dist/css/bootstrap-select.min.css';
 
     let vm;
 
@@ -230,6 +231,20 @@
             this.$nextTick(function () {
                 this.searchSubstitute();
             });
+
+            const $selectpicker = $(this.$el).find('.selectpicker');
+
+            $selectpicker
+                .selectpicker()
+                .on('changed.bs.select', () => this.$emit('changeWeek', this.options[$selectpicker.val()]));
+        },
+        updated() {
+            $(this.$el).find('.selectpicker').selectpicker('refresh');
+        },
+        destroyed() {
+            $(this.$el).find('.selectpicker')
+                .off()
+                .selectpicker('destroy');
         },
         methods: {
             searchSubstitute: function () {

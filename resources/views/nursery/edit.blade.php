@@ -41,8 +41,7 @@
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="network">Réseau :</label>
-                            <select name="network" class="form-control">
-                                <option value="">Sélectionner...</option>
+                            <select name="network" class="form-control selectpicker" title="Sélectionner..." data-style="btn-link border text-secondary">
                                 @foreach($networks as $network)
                                     <option value="{{$network->id}}" {{(optional($nursery->network)->id == $network->id) ? 'selected' : ''}}>{{$network->name}}</option>
                                 @endforeach

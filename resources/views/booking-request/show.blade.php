@@ -1,12 +1,12 @@
 @extends('layouts.two-columns')
 
-@section('title', 'Demande de remplaçement')
+@section('title', 'Demande de remplacement')
 
 @section('content')
     <booking-request-show inline-template>
         <div class="card card-default">
             <div class="card-header">
-                Demande de remplaçement pour le {{$bookingRequest->start->format('d.m.Y')}}
+                Demande de remplacement pour le {{$bookingRequest->start->format('d.m.Y')}}
 
                 <div class="actions float-right">
                     @if ($bookingRequest->status == \App\BookingRequest::STATUS_PENDING && $bookingRequest->availability->status == \App\Availability::STATUS_UNTOUCHED)
@@ -31,7 +31,7 @@
                 @endswitch
 
                 @if (($bookingRequest->availability->status == \App\Availability::STATUS_BOOKED || $bookingRequest->availability->status == \App\Availability::STATUS_ARCHIVED))
-                        <div class="alert alert-warning">Le remplacant n'est plus disponible pour cet horaire</div>
+                        <div class="alert alert-warning">Le remplaçant n'est plus disponible pour cet horaire</div>
                 @endif
 
                 <div class="progress mt-4 mb-4">
@@ -71,7 +71,7 @@
                                 </div>
                                 <hr>
                                 @if ($bookingRequest->availability)
-                                    <p>Disponibilité proposée par le remplacant.</p>
+                                    <p>Disponibilité proposée par le remplaçant.</p>
                                     <p><strong>Date :</strong> {{$availability->start->format('d.m.Y')}}</p>
                                     <p>
                                         <strong>Dès :</strong>

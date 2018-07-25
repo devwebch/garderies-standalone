@@ -13,7 +13,11 @@ class HomeController extends Controller
     public function index(TopList $topList)
     {
         $count_nursery  = Nursery::all()->count();
-        $count_user     = User::all()->count();
+        $count_user     = User::select('users.*')
+            ->join('network_user', 'users.id', '=', 'user_id')
+            ->join('networks', 'networks.id', '=', 'network_id')->with('networks')
+            ->join('nurseries', 'nurseries.id', '=', 'nursery_id')->with('nursery')
+            ->where('users.id', '!=', 1)->count();
         $count_booking  = Booking::where('user_id', '!=', 1)->whereMonth('start', date('m'))->count();
 
         $bookingsChart = new BookingsChart();

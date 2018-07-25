@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="card card-default mb-4">
-        <div class="card-header bg-dark text-white">Demandes de remplaçements</div>
+        <div class="card-header bg-dark text-white">Demandes de remplacements</div>
         <div class="card-body">
             <table class="table table-borderless table-striped table-responsive-lg">
                 <thead>

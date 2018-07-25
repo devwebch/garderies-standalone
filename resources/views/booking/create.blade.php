@@ -5,7 +5,7 @@
 @section('content')
     <booking-create inline-template>
         <div class="card card-default">
-            <div class="card-header">Créer remplaçement</div>
+            <div class="card-header">Créer remplacement</div>
             <div class="card-body">
                 <form action="{{route('bookings.store')}}" method="post">
                     {{csrf_field()}}

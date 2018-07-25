@@ -22,7 +22,7 @@
                         <a class="nav-link" href="{{route('users.index')}}"><i class="fas fa-users"></i> Employés</a>
                     </li>
                     <li class="nav-item link-bookings">
-                        <a class="nav-link" href="{{route('booking-requests.index')}}"><i class="fas fa-user-clock"></i> Remplaçements</a>
+                        <a class="nav-link" href="{{route('booking-requests.index')}}"><i class="fas fa-user-clock"></i> Remplacements</a>
                     </li>
                     <li class="nav-item link-availabilities">
                         <a class="nav-link" href="{{route('availabilities.search')}}"><i class="fas fa-search"></i> Recherche</a>
