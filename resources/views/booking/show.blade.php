@@ -42,8 +42,8 @@
                     <div class="col-md-6 mb-4 mb-sm-0 text-center">
                         @if ($booking->user)
                             <strong>Employé</strong>
-                            <div class="thumb-xl member-thumb mb-2 center-block">
-                                <img src="{{asset($avatar1)}}" class="rounded-circle img-thumbnail" alt="User profile picture">
+                            <div class="mt-2 center-block">
+                                {!! Avatar::create($booking->user->name)->setDimension(140, 140)->toSvg() !!}
                             </div>
                             <h4><a href="{{route('users.show', $booking->user)}}">{{$booking->user->name}}</a></h4>
                         @endif
@@ -51,8 +51,8 @@
                     <div class="col-md-6 text-center">
                         @if ($booking->substitute)
                             <strong>Remplaçant</strong>
-                            <div class="thumb-xl member-thumb mb-2 center-block">
-                                <img src="{{asset($avatar2)}}" class="rounded-circle img-thumbnail" alt="User profile picture">
+                            <div class="mt-2 center-block">
+                                {!! Avatar::create($booking->substitute->name)->setDimension(140, 140)->toSvg() !!}
                             </div>
                             <h4><a href="{{route('users.show', $booking->substitute)}}">{{$booking->substitute->name}}</a></h4>
                         @endif

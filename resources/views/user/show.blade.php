@@ -17,7 +17,7 @@
                             <div class="card-body">
 
                                 <div class="thumb-xl member-thumb mb-2 center-block">
-                                    <img src="{{asset($avatar)}}" class="rounded-circle img-thumbnail" alt="User profile picture">
+                                    {!! Avatar::create($user->name)->setDimension(140, 140)->toSvg() !!}
                                 </div>
                                 <div>
                                     <h5>{{$user->name}}</h5>

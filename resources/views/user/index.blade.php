@@ -3,7 +3,8 @@
 @section('title', 'Employés')
 
 @section('content')
-    <vue-table title="Employés" api-url="/api/users?nursery=0&network=0" :fields="[{
+    <vue-table title="Employés" api-url="/api/users?nursery=0&network=0" :fields="[
+            {
               name: '__slot:userlink',
               sortField: 'users.name',
               title: 'Nom et prénom'

@@ -39,7 +39,12 @@
                         <div class="card border">
                             <div class="card-header bg-secondary text-white">Employé</div>
                             <div class="card-body">
-                                <h4>{{$bookingRequest->user->name ?? '-'}}</h4>
+                                <div class="text-center">
+                                    <div class="mb-2">
+                                        {!! Avatar::create($bookingRequest->user->name)->setDimension(140, 140)->toSvg() !!}
+                                    </div>
+                                    <h4>{{$bookingRequest->user->name ?? '-'}}</h4>
+                                </div>
                                 <hr>
                                 <p class="text-muted">Demande de remplacement faite par l'employé.</p>
                                 <p><strong>Date :</strong> {{$bookingRequest->start->format('d.m.Y')}}</p>
@@ -52,7 +57,12 @@
                         <div class="card border">
                             <div class="card-header bg-primary text-white">Remplaçant</div>
                             <div class="card-body">
-                                <h4>{{$bookingRequest->substitute->name ?? '-'}}</h4>
+                                <div class="text-center">
+                                    <div class="mb-2">
+                                        {!! Avatar::create($bookingRequest->substitute->name)->setDimension(140, 140)->toSvg() !!}
+                                    </div>
+                                    <h4>{{$bookingRequest->substitute->name ?? '-'}}</h4>
+                                </div>
                                 <hr>
                                 @if ($bookingRequest->availability)
                                     <p class="text-muted">Disponibilité proposée par le remplacant.</p>
