@@ -3,6 +3,7 @@
 namespace App;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -10,6 +11,7 @@ class Nursery extends Model
 {
     use SoftDeletes;
     use Sluggable;
+    use Cachable;
 
     protected $table = 'nurseries';
     protected $dates = ['deleted_at'];
