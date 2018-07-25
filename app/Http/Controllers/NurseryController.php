@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Network;
 use App\Nursery;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class NurseryController extends Controller
@@ -127,5 +128,16 @@ class NurseryController extends Controller
         }
 
         return redirect()->route('nurseries.index');
+    }
+
+    public function planning(Nursery $nursery)
+    {
+        setlocale(LC_TIME, 'fr');
+        $bookings = $nursery->bookings;
+
+        return view('nursery.planning', [
+            'nursery'   => $nursery,
+            'bookings'  => $bookings
+        ]);
     }
 }

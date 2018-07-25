@@ -1,6 +1,6 @@
 @extends('layouts.two-columns')
 
-@section('title', 'Nursery')
+@section('title', $nursery->name)
 
 @section('content')
     <nursery-show inline-template>
