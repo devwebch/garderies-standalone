@@ -8,12 +8,9 @@
         data() {
             return data;
         },
-        mounted() {
-            console.log('Nursery show component mounted.');
-        },
+        mounted() {},
         methods: {
             deleteNursery: function (nursery) {
-                console.log('try to delete');
                 if (!nursery) { return; }
                 swal({
                     title: 'Attention !',

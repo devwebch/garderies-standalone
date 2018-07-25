@@ -7,7 +7,7 @@
         <div class="card card-default">
             <div class="card-header">Edition garderie</div>
             <div class="card-body">
-                <form action="{{route('nurseries.update', [$nursery->id])}}" method="post">
+                <form action="{{route('nurseries.update', [$nursery])}}" method="post">
                     {{csrf_field()}}
                     {{method_field('PUT')}}
                     <div class="form-group">

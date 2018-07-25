@@ -8,8 +8,8 @@
             <div class="card card-default mb-4">
                 <div class="card-header">{{$nursery->name}}
                     <div class="actions float-right">
-                        <a href="{{route('nurseries.edit', [$nursery->id])}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-edit"></i> Editer</a>
-                        <a href="#" v-on:click.prevent="deleteNursery({{$nursery->id}})" class="btn btn-danger btn-sm"><i class="fas fa-edit"></i> Supprimer</a>
+                        <a href="{{route('nurseries.edit', [$nursery])}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-edit"></i> Editer</a>
+                        <a href="#" v-on:click.prevent="deleteNursery('{{$nursery->slug}}')" class="btn btn-danger btn-sm"><i class="fas fa-edit"></i> Supprimer</a>
                     </div>
                 </div>
 

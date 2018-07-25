@@ -88,7 +88,6 @@ class NurseryController extends Controller
     public function update(Request $request, Nursery $nursery)
     {
         // TODO: Add validation
-
         $nursery->name          = $request->name;
         $nursery->address       = $request->address;
         $nursery->post_code     = $request->post_code;

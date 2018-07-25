@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+use App\Nursery;
 
 class NurserySeeder extends Seeder
 {
@@ -44,6 +46,7 @@ class NurserySeeder extends Seeder
         for ($i = 1; $i <= 15; $i++) {
             DB::table('nurseries')->insert([
                 'name'          => $nurseries[$i],
+                'slug'          => SlugService::createSlug(Nursery::class, 'slug', $nurseries[$i]),
                 'created_at'    => \Carbon\Carbon::now(),
                 'address'       => $faker->streetAddress,
                 'post_code'     => rand(1000, 1500),

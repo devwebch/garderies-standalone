@@ -16,6 +16,7 @@ class CreateNurseriesTable extends Migration
         Schema::create('nurseries', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('slug')->nullable();
             $table->string('address')->nullable();
             $table->string('post_code')->nullable();
             $table->string('city')->nullable();

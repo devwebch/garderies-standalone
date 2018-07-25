@@ -9,8 +9,8 @@
             <div class="card-header">
                 {{$network->name}}
                 <div class="actions float-right">
-                    <a href="{{route('networks.edit', [$network->id])}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-edit"></i> Editer</a>
-                    <a href="#" v-on:click.prevent="deleteNetwork({{$network->id}})" class="btn btn-danger btn-sm"><i class="fas fa-edit"></i> Supprimer</a>
+                    <a href="{{route('networks.edit', [$network])}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-edit"></i> Editer</a>
+                    <a href="#" v-on:click.prevent="deleteNetwork('{{$network->slug}}')" class="btn btn-danger btn-sm"><i class="fas fa-edit"></i> Supprimer</a>
                 </div>
             </div>
             <div class="card-body">
@@ -29,19 +29,15 @@
     <vue-table title="Garderies" api-url="/api/nurseries?network={{$network->id}}" :fields="[{
             name: '__slot:nurserylink',
             sortField: 'nurseries.name',
-            title: 'Nom',
-            width: '50%'
+            title: 'Nom'
         }, {
             name: 'users_count',
             sortField: 'users_count',
-            title: 'Employés',
-            titleClass: 'text-right',
-            dataClass: 'text-right',
+            title: 'Employés'
         }, {
             name: '__slot:networklinkrelation',
             sortField: 'networks.name',
-            title: 'Réseau',
-            width: '200px'
+            title: 'Réseau'
         }]">
     </vue-table>
 

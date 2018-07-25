@@ -18,11 +18,11 @@
                       @vuetable:pagination-data="onPaginationData"
                       no-data-template="Aucune donnée disponible">
                 <template slot="nurserylink" slot-scope="props">
-                    <a :href="'/nurseries/' + props.rowData.id">{{props.rowData.name}}</a>
+                    <a :href="'/nurseries/' + props.rowData.slug">{{props.rowData.name}}</a>
                 </template>
 
                 <template slot="networklink" slot-scope="props">
-                    <a :href="'/networks/' + props.rowData.id">{{props.rowData.name}}</a>
+                    <a :href="'/networks/' + props.rowData.slug">{{props.rowData.name}}</a>
                 </template>
 
                 <template slot="userlink" slot-scope="props">
@@ -64,7 +64,7 @@
                 </template>
 
                 <template slot="networklinkrelation" slot-scope="props">
-                    <a :href="'/networks/' + props.rowData.network.id" v-if="props.rowData.network">
+                    <a :href="'/networks/' + props.rowData.network.slug" v-if="props.rowData.network">
                         <span class="badge text-white" :style="'background-color: ' + props.rowData.network.color + ';'">
                             {{props.rowData.network.name}}</span>
                     </a>
@@ -72,7 +72,7 @@
                 </template>
 
                 <template slot="nurserylinkrelation" slot-scope="props">
-                    <a v-if="props.rowData.nursery" :href="'/nurseries/' + props.rowData.nursery.id">{{props.rowData.nursery.name}}</a>
+                    <a v-if="props.rowData.nursery" :href="'/nurseries/' + props.rowData.nursery.slug">{{props.rowData.nursery.name}}</a>
                     <span v-if="!props.rowData.nursery" class="text-muted">Aucun</span>
                 </template>
 

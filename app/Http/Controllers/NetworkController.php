@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Network;
-use App\User;
 use Illuminate\Http\Request;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class NetworkController extends Controller
 {
@@ -40,6 +40,7 @@ class NetworkController extends Controller
     {
         $network = new Network();
         $network->name      = $request->name;
+        $network->color     = strtolower($request->color);
         $network->owner_id  = 1; // TODO: change to logged in user
         $network->save();
 

@@ -7,7 +7,7 @@
         <div class="card card-default">
             <div class="card-header">Edition réseau</div>
             <div class="card-body">
-                <form action="{{route('networks.update', [$network->id])}}" method="post">
+                <form action="{{route('networks.update', [$network])}}" method="post">
                     {{csrf_field()}}
                     {{method_field('PUT')}}
                     <div class="form-group">
