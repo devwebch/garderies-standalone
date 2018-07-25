@@ -47,6 +47,11 @@ class User extends Authenticatable
         return $this->hasMany('App\BookingRequest', 'substitute_id', 'id');
     }
 
+    public function ownBookingRequests()
+    {
+        return $this->hasMany('App\BookingRequest', 'user_id', 'id');
+    }
+
     public function managedNetworks()
     {
         return $this->hasMany('App\Network');

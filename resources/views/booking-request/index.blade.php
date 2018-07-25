@@ -3,7 +3,7 @@
 @section('title', 'Demandes de remplacement')
 
 @section('content')
-    
+
     <div class="card card-default mb-4">
         <div class="card-header bg-dark text-white">Demandes de remplaçements</div>
         <div class="card-body">
@@ -43,7 +43,11 @@
                             </a>
                         </td>
                         <td>
-                            {{$request->start->format('H\hi')}} <i class="fas fa-arrow-right"></i> {{$request->end->format('H\hi')}}
+                            <span style="font-size: 0.9em;">
+                                {{$request->start->format('H\hi')}} <i
+                                        class="fas fa-arrow-right"
+                                        style="font-size: .7em;"></i> {{$request->end->format('H\hi')}}
+                            </span>
                         </td>
                         <td>
                             <a href="{{route('users.show', $request->substitute->id ?? 0)}}" target="_blank">
@@ -52,9 +56,11 @@
                         </td>
                         <td>
                             @if ($request->availability)
-                                {{$request->availability->start->format('H\hi')}}
-                                <i class="fas fa-arrow-right"></i>
-                                {{$request->availability->end->format('H\hi')}}
+                                <span style="font-size: 0.9em;">
+                                    {{$request->availability->start->format('H\hi')}}
+                                    <i class="fas fa-arrow-right" style="font-size: .7em;"></i>
+                                    {{$request->availability->end->format('H\hi')}}
+                                </span>
                             @endif
                         </td>
                         <td>

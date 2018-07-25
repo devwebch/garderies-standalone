@@ -31,9 +31,9 @@
                 </div>
 
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-secondary" role="progressbar" style="width: {{$start_pct}}%" aria-valuenow="{{$start_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->request->start->format('H:i')}}</div>
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{$completion_pct}}%" aria-valuenow="{{$completion_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->start->format('H:i')}} - {{$booking->end->format('H:i')}}</div>
-                    <div class="progress-bar progress-bar-striped bg-secondary" role="progressbar" style="width: {{$end_pct}}%" aria-valuenow="{{$end_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->request->end->format('H:i')}}</div>
+                    <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar" style="width: {{$start_pct}}%" aria-valuenow="{{$start_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->request->start->format('H:i')}}</div>
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{$completion_pct}}%" aria-valuenow="{{$completion_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->start->format('H:i')}} - {{$booking->end->format('H:i')}}</div>
+                    <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar" style="width: {{$end_pct}}%" aria-valuenow="{{$end_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->request->end->format('H:i')}}</div>
                 </div>
 
                 <hr>
@@ -42,8 +42,8 @@
                     <div class="col-md-6 mb-4 mb-sm-0 text-center">
                         @if ($booking->user)
                             <strong>Employé</strong>
-                            <div class="mt-2 center-block">
-                                {!! Avatar::create($booking->user->name)->setDimension(140, 140)->toSvg() !!}
+                            <div class="avatar avatar--sm mt-2 center-block">
+                                {!! Avatar::create($booking->user->name)->toSvg() !!}
                             </div>
                             <h4><a href="{{route('users.show', $booking->user)}}">{{$booking->user->name}}</a></h4>
                         @endif
@@ -51,8 +51,8 @@
                     <div class="col-md-6 text-center">
                         @if ($booking->substitute)
                             <strong>Remplaçant</strong>
-                            <div class="mt-2 center-block">
-                                {!! Avatar::create($booking->substitute->name)->setDimension(140, 140)->toSvg() !!}
+                            <div class="avatar avatar--sm mt-2 center-block">
+                                {!! Avatar::create($booking->substitute->name)->toSvg() !!}
                             </div>
                             <h4><a href="{{route('users.show', $booking->substitute)}}">{{$booking->substitute->name}}</a></h4>
                         @endif

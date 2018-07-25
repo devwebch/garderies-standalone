@@ -34,7 +34,7 @@ $material = [
     '#4caf4f',
     '#8ac349',
     '#cddd39',
-    '#ffeb3b',
+    '#fdd835',
     '#fec106',
     '#fd9703',
     '#fc5623',
@@ -100,17 +100,17 @@ return [
     'chars'    => 2,
 
     // font size
-    'fontSize' => 48,
+    'fontSize' => 30,
 
     // convert initial letter in uppercase
     'uppercase' => false,
 
     // Fonts used to render text.
     // If contains more than one fonts, randomly selected based on name supplied
-    'fonts'    => [__DIR__.'/../fonts/OpenSans-Bold.ttf', __DIR__.'/../fonts/rockwell.ttf'],
+    'fonts'    => [__DIR__.'/../fonts/OpenSans-Bold.ttf'],
 
     // List of foreground colors to be used, randomly selected based on name supplied
-    'foregrounds'   => $material_light,
+    'foregrounds'   => ['#efefef'],
 
     // List of background colors to be used, randomly selected based on name supplied
     'backgrounds'   => $material,

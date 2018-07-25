@@ -75,14 +75,22 @@ class UserController extends Controller
             ->orderBy('start')
             ->get();
 
+        // Get a user's own booking requests
+        $userBookingRequests = $user->ownBookingRequests()
+            ->where('start', '>=', now())
+            ->with('nursery')
+            ->orderBy('start')
+            ->get();
+
         $avatars = ['img/dummy_avatar_1.jpg', 'img/dummy_avatar_2.jpg', 'img/dummy_avatar_3.jpg'];
 
         return view('user.show', [
-            'user'              => $user,
-            'availabilities'    => $availabilities,
-            'bookings'          => $bookings,
-            'bookingRequests'   => $bookingRequests,
-            'avatar'            => $avatars[$user->id % 3]
+            'user'                  => $user,
+            'availabilities'        => $availabilities,
+            'bookings'              => $bookings,
+            'bookingRequests'       => $bookingRequests,
+            'userBookingRequests'   => $userBookingRequests,
+            'avatar'                => $avatars[$user->id % 3]
         ]);
     }
 
