@@ -97,7 +97,7 @@ class NurseryController extends Controller
         $nursery->network_id    = $request->network;
         $nursery->save();
 
-        return redirect()->route('nurseries.index')->with('status', 'Nursery mise à jour.');
+        return redirect()->route('nurseries.show', $nursery)->with('status', 'Nursery mise à jour.');
     }
 
     /**
