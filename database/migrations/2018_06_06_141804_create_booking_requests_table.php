@@ -15,6 +15,7 @@ class CreateBookingRequestsTable extends Migration
     {
         Schema::create('booking_requests', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('request_group');
             $table->integer('user_id'); // user requesting substitute
             $table->integer('substitute_id'); // user having an availability
             $table->integer('availability_id'); // requested availability

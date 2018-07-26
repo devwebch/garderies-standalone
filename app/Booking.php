@@ -37,4 +37,5 @@ class Booking extends Model
     {
         return $this->belongsTo('App\BookingRequest', 'request_id');
     }
+
 }

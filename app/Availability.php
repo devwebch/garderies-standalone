@@ -11,9 +11,10 @@ class Availability extends Model
     use SoftDeletes;
     use Cachable;
 
-    public const STATUS_UNTOUCHED    = 0;
-    public const STATUS_BOOKED       = 1;
-    public const STATUS_ARCHIVED     = 2;
+    public const STATUS_UNTOUCHED           = 0;
+    public const STATUS_BOOKED              = 1;
+    public const STATUS_PARTIALLY_BOOKED    = 2;
+    public const STATUS_ARCHIVED            = 3;
 
     protected $dates = ['start', 'end', 'deleted_at'];
 
@@ -22,8 +23,8 @@ class Availability extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function request()
+    public function requests()
     {
-        return $this->hasOne('App\BookingRequest');
+        return $this->hasMany('App\BookingRequest');
     }
 }

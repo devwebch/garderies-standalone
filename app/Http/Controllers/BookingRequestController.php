@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Availability;
+use App\Booking;
 use App\BookingRequest;
 use Illuminate\Http\Request;
 
@@ -16,6 +18,8 @@ class BookingRequestController extends Controller
     {
         $bookingRequests = BookingRequest::with('user')
             ->where('start', '>=', now())
+            ->orderBy('id', 'DESC')
+            ->orderBy('request_group')
             ->orderBy('start')
             ->orderBy('status')
             ->with('availability')
@@ -74,21 +78,33 @@ class BookingRequestController extends Controller
         $end_delay_pct      = ($booking_delay_end * 100) / $booking_duration;
 
         /**
-         * Check for conflicts
+         * Check for conflicts between request and availability
          */
         $conflict_start = $bookingRequest->start->lt($bookingRequest->availability->start);
         $conflict_end   = $bookingRequest->end->gt($bookingRequest->availability->end);
 
+        $associated_requests = BookingRequest::where('request_group', $bookingRequest->request_group)
+            ->where('id', '!=', $bookingRequest->id)
+            ->get()
+            ->count();
         $availability   = $bookingRequest->availability;
 
+        /**
+         * Check for existing requests on a specific availability
+         * TODO: Clean up this shit
+         */
+        $existing_requests = $availability->requests->where('status', BookingRequest::STATUS_APPROVED);
+
         return view('booking-request.show', [
-            'bookingRequest'    => $bookingRequest,
-            'availability'      => $availability,
-            'conflict_start'    => $conflict_start,
-            'conflict_end'      => $conflict_end,
-            'completion_pct'    => $completion_pct,
-            'start_pct'         => $start_delay_pct,
-            'end_pct'           => $end_delay_pct,
+            'bookingRequest'            => $bookingRequest,
+            'associated_requests'       => $associated_requests,
+            'availability'              => $availability,
+            'conflict_start'            => $conflict_start,
+            'conflict_end'              => $conflict_end,
+            'completion_pct'            => $completion_pct,
+            'start_pct'                 => $start_delay_pct,
+            'end_pct'                   => $end_delay_pct,
+            'conflicts'                 => $this->hasBookingConflicts($bookingRequest, $availability)
         ]);
     }
 
@@ -124,5 +140,35 @@ class BookingRequestController extends Controller
     public function destroy(BookingRequest $bookingRequest)
     {
         //
+    }
+
+    public function hasBookingConflicts(BookingRequest $bookingRequest, Availability $availability)
+    {
+        $has_conflicts = false;
+        $requests = $availability->requests;
+        if (!$requests) { return $has_conflicts; }
+
+        $requests_id = $requests->pluck('id')->all(); // array of ID
+        $bookings_for_availability = Booking::whereIn('request_id', $requests_id)
+            ->select('id', 'start', 'end')->get();
+
+        $conflicting_bookings = [];
+        foreach ($bookings_for_availability as $booking) {
+            if (
+                ($bookingRequest->start->lte($booking->start) && $bookingRequest->end->gte($booking->start)) ||
+                ($bookingRequest->start->gte($booking->start) && $bookingRequest->end->lte($booking->end)) ||
+                ($bookingRequest->start->lte($booking->end) && $bookingRequest->end->gte($booking->end))
+            ) {
+                $has_conflicts = true;
+                $conflicting_bookings[] = $booking;
+            }
+        }
+
+        $status = (object) [
+            'has_conflicts' => $has_conflicts,
+            'conflicts' => $conflicting_bookings
+        ];
+
+        return $status;
     }
 }

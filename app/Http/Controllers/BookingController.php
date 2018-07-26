@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
+use App\BookingRequest;
+use App\Http\Resources\Availability;
 use App\Nursery;
 use App\User;
 use Carbon\Carbon;
@@ -74,23 +76,33 @@ class BookingController extends Controller
         /**
          * Calculate the difference between the original booking request and the availability
          */
-        $request_start          = $booking->request->start;
-        $request_end            = $booking->request->end;
-        $availability_start     = $booking->request->availability->start;
-        $availability_end       = $booking->request->availability->end;
+        $matching_pct = 0;
+        $matching_start_pct = 0;
+        $matching_end_pct = 0;
 
-        // Durations
-        $booking_duration       = $request_start->diffInMinutes($request_end);
-        $availability_duration  = $availability_start->diffInMinutes($availability_end);
+        if ($booking->request) {
+            $request_start      = $booking->request->start;
+            $request_end        = $booking->request->end;
+            $availability_start = $booking->request->availability->start;
+            $availability_end   = $booking->request->availability->end;
 
-        // Differences between starting and ending hours
-        $booking_delay_start    = ($request_start->lte($availability_start)) ? $request_start->diffInMinutes($availability_start) : 0;
-        $booking_delay_end      = ($request_end->gte($availability_end)) ? $request_end->diffInMinutes($availability_end) : 0;
+            // Durations
+            $booking_duration       = $request_start->diffInMinutes($request_end);
+            $availability_duration  = $availability_start->diffInMinutes($availability_end);
 
-        // Percentages calculation
-        $completion_pct     = ($availability_duration * 100) / $booking_duration;
-        $start_delay_pct    = ($booking_delay_start * 100) / $booking_duration;
-        $end_delay_pct      = ($booking_delay_end * 100) / $booking_duration;
+            // Differences between starting and ending hours
+            $booking_delay_start = ($request_start->lte($availability_start))
+                ? $request_start->diffInMinutes($availability_start)
+                : 0;
+            $booking_delay_end = ($request_end->gte($availability_end))
+                ? $request_end->diffInMinutes($availability_end)
+                : 0;
+
+            // Percentages calculation
+            $matching_pct = ($availability_duration * 100) / $booking_duration;
+            $matching_start_pct = ($booking_delay_start * 100) / $booking_duration;
+            $matching_end_pct = ($booking_delay_end * 100) / $booking_duration;
+        }
 
         /**
          * User avatars
@@ -108,12 +120,12 @@ class BookingController extends Controller
         }
 
         return view('booking.show', [
-            'booking'           => $booking,
-            'completion_pct'    => $completion_pct,
-            'start_pct'         => $start_delay_pct,
-            'end_pct'           => $end_delay_pct,
-            'avatar1'           => $avatar_1,
-            'avatar2'           => $avatar_2,
+            'booking'               => $booking,
+            'matching_pct'          => $matching_pct,
+            'matching_start_pct'    => $matching_start_pct,
+            'matching_end_pct'      => $matching_end_pct,
+            'avatar1'               => $avatar_1,
+            'avatar2'               => $avatar_2,
         ]);
     }
 

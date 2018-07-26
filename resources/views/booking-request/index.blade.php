@@ -11,6 +11,7 @@
                 <thead>
                 <tr>
                     <th>Employé</th>
+                    <th>Date</th>
                     <th>Horaire</th>
                     <th>Remplaçant</th>
                     <th>Disponibilité</th>
@@ -20,21 +21,21 @@
                 </thead>
                 <tbody>
                 @php
-                    $last_timestamp = 0;
+                    $last_timestamp = '';
                 @endphp
 
                 @foreach($bookingRequests as $request)
 
-                    @if ($last_timestamp != $request->start->timestamp)
+                    @if ($last_timestamp != $request->request_group)
                         <tr class="bg-dark text-white small">
-                            <td colspan="6" class="p-2">
-                                <strong>{{$request->start->format('d.m.Y')}}</strong>
+                            <td colspan="7" class="p-2">
+                                <strong>Request group : {{$request->request_group}}</strong>
                             </td>
                         </tr>
                     @endif
 
                     @php
-                        $last_timestamp = $request->start->timestamp;
+                        $last_timestamp = $request->request_group;
                     @endphp
                     <tr>
                         <td>
@@ -42,6 +43,7 @@
                                 {{$request->user->name ?? 'Aucun'}}
                             </a>
                         </td>
+                        <td>{{$request->start->format('d.m.Y')}}</td>
                         <td>
                             <span style="font-size: 0.9em;">
                                 {{$request->start->format('H\hi')}} <i

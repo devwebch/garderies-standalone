@@ -42,9 +42,13 @@ class BookingRequestController extends Controller
         $start          = Carbon::parse($request->date_start);
         $end            = Carbon::parse($request->date_end);
 
+        // Create a request group identifier
+        $request_group_ID   = str_random();
+
         // Loop through availabilities
         foreach ($availabilities as $availability) {
             $bookingRequest = new BookingRequest();
+            $bookingRequest->request_group      = $request_group_ID;
             $bookingRequest->availability_id    = $availability['id'];
             $bookingRequest->substitute_id      = $availability['user_id'];
             $bookingRequest->user_id            = $user->id;
@@ -127,7 +131,7 @@ class BookingRequestController extends Controller
 
             // Update the availability status
             $availability = $bookingRequest->availability;
-            $availability->status = Availability::STATUS_BOOKED;
+            //$availability->status = Availability::STATUS_BOOKED;
             $availability->save();
         }
 

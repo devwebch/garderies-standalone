@@ -30,11 +30,13 @@
                     <p><a href="{{route('nurseries.show', $booking->nursery ?? 0)}}">{{$booking->nursery->name ?? '-'}}</a></p>
                 </div>
 
+                @if ($matching_pct)
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar" style="width: {{$start_pct}}%" aria-valuenow="{{$start_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->request->start->format('H:i')}}</div>
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{$completion_pct}}%" aria-valuenow="{{$completion_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->start->format('H:i')}} - {{$booking->end->format('H:i')}}</div>
-                    <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar" style="width: {{$end_pct}}%" aria-valuenow="{{$end_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->request->end->format('H:i')}}</div>
+                    <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar" style="width: {{$matching_start_pct}}%" aria-valuenow="{{$matching_start_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->request->start->format('H:i')}}</div>
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{$matching_pct}}%" aria-valuenow="{{$matching_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->start->format('H:i')}} - {{$booking->end->format('H:i')}}</div>
+                    <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar" style="width: {{$matching_end_pct}}%" aria-valuenow="{{$matching_end_pct}}" aria-valuemin="0" aria-valuemax="100">{{$booking->request->end->format('H:i')}}</div>
                 </div>
+                @endif
 
                 <hr>
 
@@ -73,7 +75,7 @@
                     </div>
                     <div class="col-md-6">
                         <p><strong>Message pour le remplaçant :</strong></p>
-                        <p class="mb-0">{{$booking->request->message}}</p>
+                        <p class="mb-0">{{optional($booking->request)->message ?? '-'}}</p>
                     </div>
                 </div>
 
