@@ -44,40 +44,33 @@
               sortField: 'networks.name',
               title: 'Réseaux'
             }]"></vue-table>
-
-            <div class="card card-default">
-                <div class="card-header">Remplacements</div>
-                <div class="card-body">
-                    <table class="table table-borderless table-striped table-responsive-lg">
-                        <thead>
-                        <tr>
-                            <th>Employé</th>
-                            <th>Remplaçant</th>
-                            <th>Jour</th>
-                            <th>Début</th>
-                            <th>Fin</th>
-                            <th width="50"></th>
-                        </tr>
-                        </thead>
-                        @forelse($bookings as $booking)
-                            <tr>
-                                <td><a href="{{route('users.show', $booking->user ?? 0)}}">{{$booking->user->name ?? '-'}}</a></td>
-                                <td><a href="{{route('users.show', $booking->substitute ?? 0)}}">{{$booking->substitute->name ?? '-'}}</a></td>
-                                <td>{{$booking->start->format('d.m.Y')}}</td>
-                                <td>{{$booking->start->format('H:i')}}</td>
-                                <td>{{$booking->end->format('H:i')}}</td>
-                                <td>
-                                    <a href="{{route('bookings.show', $booking)}}">Voir</a>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5">Pas de remplacement</td>
-                            </tr>
-                        @endforelse
-                    </table>
-                </div>
-            </div>
+    
+            <vue-table title="Remplacements" api-url="/api/bookings?nursery={{$nursery->id}}" :fields="[{
+              name: '__slot:userbookinglink',
+              sortField: 'users.name',
+              title: 'Employé'
+            }, {
+              name: '__slot:substitutelink',
+              sortField: 'substitutes.name',
+              title: 'Remplaçant'
+            }, {
+              name: '__slot:bookinglink',
+              sortField: 'bookings.start',
+              title: 'Date'
+            }, {
+              name: 'start',
+              sortField: 'start',
+              title: 'Début',
+              callback: 'formatTime'
+            }, {
+              name: 'end',
+              sortField: 'end',
+              title: 'Fin',
+              callback: 'formatTime'
+            }, {
+              name: '__slot:bookingShowlink',
+              title: ''
+            }]"></vue-table>
         </div>
     </nursery-show>
 @endsection
