@@ -131,7 +131,11 @@ class BookingRequestController extends Controller
 
             // Update the availability status
             $availability = $bookingRequest->availability;
-            //$availability->status = Availability::STATUS_BOOKED;
+            if ($booking->start->diffInHours($booking->end) >= 4) {
+                $availability->status = Availability::STATUS_BOOKED;
+            } else {
+                $availability->status = Availability::STATUS_PARTIALLY_BOOKED;
+            }
             $availability->save();
         }
 

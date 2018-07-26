@@ -157,7 +157,7 @@ class AvailabilityController extends Controller
         // New array for formatted data
         $availabilities_formatted = [];
         
-        $colors = ['#3a87ad', '#666666'];
+        $colors = ['#3a87ad', '#333333', '#666666', '#666666'];
         
         // Loop through each object
         foreach ($availabilities as $availability) {
@@ -201,9 +201,7 @@ class AvailabilityController extends Controller
             // ending hour
             $hour_end = Carbon::parse($request->input('hour_end'), 'Europe/Zurich')->format('H:i');
             
-            // recompose the date object through Carbon, extends the search perimeter for flexibility
-            //$date_start = Carbon::parse($day_start . ' ' . $hour_start)->subHour(1);
-            //$date_end   = Carbon::parse($day_start . ' ' . $hour_end)->addHour(1);
+            // recompose the date object through Carbon
             $date_start = Carbon::parse($day_start . ' ' . $hour_start);
             $date_end = Carbon::parse($day_start . ' ' . $hour_end);
         }
@@ -219,7 +217,8 @@ class AvailabilityController extends Controller
                 $collection = Availability::where([
                     ['start', '<=', $date_start_extended],
                     ['end', '>=', $date_end_extended],
-                    ['status', Availability::STATUS_UNTOUCHED]// complete
+                    ['status', '!=', Availability::STATUS_ARCHIVED],
+                    ['status', '!=', Availability::STATUS_BOOKED]// complete
                 ])
                 ->orderBy('start')
                 ->get();
@@ -227,21 +226,25 @@ class AvailabilityController extends Controller
                 $collection = Availability::where([
                     ['start', '<=', $date_start],
                     ['end', '>=', $date_end],
-                    ['status', Availability::STATUS_UNTOUCHED] // complete
+                    ['status', '!=', Availability::STATUS_ARCHIVED],
+                    ['status', '!=', Availability::STATUS_BOOKED]// complete
                 ])->orWhere([
                     ['start', '<=', $date_start],
                     ['end', '<', $date_end],
                     ['end', '>', $date_start],
-                    ['status', Availability::STATUS_UNTOUCHED] // partial
+                    ['status', '!=', Availability::STATUS_ARCHIVED],
+                    ['status', '!=', Availability::STATUS_BOOKED]// partial
                 ])->orWhere([
                     ['start', '>', $date_start],
                     ['end', '>=', $date_end],
                     ['start', '<', $date_end],
-                    ['status', Availability::STATUS_UNTOUCHED] // partial
+                    ['status', '!=', Availability::STATUS_ARCHIVED],
+                    ['status', '!=', Availability::STATUS_BOOKED]// partial
                 ])->orWhere([
                     ['start', '>', $date_start],
                     ['end', '<', $date_end],
-                    ['status', Availability::STATUS_UNTOUCHED] // partial
+                    ['status', '!=', Availability::STATUS_ARCHIVED],
+                    ['status', '!=', Availability::STATUS_BOOKED]// partial
                 ])
                 ->orderBy('start')
                 ->get();

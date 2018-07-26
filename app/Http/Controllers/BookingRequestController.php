@@ -83,10 +83,20 @@ class BookingRequestController extends Controller
         $conflict_start = $bookingRequest->start->lt($bookingRequest->availability->start);
         $conflict_end   = $bookingRequest->end->gt($bookingRequest->availability->end);
 
+        /**
+         * Check if a request from the same group has already been approved
+         */
         $associated_requests = BookingRequest::where('request_group', $bookingRequest->request_group)
             ->where('id', '!=', $bookingRequest->id)
-            ->get()
-            ->count();
+            ->get();
+
+        $other_request_approved = false;
+        foreach ($associated_requests as $request) {
+            if ($request->status == BookingRequest::STATUS_APPROVED) {
+                $other_request_approved = true;
+            }
+        }
+
         $availability   = $bookingRequest->availability;
 
         /**
@@ -97,14 +107,15 @@ class BookingRequestController extends Controller
 
         return view('booking-request.show', [
             'bookingRequest'            => $bookingRequest,
-            'associated_requests'       => $associated_requests,
+            'associated_requests'       => $associated_requests->count(),
             'availability'              => $availability,
             'conflict_start'            => $conflict_start,
             'conflict_end'              => $conflict_end,
             'completion_pct'            => $completion_pct,
             'start_pct'                 => $start_delay_pct,
             'end_pct'                   => $end_delay_pct,
-            'conflicts'                 => $this->hasBookingConflicts($bookingRequest, $availability)
+            'conflicts'                 => $this->hasBookingConflicts($bookingRequest, $availability),
+            'other_request_approved'    => $other_request_approved
         ]);
     }
 
@@ -145,25 +156,32 @@ class BookingRequestController extends Controller
     public function hasBookingConflicts(BookingRequest $bookingRequest, Availability $availability)
     {
         $has_conflicts = false;
-        $requests = $availability->requests;
+        // get the requests that are not the one we're viewing
+        $requests = $availability->requests->where('id', '!=', $bookingRequest->id);
+        // if no requests are found, return no conflicts
         if (!$requests) { return $has_conflicts; }
 
+        // get the requests IDs
         $requests_id = $requests->pluck('id')->all(); // array of ID
+        // get bookings related to each requests
         $bookings_for_availability = Booking::whereIn('request_id', $requests_id)
             ->select('id', 'start', 'end')->get();
 
+        // init the conflicting bookings array
         $conflicting_bookings = [];
+        // loop through each booking and store the conflicting ones
         foreach ($bookings_for_availability as $booking) {
             if (
-                ($bookingRequest->start->lte($booking->start) && $bookingRequest->end->gte($booking->start)) ||
-                ($bookingRequest->start->gte($booking->start) && $bookingRequest->end->lte($booking->end)) ||
-                ($bookingRequest->start->lte($booking->end) && $bookingRequest->end->gte($booking->end))
+                ($bookingRequest->start->lte($booking->start) && $bookingRequest->end->gte($booking->start)) || // starts before start and ends after start
+                ($bookingRequest->start->gte($booking->start) && $bookingRequest->end->lte($booking->end)) || // starts after start and ends before end
+                ($bookingRequest->start->lte($booking->end) && $bookingRequest->end->gte($booking->end)) // starts before end and ends after end
             ) {
                 $has_conflicts = true;
                 $conflicting_bookings[] = $booking;
             }
         }
 
+        // create a status object
         $status = (object) [
             'has_conflicts' => $has_conflicts,
             'conflicts' => $conflicting_bookings

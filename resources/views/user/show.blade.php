@@ -111,6 +111,9 @@
                                                     @case(\App\Availability::STATUS_UNTOUCHED)
                                                     <span class="badge badge-info">Libre</span>
                                                     @break
+                                                    @case(\App\Availability::STATUS_PARTIALLY_BOOKED)
+                                                    <span class="badge badge-warning">Réservé part.</span>
+                                                    @break
                                                     @case(\App\Availability::STATUS_BOOKED)
                                                     <span class="badge badge-success">Réservé</span>
                                                     @break
