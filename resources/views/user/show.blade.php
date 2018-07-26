@@ -267,7 +267,3 @@
         </div>
     </user-show>
 @endsection
-
-@section('nav-lateral')
-    @include('user.nav')
-@endsection

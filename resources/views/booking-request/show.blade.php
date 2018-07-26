@@ -33,7 +33,7 @@
                 @endswitch
 
                 @if (($bookingRequest->availability->status == \App\Availability::STATUS_BOOKED || $bookingRequest->availability->status == \App\Availability::STATUS_ARCHIVED))
-                    <div class="alert alert-warning">Le remplaçant n'est plus disponible pour cet horaire</div>
+                        <div class="alert alert-warning">Le remplaçant n'est plus disponible pour cet horaire</div>
                 @endif
 
                 @if ($conflicts->has_conflicts)
@@ -46,12 +46,8 @@
                             @endforeach
                         </ul>
                     </div>
-                @elseif(!$conflicts->has_conflicts && $bookingRequest->status == \App\BookingRequest::STATUS_PENDING)
-                    <div class="alert alert-info">Ce créneau horaire peut être réservé.</div>
-                @endif
-
-                @if ($other_request_approved)
-                    <div class="alert alert-danger">Un remplacement a déjà été validé</div>
+                @else
+                    <div class="alert alert-info">Le remplaçant est occupé partiellement, mais peut avoir un autre crénau horaire assigné.</div>
                 @endif
 
                 <div class="progress mt-4 mb-4">

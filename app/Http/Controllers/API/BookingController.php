@@ -19,6 +19,7 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         $status = $request->status;
+        $nursery = $request->nursery;
 
         // Retrieve bookings and their relations
         $bookings = Booking::select(
@@ -29,7 +30,11 @@ class BookingController extends Controller
             ->join('users', 'users.id', 'bookings.user_id')->with('user')
             ->join('users as substitutes', 'substitutes.id', 'bookings.substitute_id')->with('substitute')
             ->join('nurseries', 'nurseries.id', 'bookings.nursery_id')->with('nursery');
-
+    
+        if ($nursery) {
+            $bookings->where('nurseries.id', '=', $nursery);
+        }
+        
         // Filter by status
         if ($status) {
             $bookings->where('bookings.status', '=', $status);
