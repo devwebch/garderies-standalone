@@ -15,7 +15,7 @@
                     <th>Début</th>
                     <th>Fin</th>
                     <th>Groupe</th>
-                    <th>Téléphone</th>
+                    <th>Tél. remplaçant</th>
                 </tr>
                 </thead>
                 @forelse($bookings as $booking)
