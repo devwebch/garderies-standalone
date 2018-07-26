@@ -16,6 +16,7 @@
                 </div>
             </div>
 
+
             <div class="card-body">
 
                 <strong>{{$associated_requests}} requêtes associées</strong>
