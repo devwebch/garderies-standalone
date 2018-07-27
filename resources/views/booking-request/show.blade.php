@@ -16,7 +16,11 @@
                         Demande de remplacement pour le {{$bookingRequest->start->format('d.m.Y')}}
 
                         <div class="actions float-right">
-                            @if ($bookingRequest->status == \App\BookingRequest::STATUS_PENDING && $bookingRequest->availability->status == \App\Availability::STATUS_UNTOUCHED)
+                            @if (
+                            $bookingRequest->status == \App\BookingRequest::STATUS_PENDING &&
+                            $bookingRequest->availability->status != \App\Availability::STATUS_BOOKED &&
+                            !$conflicts->has_conflicts
+                            )
                                 <a href="#" v-on:click.prevent="validateBookingRequest({{$bookingRequest->id}})" class="btn btn-success btn-sm mr-2"><i class="fas fa-check"></i> Valider</a>
                             @endif
                             <a href="#" v-on:click.prevent="deleteBookingRequest({{$bookingRequest->id}})" class="btn btn-danger btn-sm"><i class="fas fa-edit"></i> Supprimer</a>
@@ -24,8 +28,6 @@
                     </div>
 
                     <div class="card-body">
-
-                        <strong>{{$associated_requests}} requêtes associées</strong>
 
                         @switch($bookingRequest->status)
                             @case(\App\BookingRequest::STATUS_PENDING)
@@ -43,17 +45,17 @@
                                 <div class="alert alert-warning">Le remplaçant n'est plus disponible pour cet horaire</div>
                         @endif
 
-                        @if ($conflicts->has_conflicts)
+                        @if ($conflicts->has_conflicts && $bookingRequest->availability->status == \App\Availability::STATUS_PARTIALLY_BOOKED && $bookingRequest->status != \App\BookingRequest::STATUS_APPROVED)
                             <div class="alert alert-danger">
-                                Cette demande de remplacement entre en conflit avec d'autres remplacements :
+                                Cette demande entre en conflit avec d'autres remplacements :
 
                                 <ul class="m-0">
                                     @foreach($conflicts->conflicts as $conflict)
-                                        <li>{{$conflict->id}} : {{$conflict->start->format('H:i')}} - {{$conflict->end->format('H:i')}}</li>
+                                        <li>Remplacement de {{$conflict->start->format('H:i')}} à {{$conflict->end->format('H:i')}} dans la garderie {{$conflict->nursery->name}}</li>
                                     @endforeach
                                 </ul>
                             </div>
-                        @else
+                        @elseif (!$conflicts->has_conflicts && $bookingRequest->availability->status == \App\Availability::STATUS_PARTIALLY_BOOKED)
                             <div class="alert alert-info">Le remplaçant est occupé partiellement, mais peut avoir un autre crénau horaire assigné.</div>
                         @endif
 

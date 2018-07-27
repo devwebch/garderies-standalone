@@ -131,7 +131,22 @@ class BookingRequestController extends Controller
 
             // Update the availability status
             $availability = $bookingRequest->availability;
-            if ($booking->start->diffInHours($booking->end) >= 4) {
+
+            /**
+             * If the booking takes up more than half of the availability
+             * we can assume the day is filled
+             */
+            $booking_duration       = $booking->start->diffInHours($booking->end);
+            $availability_duration  = $availability->start->diffInHours($availability->end);
+
+            $day_filled = false;
+            if ($availability_duration > $booking_duration) {
+                if (($availability_duration - $booking_duration) < ($availability_duration / 2)) {
+                    $day_filled = true;
+                }
+            } else { $day_filled = true; }
+
+            if ($day_filled) {
                 $availability->status = Availability::STATUS_BOOKED;
             } else {
                 $availability->status = Availability::STATUS_PARTIALLY_BOOKED;
@@ -142,6 +157,10 @@ class BookingRequestController extends Controller
         $bookingRequest->status = BookingRequest::STATUS_APPROVED;
         $bookingRequest->save();
 
+        // Update the associated booking requests
+        BookingRequest::where('request_group', $bookingRequest->request_group)
+            ->where('id', '!=', $bookingRequest->id)
+            ->update(['status' => BookingRequest::STATUS_DENIED]);
 
         return response()->json([
             'status'    => 'Booking request approved'

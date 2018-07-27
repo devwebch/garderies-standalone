@@ -107,7 +107,6 @@ class BookingRequestController extends Controller
 
         return view('booking-request.show', [
             'bookingRequest'            => $bookingRequest,
-            'associated_requests'       => $associated_requests->count(),
             'availability'              => $availability,
             'conflict_start'            => $conflict_start,
             'conflict_end'              => $conflict_end,
@@ -156,21 +155,14 @@ class BookingRequestController extends Controller
     public function hasBookingConflicts(BookingRequest $bookingRequest, Availability $availability)
     {
         $has_conflicts = false;
-        // get the requests that are not the one we're viewing
-        $requests = $availability->requests->where('id', '!=', $bookingRequest->id);
-        // if no requests are found, return no conflicts
-        if (!$requests) { return $has_conflicts; }
 
-        // get the requests IDs
-        $requests_id = $requests->pluck('id')->all(); // array of ID
-        // get bookings related to each requests
-        $bookings_for_availability = Booking::whereIn('request_id', $requests_id)
-            ->select('id', 'start', 'end')->get();
+        $bookings = $availability->bookings;
+        if (!$bookings->count()) { return $has_conflicts; }
 
         // init the conflicting bookings array
         $conflicting_bookings = [];
         // loop through each booking and store the conflicting ones
-        foreach ($bookings_for_availability as $booking) {
+        foreach ($bookings as $booking) {
             if (
                 ($bookingRequest->start->lte($booking->start) && $bookingRequest->end->gte($booking->start)) || // starts before start and ends after start
                 ($bookingRequest->start->gte($booking->start) && $bookingRequest->end->lte($booking->end)) || // starts after start and ends before end
@@ -184,7 +176,7 @@ class BookingRequestController extends Controller
         // create a status object
         $status = (object) [
             'has_conflicts' => $has_conflicts,
-            'conflicts' => $conflicting_bookings
+            'conflicts'     => $conflicting_bookings
         ];
 
         return $status;

@@ -109,16 +109,16 @@
                                             <td>
                                                 @switch($availability->status)
                                                     @case(\App\Availability::STATUS_UNTOUCHED)
-                                                    <span class="badge badge-info">Libre</span>
+                                                    <span class="badge badge-success">{{\App\Availability::STATUS_UNTOUCHED_LABEL}}</span>
                                                     @break
                                                     @case(\App\Availability::STATUS_PARTIALLY_BOOKED)
-                                                    <span class="badge badge-warning">Réservé part.</span>
+                                                    <span class="badge badge-warning">{{\App\Availability::STATUS_PARTIALLY_BOOKED_LABEL}}</span>
                                                     @break
                                                     @case(\App\Availability::STATUS_BOOKED)
-                                                    <span class="badge badge-success">Réservé</span>
+                                                    <span class="badge badge-danger">{{\App\Availability::STATUS_BOOKED_LABEL}}</span>
                                                     @break
                                                     @case(\App\Availability::STATUS_ARCHIVED)
-                                                    <span class="badge badge-dark">Archivé</span>
+                                                    <span class="badge badge-dark">{{\App\Availability::STATUS_ARCHIVED_LABEL}}</span>
                                                     @break
                                                 @endswitch
                                             </td>
@@ -157,13 +157,16 @@
                                             <td>
                                                 @switch($request->status)
                                                     @case(\App\Booking::STATUS_PENDING)
-                                                    <span class="badge badge-info">En attente</span>
+                                                    <span class="badge badge-info">{{\App\Booking::STATUS_PENDING_LABEL}}</span>
                                                     @break
                                                     @case(\App\Booking::STATUS_APPROVED)
-                                                    <span class="badge badge-success">Validé</span>
+                                                    <span class="badge badge-success">{{\App\Booking::STATUS_APPROVED_LABEL}}</span>
+                                                    @break
+                                                    @case(\App\Booking::STATUS_DENIED)
+                                                    <span class="badge badge-danger">{{\App\Booking::STATUS_DENIED_LABEL}}</span>
                                                     @break
                                                     @case(\App\Booking::STATUS_ARCHIVED)
-                                                    <span class="badge badge-dark">Archivé</span>
+                                                    <span class="badge badge-dark">{{\App\Booking::STATUS_ARCHIVED_LABEL}}</span>
                                                     @break
                                                 @endswitch
                                             </td>
@@ -201,13 +204,16 @@
                                             <td>
                                                 @switch($request->status)
                                                     @case(\App\Booking::STATUS_PENDING)
-                                                    <span class="badge badge-info">En attente</span>
+                                                    <span class="badge badge-info">{{\App\Booking::STATUS_PENDING_LABEL}}</span>
                                                     @break
                                                     @case(\App\Booking::STATUS_APPROVED)
-                                                    <span class="badge badge-success">Validé</span>
+                                                    <span class="badge badge-success">{{\App\Booking::STATUS_APPROVED_LABEL}}</span>
+                                                    @break
+                                                    @case(\App\Booking::STATUS_DENIED)
+                                                    <span class="badge badge-danger">{{\App\Booking::STATUS_DENIED_LABEL}}</span>
                                                     @break
                                                     @case(\App\Booking::STATUS_ARCHIVED)
-                                                    <span class="badge badge-dark">Archivé</span>
+                                                    <span class="badge badge-dark">{{\App\Booking::STATUS_ARCHIVED_LABEL}}</span>
                                                     @break
                                                 @endswitch
                                             </td>

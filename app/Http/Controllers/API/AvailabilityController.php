@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Availability;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Availability as AvailabilityResource;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -30,10 +31,10 @@ class AvailabilityController extends Controller
     public function store(Request $request)
     {
         $userID = $request->params['userID'];
-        $event = $request->params['event'];
+        $event  = $request->params['event'];
         
-        $start = Carbon::parse($event['start']);
-        $end = Carbon::parse($event['end']);
+        $start  = Carbon::parse($event['start']);
+        $end    = Carbon::parse($event['end']);
         
         // if no starting hour is passed (thanks momentJS), set it to 8
         if (!$start->hour) {
@@ -47,7 +48,7 @@ class AvailabilityController extends Controller
             ->where('user_id', $userID)
             ->get();
 
-        $isOverlapping = false;
+        $isOverlapping  = false;
         $overlapStart   = null;
         $overlapEnd     = null;
 
@@ -157,21 +158,21 @@ class AvailabilityController extends Controller
         // New array for formatted data
         $availabilities_formatted = [];
         
-        $colors = ['#3a87ad', '#333333', '#666666', '#666666'];
+        $colors = ['#3a87ad', '#607d8b', '#fbc02d', '#666666'];
         
         // Loop through each object
         foreach ($availabilities as $availability) {
             
             // See fullcalendar doc for format
             $availabilities_formatted[] = [
-                'id' => $availability->id,
-                'title' => 'Disponible',
-                'start' => $availability->start->toDateTimeString(),
-                'end' => $availability->end->toDateTimeString(),
-                'status' => $availability->status,
-                'color' => $colors[$availability->status],
+                'id'        => $availability->id,
+                'title'     => 'Disponible',
+                'start'     => $availability->start->toDateTimeString(),
+                'end'       => $availability->end->toDateTimeString(),
+                'status'    => $availability->status,
+                'color'     => $colors[$availability->status],
                 'rendering' => ($availability->status == Availability::STATUS_UNTOUCHED) ? '' : 'background',
-                'type' => 'availability'
+                'type'      => 'availability'
             ];
         }
         
@@ -250,7 +251,6 @@ class AvailabilityController extends Controller
                 ->get();
             }
 
-
             // determine the matching between the slot and the request
             $collection->each(function ($item, $key) {
                 global $collection, $date_start, $date_end;
@@ -276,4 +276,148 @@ class AvailabilityController extends Controller
 
         return AvailabilityResource::collection($collection);
     }
+
+    /**
+     * Look through booking related to an availability
+     * to determine the available slots
+     *
+     * @param Availability $availability
+     * @return array
+     */
+    public function getAvailableBookingSlots(Availability $availability)
+    {
+        // get related bookings
+        $bookings   = $availability->bookings()->orderBy('start')->get();
+
+        // init
+        $start      = $availability->start->copy();
+        $busy_min   = 0;
+        $slots      = [];
+
+        // loop through the associated bookings
+        foreach ($bookings as $key => $booking) {
+
+            // store each booking duration
+            if ($booking->start->lt($availability->start)) {
+                $busy_min += $booking->end->diffInMinutes($availability->start);
+            } elseif ($booking->end->gt($availability->end)) {
+                $busy_min += $booking->start->diffInMinutes($availability->end);
+            } else {
+                $busy_min += $booking->start->diffInMinutes($booking->end);
+            }
+
+            // If this is the last booking and it is exactly the same length, exit early
+            if ($key == $bookings->count() &&
+                $booking->start->equaltTo($availability->start) &&
+                $booking->end->equaltTo($availability->end)
+            ) {
+                break;
+            }
+
+            // register available slots
+            if ($booking->start->equalTo($start)) {
+                $start->addMinutes($booking->start->diffInMinutes($booking->end));
+            } else {
+                $slot_start = $start->copy();
+                $slot_end   = $start->copy()->addMinutes($start->diffInMinutes($booking->start));
+                $start      = $booking->end;
+
+                $slots[] = ['start' => $slot_start, 'end' => $slot_end];
+            }
+
+            // if the last booking ends before the availability, retrieve the ending slot
+            if ($key == $bookings->count() - 1 && $booking->end->lt($availability->end)) {
+                $slot_start = $booking->end->copy();
+                $slot_end   = $slot_start->copy()->addMinutes($booking->end->diffInMinutes($availability->end));
+
+                $slots[] = ['start' => $slot_start, 'end' => $slot_end];
+            }
+        }
+
+        // prep return data
+        $data = [
+            'availability_duration' => $availability->start->diffInMinutes($availability->end),
+            'bookings_duration'     => $busy_min,
+            'slots'                 => $slots
+        ];
+
+        return $data;
+    }
+
+    /**
+     * Look through the availabilities for a specific user and date
+     * and return its free time
+     *
+     * @param User $user
+     * @param Carbon $date
+     * @return array
+     */
+    public function getAvailableSlots(User $user, Carbon $date)
+    {
+        $day_start  = $date->copy()->hour(6);
+        $day_end    = $date->copy()->hour(18);
+
+        // get related bookings
+        $availabilities = Availability::whereYear('start', $day_start->format('Y'))
+            ->whereMonth('start', $day_start->format('m'))
+            ->whereDay('start', $day_start->format('d'))
+            ->where('user_id', $user->id)
+            ->orderBy('start')
+            ->get();
+
+        // init
+        $start      = $day_start->copy();
+        $free_min   = $day_start->diffInMinutes($day_end);
+        $slots      = [];
+
+        // loop through the associated bookings
+        foreach ($availabilities as $key => $availability) {
+
+            // store each booking duration
+            if ($availability->start->lt($day_start)) {
+                $free_min -= $availability->end->diffInMinutes($day_start);
+            } elseif ($availability->end->gt($day_end)) {
+                $free_min -= $availability->start->diffInMinutes($day_end);
+            } else {
+                $free_min -= $availability->start->diffInMinutes($availability->end);
+            }
+
+            // If this is the last booking and it is exactly the same length, exit early
+            if ($key == $availability->count() &&
+                $availability->start->equaltTo($day_start) &&
+                $availability->end->equaltTo($day_end)
+            ) {
+                break;
+            }
+
+            // register available slots
+            if ($availability->start->equalTo($start)) {
+                $start->addMinutes($availability->start->diffInMinutes($availability->end));
+            } else {
+                $slot_start = $start->copy();
+                $slot_end   = $start->copy()->addMinutes($start->diffInMinutes($availability->start));
+                $start      = $availability->end;
+
+                $slots[] = ['start' => $slot_start, 'end' => $slot_end];
+            }
+
+            // if the last booking ends before the availability, retrieve the ending slot
+            if ($key == $availabilities->count() - 1 && $availability->end->lt($day_end)) {
+                $slot_start = $availability->end->copy();
+                $slot_end   = $slot_start->copy()->addMinutes($availability->end->diffInMinutes($day_end));
+
+                $slots[] = ['start' => $slot_start, 'end' => $slot_end];
+            }
+        }
+
+        // prep return data
+        $data = [
+            'total_freetime'        => $day_start->diffInMinutes($day_end),
+            'available_freetime'    => $free_min,
+            'slots'                 => $slots
+        ];
+
+        return $data;
+    }
+
 }

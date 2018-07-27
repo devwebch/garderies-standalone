@@ -20,9 +20,28 @@
 
         <div class="card-body">
             <p><strong>ID:</strong> {{$availability->id}}</p>
-            <p><strong>Created at:</strong> {{$availability->created_at->format('d.m.Y - H:i')}}</p>
-            <p><strong>Start:</strong> {{$availability->start}}</p>
-            <p><strong>End:</strong> {{$availability->end}}</p>
+            <p><strong>User:</strong> {{$availability->user->id}} - {{$availability->user->name}}</p>
+            <p><strong>Created at:</strong> {{$availability->created_at->format('d.m.Y - H\hi')}}</p>
+            <p><strong>Start:</strong> {{$availability->start->format('d.m.Y H\hi')}}</p>
+            <p><strong>End:</strong> {{$availability->end->format('d.m.Y H\hi')}}</p>
+
+            <strong>Bookings</strong>
+            <ul>
+            @foreach ($bookings as $booking)
+                <li>(bID) {{$booking->id}} : (brID) {{$booking->request_id}} : {{$booking->start}} - {{$booking->end}}</li>
+            @endforeach
+            </ul>
+
+            <p><strong>Available slots</strong></p>
+            @php
+                echo '<pre>' . print_r($slots, true) . '</pre>';
+            @endphp
+
+            <p><strong>Free time</strong></p>
+            @php
+                echo '<pre>' . print_r($freetime, true) . '</pre>';
+            @endphp
+
         </div>
     </div>
 @endsection

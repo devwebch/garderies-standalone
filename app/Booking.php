@@ -16,6 +16,11 @@ class Booking extends Model
     public const STATUS_DENIED      = 2;
     public const STATUS_ARCHIVED    = 3;
 
+    public const STATUS_PENDING_LABEL     = 'En attente';
+    public const STATUS_APPROVED_LABEL    = 'Approuvé';
+    public const STATUS_DENIED_LABEL      = 'Refusé';
+    public const STATUS_ARCHIVED_LABEL    = 'Archivé';
+
     protected $dates = ['start', 'end', 'deleted_at'];
 
     public function user()

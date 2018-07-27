@@ -119,7 +119,7 @@
                     },
                     {
                         url: '/api/bookings/user/' + this.user,
-                        color: 'red',
+                        color: '#c62828',
                         textColor: 'white',
                         editable: false
                     }
