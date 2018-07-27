@@ -11,7 +11,7 @@
             <div class="filter-bar p-4 mb-4 bg-white d-print-none">
                 <div class="row">
                     <div class="col-md-5">
-                        <a href="{{route('nurseries.show', $nursery)}}" class="btn btn-info btn-sm">&larr; Retour à la garderie</a>
+                        <a href="{{route('nurseries.show', $nursery)}}" class="btn btn-info">&larr; Retour à la garderie</a>
                     </div>
                     <div class="col-md-3">
                         <flat-pickr
