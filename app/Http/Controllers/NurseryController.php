@@ -134,10 +134,14 @@ class NurseryController extends Controller
     {
         setlocale(LC_TIME, 'fr');
         $bookings = $nursery->bookings;
+        $first_day_month = Carbon::now()->day(1)->format('d.m.Y');
+        $last_day_month = Carbon::now()->lastOfMonth()->format('d.m.Y');
 
         return view('nursery.planning', [
             'nursery'   => $nursery,
-            'bookings'  => $bookings
+            'bookings'  => $bookings,
+            'first_day_month'   => $first_day_month,
+            'last_day_month'   => $last_day_month,
         ]);
     }
 }

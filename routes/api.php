@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('nurseries/planning', 'API\NurseryController@planning');
 Route::resource('nurseries', 'API\NurseryController');
 Route::resource('users', 'API\UserController');
 Route::resource('networks', 'API\NetworkController');

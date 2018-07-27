@@ -49,7 +49,7 @@
     import flatPickr from 'vue-flatpickr-component';
     import 'flatPickr/dist/flatpickr.css';
     import {French} from 'flatPickr/dist/l10n/fr';
-    import moment from 'moment'
+    import moment from 'moment';
 
     import swal from 'sweetalert2';
     import 'sweetalert2/dist/sweetalert2.min.css';

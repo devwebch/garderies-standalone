@@ -30,6 +30,7 @@ Vue.component('user-edit', require('./components/UserEditComponent'));
 Vue.component('nursery-show', require('./components/NurseryShowComponent'));
 Vue.component('nursery-create', require('./components/NurseryCreateComponent'));
 Vue.component('nursery-edit', require('./components/NurseryEditComponent'));
+Vue.component('nursery-planning', require('./components/NurseryPlanningComponent'));
 Vue.component('network-show', require('./components/NetworkShowComponent'));
 Vue.component('network-create', require('./components/NetworkCreateComponent'));
 Vue.component('network-edit', require('./components/NetworkEditComponent'));

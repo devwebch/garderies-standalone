@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Booking;
 use App\Http\Resources\Nursery as NurseryResource;
 use App\Nursery;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Booking as BookingResource;
 
 class NurseryController extends Controller
 {
@@ -96,5 +99,24 @@ class NurseryController extends Controller
             'status'    => 'Nursery deleted',
             'redirect'  => route('nurseries.index')
         ]);
+    }
+
+    public function planning(Request $request)
+    {
+        $nursery_ID = $request->nursery;
+        $date_start = Carbon::parse($request->start);
+        $date_end   = Carbon::parse($request->end);
+
+        $bookings = Booking::where('nursery_id', $nursery_ID)
+            ->where('start', '>=', $date_start)
+            ->where('end', '<=', $date_end)
+            ->with('user')
+            ->with('substitute')
+            ->with('request')
+            ->get();
+
+        $bookings = BookingResource::collection($bookings);
+
+        return response()->json($bookings);
     }
 }
