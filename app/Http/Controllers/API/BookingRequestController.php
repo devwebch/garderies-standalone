@@ -136,15 +136,21 @@ class BookingRequestController extends Controller
              * If the booking takes up more than half of the availability
              * we can assume the day is filled
              */
-            $booking_duration       = $booking->start->diffInHours($booking->end);
+            $bookings_duration = 0;
+            $related_bookings = $availability->bookings;
+            foreach ($related_bookings as $booking) {
+                $bookings_duration += $booking->start->diffInHours($booking->end);
+            }
+
             $availability_duration  = $availability->start->diffInHours($availability->end);
 
             $day_filled = false;
-            if ($availability_duration > $booking_duration) {
-                if (($availability_duration - $booking_duration) < ($availability_duration / 2)) {
+            if ($availability_duration > $bookings_duration) {
+                if (($availability_duration - $bookings_duration) < ($availability_duration / 2)) {
                     $day_filled = true;
                 }
             } else { $day_filled = true; }
+
 
             if ($day_filled) {
                 $availability->status = Availability::STATUS_BOOKED;
