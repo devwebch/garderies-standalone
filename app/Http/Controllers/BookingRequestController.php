@@ -155,9 +155,12 @@ class BookingRequestController extends Controller
     public function hasBookingConflicts(BookingRequest $bookingRequest, Availability $availability)
     {
         $has_conflicts = false;
+        $status = (object) [
+            'has_conflicts' => $has_conflicts
+        ];
 
         $bookings = $availability->bookings;
-        if (!$bookings->count()) { return $has_conflicts; }
+        if (!$bookings->count()) { return $status; }
 
         // init the conflicting bookings array
         $conflicting_bookings = [];
