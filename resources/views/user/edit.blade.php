@@ -64,8 +64,9 @@
                             </div>
                         </div>
                     </div>
-
-                    <button class="btn btn-primary" type="submit">Enregistrer</button>
+    
+                    <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary">&larr; Retour</a>
+                    <button class="btn btn-primary float-right" type="submit">Enregistrer</button>
                 </form>
             </div>
         </div>

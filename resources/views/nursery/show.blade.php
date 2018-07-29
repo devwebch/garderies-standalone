@@ -20,9 +20,14 @@
                     <p><strong>E-mail :</strong> {{$nursery->email}}</p>
                     <p>
                         <strong>Réseau :</strong>
-                        <a href="{{route('networks.show', $nursery->network)}}">
-                            <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">{{$nursery->network->name ?? '-'}}</span>
-                        </a>
+                        @if ($nursery->network)
+                            <a href="{{route('networks.show', $nursery->network)}}">
+                                <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">{{$nursery->network->name}}</span>
+                            </a>
+                        @else
+                            <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">-</span>
+                        @endif
+                        
                     </p>
                 </div>
             </div>

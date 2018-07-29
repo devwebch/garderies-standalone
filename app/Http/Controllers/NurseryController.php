@@ -26,7 +26,8 @@ class NurseryController extends Controller
      */
     public function create()
     {
-        return view('nursery.create');
+        $networks = Network::all();
+        return view('nursery.create', ['networks' => $networks]);
     }
 
     /**
@@ -46,6 +47,7 @@ class NurseryController extends Controller
         $nursery->city      = $request->city;
         $nursery->email     = $request->email;
         $nursery->phone     = $request->phone;
+        $nursery->network_id    = $request->network;
         $nursery->save();
 
         return redirect()->route('nurseries.index');
