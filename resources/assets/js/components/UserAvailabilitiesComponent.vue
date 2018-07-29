@@ -94,7 +94,7 @@
                 locale: 'fr-ch',
                 header: {
                     left: 'title',
-                    center: 'agendaWeek listWeek',
+                    center: 'agendaWeek',
                     right: 'today prev,next'
                 },
                 buttonText: {
@@ -111,6 +111,14 @@
                 slotLabelFormat: 'HH:mm',
                 minTime: '06:00:00', // May change depending on Nursery
                 maxTime: '19:00:00', // May change depending on Nursery
+                businessHours: {
+                    dow: [1, 2, 3, 4, 5],
+                    start: '06:00',
+                    end: '19:00'
+                },
+                validRange: {
+                    start: new Date()
+                },
                 editable: true,
                 eventSources: [
                     {
@@ -147,8 +155,6 @@
                         }
                     })
                     .then(function(response){
-                        console.log(response);
-
                         if (!response.data.isOverlapping) {
                             // Assign the created ID to the event object
                             newEvent.id = response.data.id;
@@ -195,7 +201,7 @@
                 eventClick: function(event, jsEvent, view) {
 
                     // Limit the event to events that are availabilities
-                    if (event.type != 'availability') { return; }
+                    if (event.type !== 'availability') { return; }
 
                     // Display the modale
                     $('.modal-event').modal({show: true, focus: false}); // focus on the modal messes up with flatpickr
@@ -211,7 +217,7 @@
                 eventRender: function (event, element, view) {
 
                     // Inject a link element to the events
-                    if (event.type == 'availability' && event.status == 0) {
+                    if (event.type === 'availability' && event.status === 0) {
                         element.append('<a href="/availabilities/' + event.id + '" class="edit-link">Editer</a>');
                     }
                 }

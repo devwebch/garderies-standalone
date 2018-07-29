@@ -144,6 +144,7 @@ class BookingRequestController extends Controller
 
             $availability_duration  = $availability->start->diffInHours($availability->end);
 
+            // determine if the days is considered filled with bookings
             $day_filled = false;
             if ($availability_duration > $bookings_duration) {
                 if (($availability_duration - $bookings_duration) < ($availability_duration / 2)) {
@@ -151,7 +152,7 @@ class BookingRequestController extends Controller
                 }
             } else { $day_filled = true; }
 
-
+            // select the correct status
             if ($day_filled) {
                 $availability->status = Availability::STATUS_BOOKED;
             } else {
@@ -160,6 +161,7 @@ class BookingRequestController extends Controller
             $availability->save();
         }
 
+        // update the booking request
         $bookingRequest->status = BookingRequest::STATUS_APPROVED;
         $bookingRequest->save();
 
