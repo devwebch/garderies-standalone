@@ -116,8 +116,11 @@
                     start: '06:00',
                     end: '19:00'
                 },
-                validRange: {
-                    start: new Date()
+                validRange: function (now) {
+                    return {
+                        start: now,
+                        end: now.clone().add(2, 'month')
+                    }
                 },
                 editable: true,
                 eventSources: [
