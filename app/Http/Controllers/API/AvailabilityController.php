@@ -43,8 +43,7 @@ class AvailabilityController extends Controller
         }
 
         $availabilities = Availability::whereYear('start', $start->format('Y'))
-            ->whereMonth('start', $start->format('m'))
-            ->whereDay('start', $start->format('d'))
+            //->whereMonth('start', $start->format('m'))
             ->where('user_id', $userID)
             ->get();
 
@@ -53,10 +52,15 @@ class AvailabilityController extends Controller
         $overlapEnd     = null;
 
         foreach ($availabilities as $availability) {
-            if (($start->gte($availability->start) && $start->lt($availability->end)) || ($end->gt($availability->start) && $end->lte($availability->end))) {
+            if (
+                ($start->lte($availability->start) && $end->lte($availability->end)) || // overlapse before
+                ($start->gte($availability->start) && $end->gte($availability->end)) || // overlapse after
+                ($start->gte($availability->start) && $end->lte($availability->end)) || // between
+                ($end->lt($availability->start) && $end->gt($availability->end)) // total overlapse
+            ) {
                 $isOverlapping = true;
-                $overlapStart   = $availability->start;
-                $overlapEnd     = $availability->end;
+                $overlapStart   = $availability->start; // overlap on start
+                $overlapEnd     = $availability->end; // overlap on end
             }
         }
 
@@ -70,6 +74,20 @@ class AvailabilityController extends Controller
                 $start  = $overlapEnd->copy();
                 $end    = $start->copy()->addHours(2);
             }
+
+            // if the new availability starts too early or too late, adjust it
+            if ($start->lt($start->copy()->hour(7))) {
+                $start->addDay(1)->hour(7);
+                $end->addDay(1)->hour(9);
+            }
+            if ($end->gt($end->copy()->hour(18))) {
+                $start->addDay(1)->hour(18);
+                $end->addDay(1)->hour(16);
+            }
+
+            // if the new availability ends up on a weekend, adjust day
+            if ($start->isSaturday()) { $start->addDay(2); $end->addDay(2); }
+            if ($start->isSunday()) { $start->addDay(1); $end->addDay(1); }
 
             $isOverlapping = false;
         }
