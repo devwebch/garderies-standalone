@@ -37,3 +37,4 @@ Route::resource('booking-requests', 'API\BookingRequestController');
 Route::post('booking-requests/approve/{bookingRequest}', 'API\BookingRequestController@approve')->name('booking-requests.approve');
 
 Route::resource('feedbacks', 'API\FeedbackController');
+Route::resource('purposes', 'API\PurposeController');

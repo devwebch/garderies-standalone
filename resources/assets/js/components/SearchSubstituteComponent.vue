@@ -53,7 +53,7 @@
         <div class="card card-default">
             <div class="card-header bg-dark text-white">
                 Résultats de recherche
-                <div class="float-right" v-if="selectedAvailabilities.length">
+                <div class="float-md-right" v-if="selectedAvailabilities.length">
                     <button class="btn btn-success btn-sm" v-on:click="contactPeopleValidation">Contacter les personnes sélectionnées</button>
                 </div>
             </div>
@@ -135,16 +135,22 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="nursery">Garderie <span class="text-danger">*</span></label>
                                 <select name="nursery" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary" v-model="nursery">
                                     <option v-for="nursery in nurseries" :value="nursery.id">{{nursery.name}}</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="workgroup">Groupe de travail <span class="text-danger">*</span></label>
                                 <select name="workgroup" class="form-control selectpicker" title="Sélectionner..." data-style="btn-link border text-secondary" v-model="workgroup">
                                     <option v-for="workgroup in workgroups" :value="workgroup.id">{{workgroup.name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="purpose">Raison <span class="text-danger">*</span></label>
+                                <select name="purpose" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary" v-model="purpose">
+                                    <option v-for="purpose in purposes" :value="purpose.id">{{purpose.name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -157,7 +163,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary" :disabled="nursery == 0" v-on:click="contactPeople">Envoyer la demande
+                        <button type="button" class="btn btn-primary" :disabled="nursery === 0 || workgroup === 0 || purpose === 0" v-on:click="contactPeople">Envoyer la demande
                         </button>
                     </div>
                 </div>
@@ -174,7 +180,7 @@
     import swal from 'sweetalert2';
     import 'sweetalert2/dist/sweetalert2.min.css';
 
-    import selectpicker  from 'bootstrap-select';
+    import selectpicker from 'bootstrap-select';
     import 'bootstrap-select/dist/css/bootstrap-select.min.css';
 
     let vm;
@@ -216,6 +222,8 @@
         nursery: 0,
         workgroups: [],
         workgroup: 0,
+        purposes: [],
+        purpose: 0,
         message: null,
         loaded: true
     };
@@ -230,13 +238,10 @@
 
             this.$nextTick(function () {
                 this.searchSubstitute();
+
+                // init selectpicker
+                $('.selectpicker').selectpicker({});
             });
-
-            const $selectpicker = $(this.$el).find('.selectpicker');
-
-            $selectpicker
-                .selectpicker()
-                .on('changed.bs.select', () => this.$emit('changeWeek', this.options[$selectpicker.val()]));
         },
         updated() {
             $(this.$el).find('.selectpicker').selectpicker('refresh');
@@ -276,15 +281,13 @@
             },
             contactPeopleValidation: function () {
 
-                // Retrieve nurseries
-                axios.get('/api/nurseries').then(function (response) {
-                   data.nurseries = response.data.data;
-                });
-
-                // Retrieve workgroups
-                axios.get('/api/workgroups').then(function (response) {
-                   data.workgroups = response.data;
-                });
+                // retrieve data related to availabilities
+                axios.all([getNurseries(), getWorkgroups(), getPurposes()])
+                    .then(axios.spread(function(nurseries, workgroups, purposes) {
+                       data.nurseries = nurseries.data.data;
+                       data.workgroups = workgroups.data;
+                       data.purposes = purposes.data;
+                    }));
 
                 $('.modal').modal('show'); // Show the modal
             },
@@ -336,6 +339,10 @@
     function formattedDate(date) {
         return zeroLeadingNumber(date.getDate()) + '.' + zeroLeadingNumber(date.getMonth() + 1) + '.' + zeroLeadingNumber(date.getFullYear());
     }
+
+    function getNurseries() { return axios.get('/api/nurseries'); }
+    function getWorkgroups() { return axios.get('/api/workgroups'); }
+    function getPurposes() { return axios.get('/api/purposes'); }
 
 </script>
 

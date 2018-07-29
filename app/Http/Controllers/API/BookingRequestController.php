@@ -54,6 +54,7 @@ class BookingRequestController extends Controller
             $bookingRequest->user_id            = $user->id;
             $bookingRequest->nursery_id         = $request->nursery;
             $bookingRequest->workgroup_id       = $request->workgroup;
+            $bookingRequest->purpose_id         = $request->purpose;
             $bookingRequest->message            = $request->message;
             $bookingRequest->start              = $start;
             $bookingRequest->end                = $end;
