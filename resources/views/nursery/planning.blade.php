@@ -39,7 +39,12 @@
                 </div>
             </div>
             <div class="card card-default">
-                <div class="card-header">Remplacements du <em><span v-html="search.date_start"></span></em> au <em><span v-html="search.date_end"></span></em></div>
+                <div class="card-header">
+                    Remplacements du <em><span v-html="search.date_start"></span></em> au <em><span v-html="search.date_end"></span></em>
+                    <div class="actions float-right">
+                        <button class="btn btn-link" onclick="javascript:window.print();"><i class="fas fa-print"></i></button>
+                    </div>
+                </div>
                 <div class="card-body p-0">
                     <table class="table table-bordered table-striped m-0">
                         <thead>
