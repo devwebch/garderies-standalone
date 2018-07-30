@@ -12,6 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-xl-4 col-lg-5">
+
                     <div class="card">
                         <div class="profile-card text-center">
                             <div class="card-body">

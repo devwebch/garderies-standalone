@@ -8,6 +8,7 @@ use App\Http\Resources\Availability as AvailabilityResource;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
 
 class AvailabilityController extends Controller
 {
@@ -31,6 +32,7 @@ class AvailabilityController extends Controller
     public function store(Request $request)
     {
         $userID = $request->params['userID'];
+        $user   = User::find($userID);
         $event  = $request->params['event'];
         
         $start  = Carbon::parse($event['start']);
@@ -43,7 +45,8 @@ class AvailabilityController extends Controller
         }
 
         $availabilities = Availability::whereYear('start', $start->format('Y'))
-            //->whereMonth('start', $start->format('m'))
+            ->whereMonth('start', $start->format('m'))
+            ->whereDay('start', $start->format('d'))
             ->where('user_id', $userID)
             ->get();
 
@@ -53,8 +56,8 @@ class AvailabilityController extends Controller
 
         foreach ($availabilities as $availability) {
             if (
-                ($start->lte($availability->start) && $end->lte($availability->end)) || // overlapse before
-                ($start->gte($availability->start) && $end->gte($availability->end)) || // overlapse after
+                ($start->lte($availability->start) && $end->gte($availability->start) && $end->lte($availability->end)) || // overlapse before
+                ($start->gte($availability->start) && $start->lte($availability->end) && $end->gte($availability->end)) || // overlapse after
                 ($start->gte($availability->start) && $end->lte($availability->end)) || // between
                 ($end->lt($availability->start) && $end->gt($availability->end)) // total overlapse
             ) {
@@ -67,6 +70,10 @@ class AvailabilityController extends Controller
         // set the start and end date depending on the overlap type
         // TODO: determine open slots amongst the availabilities
         if ($isOverlapping) {
+
+            $opening_time = $start->copy()->hour(config('nursery.opening_time'))->minute(0);
+            $closing_time = $start->copy()->hour(config('nursery.closing_time'))->minute(0);
+
             if ($start->lte($overlapStart)) {
                 $start  = $overlapStart->copy()->subHours(2);
                 $end    = $start->copy()->addHours(2);
@@ -75,14 +82,15 @@ class AvailabilityController extends Controller
                 $end    = $start->copy()->addHours(2);
             }
 
-            // if the new availability starts too early or too late, adjust it
-            if ($start->lt($start->copy()->hour(7))) {
-                $start->addDay(1)->hour(7);
-                $end->addDay(1)->hour(9);
-            }
-            if ($end->gt($end->copy()->hour(18))) {
-                $start->addDay(1)->hour(18);
-                $end->addDay(1)->hour(16);
+            if ($start->lt($opening_time) || $end->gt($closing_time)) {
+                $nextDay = $start->copy()->addDay(1);
+                $freetime = UserController::getAvailableSlots($user, $nextDay);
+
+                $slot_start     = $freetime['slots'][0]['start'];
+                $slot_end       = $freetime['slots'][0]['end'];
+                $start  = $slot_start;
+                $end    = $slot_start->copy()->addHours(2);
+                if ($end->gt($slot_end)) { $end = $slot_end; }
             }
 
             // if the new availability ends up on a weekend, adjust day
@@ -356,82 +364,6 @@ class AvailabilityController extends Controller
         $data = [
             'availability_duration' => $availability->start->diffInMinutes($availability->end),
             'bookings_duration'     => $busy_min,
-            'slots'                 => $slots
-        ];
-
-        return $data;
-    }
-
-    /**
-     * Look through the availabilities for a specific user and date
-     * and return its free time
-     *
-     * @param User $user
-     * @param Carbon $date
-     * @return array
-     */
-    public function getAvailableSlots(User $user, Carbon $date)
-    {
-        $day_start  = $date->copy()->hour(6);
-        $day_end    = $date->copy()->hour(18);
-
-        // get related bookings
-        $availabilities = Availability::whereYear('start', $day_start->format('Y'))
-            ->whereMonth('start', $day_start->format('m'))
-            ->whereDay('start', $day_start->format('d'))
-            ->where('user_id', $user->id)
-            ->orderBy('start')
-            ->get();
-
-        // init
-        $start      = $day_start->copy();
-        $free_min   = $day_start->diffInMinutes($day_end);
-        $slots      = [];
-
-        // loop through the associated bookings
-        foreach ($availabilities as $key => $availability) {
-
-            // store each booking duration
-            if ($availability->start->lt($day_start)) {
-                $free_min -= $availability->end->diffInMinutes($day_start);
-            } elseif ($availability->end->gt($day_end)) {
-                $free_min -= $availability->start->diffInMinutes($day_end);
-            } else {
-                $free_min -= $availability->start->diffInMinutes($availability->end);
-            }
-
-            // If this is the last booking and it is exactly the same length, exit early
-            if ($key == $availability->count() &&
-                $availability->start->equaltTo($day_start) &&
-                $availability->end->equaltTo($day_end)
-            ) {
-                break;
-            }
-
-            // register available slots
-            if ($availability->start->equalTo($start)) {
-                $start->addMinutes($availability->start->diffInMinutes($availability->end));
-            } else {
-                $slot_start = $start->copy();
-                $slot_end   = $start->copy()->addMinutes($start->diffInMinutes($availability->start));
-                $start      = $availability->end;
-
-                $slots[] = ['start' => $slot_start, 'end' => $slot_end];
-            }
-
-            // if the last booking ends before the availability, retrieve the ending slot
-            if ($key == $availabilities->count() - 1 && $availability->end->lt($day_end)) {
-                $slot_start = $availability->end->copy();
-                $slot_end   = $slot_start->copy()->addMinutes($availability->end->diffInMinutes($day_end));
-
-                $slots[] = ['start' => $slot_start, 'end' => $slot_end];
-            }
-        }
-
-        // prep return data
-        $data = [
-            'total_freetime'        => $day_start->diffInMinutes($day_end),
-            'available_freetime'    => $free_min,
             'slots'                 => $slots
         ];
 

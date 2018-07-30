@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Availability;
 use App\Booking;
 use App\BookingRequest;
 use App\Diploma;
@@ -198,5 +199,86 @@ class UserController extends Controller
             'user'      => $user,
             'bookings'  => $bookings
         ]);
+    }
+
+    /**
+     * Look through the availabilities for a specific user and date
+     * and return its free time
+     *
+     * @param User $user
+     * @param Carbon $date
+     * @return array
+     */
+    public static function getAvailableSlots(User $user, Carbon $date)
+    {
+        $day_start  = $date->copy()->hour(config('nursery.opening_time'))->minute(0);
+        $day_end    = $date->copy()->hour(config('nursery.closing_time'))->minute(0);
+
+        // get related bookings
+        $availabilities = Availability::whereYear('start', $day_start->format('Y'))
+            ->whereMonth('start', $day_start->format('m'))
+            ->whereDay('start', $day_start->format('d'))
+            ->where('user_id', $user->id)
+            ->orderBy('start')
+            ->get();
+
+        // init
+        $start      = $day_start->copy();
+        $free_min   = $day_start->diffInMinutes($day_end);
+        $slots      = [];
+
+        // loop through the associated bookings
+        foreach ($availabilities as $key => $availability) {
+
+            // store each booking duration
+            if ($availability->start->lt($day_start)) {
+                $free_min -= $availability->end->diffInMinutes($day_start);
+            } elseif ($availability->end->gt($day_end)) {
+                $free_min -= $availability->start->diffInMinutes($day_end);
+            } else {
+                $free_min -= $availability->start->diffInMinutes($availability->end);
+            }
+
+            // If this is the last booking and it is exactly the same length, exit early
+            if ($key == $availability->count() &&
+                $availability->start->equaltTo($day_start) &&
+                $availability->end->equaltTo($day_end)
+            ) {
+                break;
+            }
+
+            // register available slots
+            if ($availability->start->equalTo($start)) {
+                $start->addMinutes($availability->start->diffInMinutes($availability->end));
+            } else {
+                $slot_start = $start->copy();
+                $slot_end   = $start->copy()->addMinutes($start->diffInMinutes($availability->start));
+                $start      = $availability->end;
+
+                $slots[] = ['start' => $slot_start, 'end' => $slot_end];
+            }
+
+            // if the last booking ends before the availability, retrieve the ending slot
+            if ($key == $availabilities->count() - 1 && $availability->end->lt($day_end)) {
+                $slot_start = $availability->end->copy();
+                $slot_end   = $slot_start->copy()->addMinutes($availability->end->diffInMinutes($day_end));
+
+                $slots[] = ['start' => $slot_start, 'end' => $slot_end];
+            }
+        }
+
+        // if no availabilities are registered for this user, he is available all day long
+        if (!$availabilities->count()) {
+            $slots[] = ['start' => $day_start, 'end' => $day_end];
+        }
+
+        // prep return data
+        $data = [
+            'total_freetime'        => $day_start->diffInMinutes($day_end),
+            'available_freetime'    => $free_min,
+            'slots'                 => $slots
+        ];
+
+        return $data;
     }
 }
