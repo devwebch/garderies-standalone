@@ -38,6 +38,10 @@ class NetworkController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => 'required',
+        ]);
+        
         $network = new Network();
         $network->name      = $request->name;
         $network->color     = strtolower($request->color);
@@ -78,6 +82,10 @@ class NetworkController extends Controller
      */
     public function update(Request $request, Network $network)
     {
+        $validatedData = $request->validate([
+            'name' => 'required',
+        ]);
+        
         $network->name      = $request->name;
         $network->color     = strtolower($request->color);
         $network->save();

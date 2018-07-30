@@ -9,6 +9,7 @@ use App\Nursery;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
@@ -54,6 +55,23 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        Validator::make($request->all(), [
+            'user' => 'required',
+            'substitute' => 'required|not_in:' . $request->user,
+            'nursery' => 'required',
+            'date_start' => 'required|date|after:yesterday',
+            'date_end' => 'required|date|after:date_start',
+        ], [
+            'user.required' => 'Veuillez séleccionner un employé.',
+            'substitute.required' => 'Veuillez séleccionner un remplaçant.',
+            'substitute.not_in' => 'Veuillez séleccionner un remplaçant différent de l\'employé.',
+            'nursery.required' => 'Veuillez séleccionner une garderie.',
+            'date_start.required' => 'Veuillez séleccionner une date de début.',
+            'date_start.after' => 'Veuillez séleccionner une date à partie d\'aujourd\'hui.',
+            'date_end.required' => 'Veuillez séleccionner une date de fin.',
+            'date_end.after' => 'La date de fin doit être après la date de début.',
+        ])->validate();
+        
         $booking = new Booking();
         $booking->user_id       = $request->user;
         $booking->substitute_id = $request->substitute;

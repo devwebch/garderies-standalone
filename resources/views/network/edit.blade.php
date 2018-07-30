@@ -12,10 +12,12 @@
                     {{method_field('PUT')}}
                     <div class="form-group">
                         <label for="name">Nom :</label>
-                        <input type="text" class="form-control" name="name" value="{{$network->name}}" required>
-                        <div class="invalid-feedback">
-                            Veuillez entrer un nom de réseau.
-                        </div>
+                        <input type="text" class="form-control {{ ($errors->has('name')) ? 'is-invalid' : '' }}" name="name" value="{{$network->name}}">
+                        @foreach ($errors->get('name') as $message)
+                            <div class="invalid-feedback" style="display: block;">
+                                Veuillez entrer un nom de réseau.
+                            </div>
+                        @endforeach
                     </div>
                     <div class="form-group">
                         <label for="color">Couleur :</label>

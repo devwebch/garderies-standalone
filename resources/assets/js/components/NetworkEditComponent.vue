@@ -13,18 +13,6 @@
         },
         mounted() {
             data.color = this.currentColor;
-
-            $("button[type='submit']").click(function(event) {
-                // Fetch form to apply custom Bootstrap validation
-                var form = $("form");
-
-                if (form[0].checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-
-                form.addClass('was-validated');
-            });
         },
         components: {
             Swatches

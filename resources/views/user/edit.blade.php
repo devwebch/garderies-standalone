@@ -15,11 +15,21 @@
                         <div class="col-md-7">
                             <div class="form-group">
                                 <label for="name">Nom :</label>
-                                <input type="text" class="form-control" name="name" value="{{$user->name}}">
+                                <input type="text" class="form-control {{ ($errors->has('name')) ? 'is-invalid' : '' }}" name="name" value="{{$user->name}}">
+                                @foreach ($errors->get('name') as $message)
+                                    <div class="invalid-feedback" style="display: block;">
+                                        Veuillez entrer le nom de l'employé.
+                                    </div>
+                                @endforeach
                             </div>
                             <div class="form-group">
                                 <label for="email">E-mail :</label>
-                                <input type="text" class="form-control" name="email" value="{{$user->email}}">
+                                <input type="text" class="form-control {{ ($errors->has('email')) ? 'is-invalid' : '' }}" name="email" value="{{$user->email}}">
+                                @foreach ($errors->get('email') as $message)
+                                    <div class="invalid-feedback" style="display: block;">
+                                        Veuillez entrer l'email de l'employé.
+                                    </div>
+                                @endforeach
                             </div>
                             <div class="form-group">
                                 <label for="phone">Téléphone :</label>

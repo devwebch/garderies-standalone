@@ -38,7 +38,9 @@ class NurseryController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: Add validation
+        $validatedData = $request->validate([
+            'name' => 'required',
+        ]);
 
         $nursery = new Nursery();
         $nursery->name      = $request->name;
@@ -90,7 +92,10 @@ class NurseryController extends Controller
      */
     public function update(Request $request, Nursery $nursery)
     {
-        // TODO: Add validation
+        $validatedData = $request->validate([
+            'name' => 'required',
+        ]);
+        
         $nursery->name          = $request->name;
         $nursery->address       = $request->address;
         $nursery->post_code     = $request->post_code;

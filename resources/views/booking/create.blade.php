@@ -13,29 +13,44 @@
                     <div class="row">
                         <div class="form-group col">
                             <label for="user">Employé :</label>
-                            <select name="user" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary">
+                            <select name="user" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary {{ ($errors->has('user')) ? 'is-invalid' : '' }}">
                                 @foreach($users as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                    <option value="{{$user->id}}" {{ old('user') && old('user') == $user->id ? 'selected' : '' }}>{{$user->name}}</option>
                                 @endforeach
                             </select>
+                            @foreach ($errors->get('user') as $message)
+                                <div class="invalid-feedback" style="display: block;">
+                                    {{ $message }}
+                                </div>
+                            @endforeach
                         </div>
                         <div class="form-group col">
                             <label for="substitute">Remplaçant :</label>
-                            <select name="substitute" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary">
+                            <select name="substitute" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary {{ ($errors->has('substitute')) ? 'is-invalid' : '' }}">
                                 @foreach($users as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                    <option value="{{$user->id}}" {{ old('substitute') && old('substitute') == $user->id ? 'selected' : '' }}>{{$user->name}}</option>
                                 @endforeach
                             </select>
+                            @foreach ($errors->get('substitute') as $message)
+                                <div class="invalid-feedback" style="display: block;">
+                                    {{ $message }}
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col">
                             <label for="nursery">Garderie</label>
-                            <select name="nursery" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary">
+                            <select name="nursery" class="form-control selectpicker" title="Sélectionner..." data-live-search="true" data-style="btn-link border text-secondary {{ ($errors->has('nursery')) ? 'is-invalid' : '' }}">
                                 @foreach($nurseries as $nursery)
-                                    <option value="{{$nursery->id}}">{{$nursery->name}}</option>
+                                    <option value="{{$nursery->id}}" {{ old('nursery') && old('nursery') == $nursery->id ? 'selected' : '' }}>{{$nursery->name}}</option>
                                 @endforeach
                             </select>
+                            @foreach ($errors->get('nursery') as $message)
+                                <div class="invalid-feedback" style="display: block;">
+                                    {{ $message }}
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="row">
@@ -44,20 +59,30 @@
                             <flat-pickr
                                     :config="flatPickrConfig"
                                     value="{{now()->addHours(2)->format('d.m.Y H:00')}}"
-                                    class="form-control"
+                                    class="form-control {{ ($errors->has('date_start')) ? 'is-invalid' : '' }}"
                                     placeholder="Select a date"
                                     name="date_start">
                             </flat-pickr>
+                            @foreach ($errors->get('date_start') as $message)
+                                <div class="invalid-feedback" style="display: block;">
+                                    {{ $message }}
+                                </div>
+                            @endforeach
                         </div>
                         <div class="form-group col">
                             <label for="name">Fin :</label>
                             <flat-pickr
                                     :config="flatPickrConfig"
                                     value="{{now()->addHours(6)->format('d.m.Y H:00')}}"
-                                    class="form-control"
+                                    class="form-control {{ ($errors->has('date_end')) ? 'is-invalid' : '' }}"
                                     placeholder="Select a date"
                                     name="date_end">
                             </flat-pickr>
+                            @foreach ($errors->get('date_end') as $message)
+                                <div class="invalid-feedback" style="display: block;">
+                                    {{ $message }}
+                                </div>
+                            @endforeach
                         </div>
                     </div>
     
