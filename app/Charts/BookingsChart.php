@@ -18,6 +18,7 @@ class BookingsChart extends Chart
 
         $monthly_bookings = DB::table('bookings')
             ->select(DB::raw("MONTH(start) as month"), DB::raw("COUNT(MONTH(start)) count"))
+            ->whereNull('deleted_at')
             ->groupBy('month')
             ->get();
         $monthly_bookings_dataset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
