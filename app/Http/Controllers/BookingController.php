@@ -62,13 +62,13 @@ class BookingController extends Controller
             'date_start' => 'required|date|after:yesterday',
             'date_end' => 'required|date|after:date_start',
         ], [
-            'user.required' => 'Veuillez séleccionner un employé.',
-            'substitute.required' => 'Veuillez séleccionner un remplaçant.',
-            'substitute.not_in' => 'Veuillez séleccionner un remplaçant différent de l\'employé.',
-            'nursery.required' => 'Veuillez séleccionner une garderie.',
-            'date_start.required' => 'Veuillez séleccionner une date de début.',
-            'date_start.after' => 'Veuillez séleccionner une date à partie d\'aujourd\'hui.',
-            'date_end.required' => 'Veuillez séleccionner une date de fin.',
+            'user.required' => 'Veuillez sélectionner un employé.',
+            'substitute.required' => 'Veuillez sélectionner un remplaçant.',
+            'substitute.not_in' => 'Veuillez sélectionner un remplaçant différent de l\'employé.',
+            'nursery.required' => 'Veuillez sélectionner une garderie.',
+            'date_start.required' => 'Veuillez sélectionner une date de début.',
+            'date_start.after' => 'Veuillez sélectionner une date à partie d\'aujourd\'hui.',
+            'date_end.required' => 'Veuillez sélectionner une date de fin.',
             'date_end.after' => 'La date de fin doit être après la date de début.',
         ])->validate();
         
