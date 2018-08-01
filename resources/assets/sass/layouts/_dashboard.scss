@@ -1,7 +1,8 @@
-.dashboard__summary {
+.dashboard-summary {
 
-  .widget-count {
+  .dashboard-summary__count {
     color: #455a64;
+    padding: 10px;
 
     h3 {
       font-size: 1em;
@@ -20,18 +21,14 @@
       line-height: 1.4em;
     }
   }
-
-  .card--nurseries {
-    border-bottom: 4px solid #24d2b5;
-    .icon { color: #24d2b5; }
+  .dashboard-summary--nurseries {
+    .icon { color: #5a9eaf; }
   }
-  .card--employees {
-    border-bottom: 4px solid #6772e5;
-    .icon { color: #6772e5; }
+  .dashboard-summary--employees {
+    .icon { color: #79a55a; }
   }
-  .card--substitutes {
-    border-bottom: 4px solid #ff5c6c;
-    .icon { color: #ff5c6c; }
+  .dashboard-summary--substitutes {
+    .icon { color: #c37481; }
   }
 }
 

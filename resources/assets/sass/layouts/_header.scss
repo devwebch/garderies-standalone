@@ -1,19 +1,41 @@
+.header__top {
+  height: auto;
+  color: #fff;
+  padding: 10px 0;
+  background: #169bf4;
+  background: -moz-linear-gradient(-45deg, #0277BD 8%, #00BCD4 100%);
+  background: -webkit-linear-gradient(-45deg, #0277BD 8%,#00BCD4 100%);
+  background: linear-gradient(135deg, #0277BD 8%,#00BCD4 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0277BD', endColorstr='#00BCD4',GradientType=1 );
+
+  .brand {
+    img {
+      width: 140px;
+      height: 41px;
+    }
+  }
+}
+
 .navbar {
 
   &.navbar-dark {
     background: #2e333f;
+  }
+
+  &.navbar-light {
+    .navbar-nav {
+      .nav-link { color: #6b6e71; }
+
+      .active {
+        .nav-link { color: #354051; }
+      }
+    }
   }
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
   padding-left: 0.9em;
   padding-right: 0.9em;
-}
-.navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.8);
-}
-.navbar-light .navbar-nav .nav-link {
-  color: rgba(0, 0, 0, 0.8) !important;
 }
 
 // Small devices (landscape phones, 576px and up)
@@ -23,7 +45,16 @@
 // Large devices (desktops, 992px and up)
 @include media-breakpoint-up(lg) {
   .navbar {
-    height: 100px;
+    padding: 0;
+
+    .nav-item {
+      padding: 10px 5px;
+
+      &.active {
+        border-bottom: 4px solid #fcb002;
+        padding-bottom: 6px;
+      }
+    }
   }
 }
 // Extra large devices (large desktops, 1200px and up)

@@ -1,7 +1,7 @@
 <template>
-    <div class="notifications float-right text-white d-none d-lg-block">
+    <div class="notifications float-right d-none d-lg-block">
         <div class="icon-wrapper">
-            <a href="#" class="btn btn-link text-white" data-toggle="popover" data-placement="bottom" title="Vos notifications">
+            <a href="#" class="btn btn-link text-dark" data-toggle="popover" data-placement="bottom" title="Vos notifications">
                 <span :class="['badge badge-pill', {'badge-danger': count > 0}]" v-show="count > 0" v-html="count">0</span>
                 <i class="fas fa-bell"></i>
             </a>
