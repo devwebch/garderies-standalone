@@ -1,6 +1,10 @@
 body {
   background: #f5f6fa;
   -webkit-font-smoothing: antialiased;
+
+  &.nav-mobile-open {
+    overflow: hidden;
+  }
 }
 
 a {

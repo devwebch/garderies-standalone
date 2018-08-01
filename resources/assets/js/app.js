@@ -41,3 +41,18 @@ Vue.component('vue-table', require('./components/VueTable'));
 const app = new Vue({
     el: '#app'
 });
+
+/**
+ * Mobile navigation
+ */
+var fadeSpeed = 200;
+$('.mobile-hamburger').click(function (e) {
+    $(this).toggleClass('open');
+    $('.nav-mobile').toggleClass('open').toggleClass('closed', !$('.nav-mobile').hasClass('open'));
+    $('body').toggleClass('nav-mobile-open');
+});
+$('.nav-mobile').click(function (e) {
+    $('.mobile-hamburger').toggleClass('open');
+    $(this).toggleClass('open').toggleClass('closed', !$('.nav-mobile').hasClass('open'));
+    $('body').removeClass('nav-mobile-open');
+});

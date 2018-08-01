@@ -12,14 +12,14 @@
         <div class="card-body">
             <div class="row mb-0">
                 <div class="col-md-4">
-                    <div class="dashboard-summary__count v-step-0 border-right dashboard-summary--nurseries">
+                    <div class="dashboard-summary__count v-step-0 dashboard-summary--nurseries">
                         <div class="icon"><i class="fas fa-building"></i></div>
                         <div class="number"><a href="/nurseries" class="text-secondary">{{$count_nursery}}</a></div>
                         <h3 class="text-muted"><a href="/nurseries" class="text-secondary">Garderies dans vos réseaux</a></h3>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="dashboard-summary__count v-step-1 border-right dashboard-summary--employees">
+                    <div class="dashboard-summary__count v-step-1 dashboard-summary--employees">
                         <div class="icon"><i class="fas fa-users"></i></div>
                         <div class="number"><a href="/users" class="text-secondary">{{$count_user}}</a></div>
                         <h3 class="text-muted"><a href="/users" class="text-secondary">Nombre d'employés</a></h3>

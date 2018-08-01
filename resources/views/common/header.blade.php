@@ -4,13 +4,11 @@
             <a class="brand" href="/">
                 <img src="{{asset('img/logo_garderies_white.png')}}" alt="{{config('app.name')}}">
             </a>
+            @include('common.nav-mobile')
         </div>
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
-            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item d-none">

@@ -1,5 +1,5 @@
 .main {
-  padding: 20px 0 80px;
+  padding: 20px 0 20px;
 }
 
 // User
@@ -17,7 +17,7 @@
 // Medium devices (tablets, 768px and up)
 @include media-breakpoint-up(md) {
   .main {
-    padding-top: 40px;
+    padding-top: 30px;
   }
 }
 // Large devices (desktops, 992px and up)
