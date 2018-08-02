@@ -42,7 +42,7 @@ class BookingController extends Controller
     public function create()
     {
         $users      = User::where('id', '!=', 1)->orderBy('name')->get();
-        $nurseries  = Nursery::all();
+        $nurseries  = Nursery::orderBy('name')->get();
 
         return view('booking.create', ['users' => $users, 'nurseries' => $nurseries]);
     }
