@@ -19,6 +19,10 @@
         list-style: none;
       }
     }
+
+    .is-invalid {
+      border-color: #d32f2f !important;
+    }
   }
 
   .pagination {
