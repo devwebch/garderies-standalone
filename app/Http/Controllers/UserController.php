@@ -176,7 +176,22 @@ class UserController extends Controller
 
     public function availabilities(User $user)
     {
-        return view('user.availabilities', ['user' => $user]);
+        // Define the current day to display
+        $current_day = Carbon::now();
+        if ($current_day->isSaturday()) { $current_day->addDays(2); }
+        if ($current_day->isSunday()) { $current_day->addDays(1); }
+        $current_day_formatted = $current_day->format('Y-m-d');
+
+        // Opening and closing time
+        $opening_time = config('nursery.opening_time_calendar');
+        $closing_time = config('nursery.closing_time_calendar');
+
+        return view('user.availabilities', [
+            'user'          => $user,
+            'current_day'   => $current_day_formatted,
+            'opening_time'  => $opening_time,
+            'closing_time'  => $closing_time
+        ]);
     }
 
     public function bookings(User $user)

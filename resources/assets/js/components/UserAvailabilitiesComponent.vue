@@ -78,7 +78,7 @@
 
     export default {
         data() { return data; },
-        props: ['user'],
+        props: ['user', 'openingTime', 'closingTime', 'defaultDate'],
         mounted() {
             vm = this;
 
@@ -91,6 +91,7 @@
                 themeSystem: 'bootstrap4',
                 contentHeight: 'auto',
                 defaultView: 'agendaWeek',
+                defaultDate: vm.defaultDate,
                 locale: 'fr-ch',
                 header: {
                     left: 'title',
@@ -113,8 +114,8 @@
                 maxTime: '19:00:00', // May change depending on Nursery
                 businessHours: {
                     dow: [1, 2, 3, 4, 5],
-                    start: '06:00',
-                    end: '19:00'
+                    start: vm.openingTime,
+                    end: vm.closingTime
                 },
                 editable: true,
                 eventSources: [

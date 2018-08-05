@@ -34,15 +34,23 @@ class AvailabilityController extends Controller
         $userID = $request->params['userID'];
         $user   = User::find($userID);
         $event  = $request->params['event'];
+        $default_duration = config('nursery.default_availability_duration');
         
         $start  = Carbon::parse($event['start']);
         $end    = Carbon::parse($event['end']);
-        
+
+        $opening_time = $start->copy()->hour(config('nursery.opening_time'))->minute(0);
+        $closing_time = $end->copy()->hour(config('nursery.closing_time'))->minute(0);
+
         // if no starting hour is passed (thanks momentJS), set it to 8
         if (!$start->hour) {
-            $start->hour(8);
-            $end->hour($start->hour + 2);
+            $start = $opening_time;
+            $end = $start->copy()->addHours($default_duration);
         }
+
+        if ($start->lt($opening_time)) { $start = $opening_time; $end = $start->copy()->addHours($default_duration); }
+        if ($start->gte($closing_time)) { $start = $closing_time->copy()->subHours($default_duration); }
+        if ($end->gt($closing_time)) { $end = $closing_time; $start = $end->copy()->subHours($default_duration); }
 
         $availabilities = Availability::whereYear('start', $start->format('Y'))
             ->whereMonth('start', $start->format('m'))
@@ -71,15 +79,12 @@ class AvailabilityController extends Controller
         // TODO: determine open slots amongst the availabilities
         if ($isOverlapping) {
 
-            $opening_time = $start->copy()->hour(config('nursery.opening_time'))->minute(0);
-            $closing_time = $start->copy()->hour(config('nursery.closing_time'))->minute(0);
-
             if ($start->lte($overlapStart)) {
-                $start  = $overlapStart->copy()->subHours(2);
-                $end    = $start->copy()->addHours(2);
+                $start  = $overlapStart->copy()->subHours($default_duration);
+                $end    = $start->copy()->addHours($default_duration);
             } else {
                 $start  = $overlapEnd->copy();
-                $end    = $start->copy()->addHours(2);
+                $end    = $start->copy()->addHours($default_duration);
             }
 
             if ($start->lt($opening_time) || $end->gt($closing_time)) {
@@ -89,7 +94,7 @@ class AvailabilityController extends Controller
                 $slot_start     = $freetime['slots'][0]['start'];
                 $slot_end       = $freetime['slots'][0]['end'];
                 $start  = $slot_start;
-                $end    = $slot_start->copy()->addHours(2);
+                $end    = $slot_start->copy()->addHours($default_duration);
                 if ($end->gt($slot_end)) { $end = $slot_end; }
             }
 

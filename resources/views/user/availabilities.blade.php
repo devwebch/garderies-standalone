@@ -12,7 +12,12 @@
         <div class="card card-default">
             <div class="card-header">{{$user->name}}</div>
             <div class="card-body">
-                <user-availabilities user="{{$user->id}}"></user-availabilities>
+                <user-availabilities
+                        user="{{$user->id}}"
+                        opening-time="{{$opening_time}}"
+                        closing-time="{{$closing_time}}"
+                        default-date="{{$current_day}}"
+                ></user-availabilities>
             </div>
         </div>
     </div>
