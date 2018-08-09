@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Availability as AvailabilityResource;
 use App\User;
 use Carbon\Carbon;
+use DateTime;
+use DateTimeZone;
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 
@@ -64,20 +67,38 @@ class AvailabilityController extends Controller
 
         foreach ($availabilities as $availability) {
             if (
-                ($start->lte($availability->start) && $end->gte($availability->start) && $end->lte($availability->end)) || // overlapse before
-                ($start->gte($availability->start) && $start->lte($availability->end) && $end->gte($availability->end)) || // overlapse after
+                ($start->lte($availability->start) && $end->gt($availability->start) && $end->lte($availability->end)) || // overlapse before
+                ($start->gte($availability->start) && $start->lt($availability->end) && $end->gte($availability->end)) || // overlapse after
                 ($start->gte($availability->start) && $end->lte($availability->end)) || // between
                 ($end->lt($availability->start) && $end->gt($availability->end)) // total overlapse
             ) {
                 $isOverlapping = true;
-                $overlapStart   = $availability->start; // overlap on start
-                $overlapEnd     = $availability->end; // overlap on end
+                /*$overlapStart   = $availability->start; // overlap on start
+                $overlapEnd     = $availability->end; // overlap on end*/
+            }
+        }
+        
+        if ($isOverlapping) {
+            $freetime = UserController::getAvailableSlots($user, $start);
+            
+            if ($freetime['available_freetime'] >= 120) {
+                foreach ($freetime['slots'] as $free) {
+                    $freestart  = Carbon::parse($free['start']);
+                    $freeend    = Carbon::parse($free['end']);
+                    
+                    if ($freestart->diffInHours($freeend) >= 2) {
+                        $start = $freestart;
+                        $end = $freestart->copy()->addHours($default_duration);
+                        $isOverlapping = false;
+                        break;
+                    }
+                }
             }
         }
 
         // set the start and end date depending on the overlap type
         // TODO: determine open slots amongst the availabilities
-        if ($isOverlapping) {
+        /*if ($isOverlapping) {
 
             if ($start->lte($overlapStart)) {
                 $start  = $overlapStart->copy()->subHours($default_duration);
@@ -103,7 +124,7 @@ class AvailabilityController extends Controller
             if ($start->isSunday()) { $start->addDay(1); $end->addDay(1); }
 
             $isOverlapping = false;
-        }
+        }*/
 
         $availability = null;
         if (!$isOverlapping) {
@@ -115,11 +136,28 @@ class AvailabilityController extends Controller
         }
 
         return response()->json([
-            'status'        => 'Availability created',
+            'status'        => UserController::getAvailableSlots($user, $start),
             'isOverlapping' => $isOverlapping,
             'event'         => $availability,
             'id'            => isset($availability) ? $availability->id : null
         ]);
+    }
+    
+    function rangesNotOverlapOpen($start_time1,$end_time1,$start_time2,$end_time2)
+    {
+        $utc = new DateTimeZone('UTC');
+        
+        $start1 = new DateTime($start_time1,$utc);
+        $end1 = new DateTime($end_time1,$utc);
+        if($end1 < $start1)
+            throw new Exception('Range is negative.');
+        
+        $start2 = new DateTime($start_time2,$utc);
+        $end2 = new DateTime($end_time2,$utc);
+        if($end2 < $start2)
+            throw new Exception('Range is negative.');
+        
+        return ($end1 <= $start2) || ($end2 <= $start1);
     }
     
     /**

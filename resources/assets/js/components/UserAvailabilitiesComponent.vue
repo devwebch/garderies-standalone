@@ -155,7 +155,10 @@
                         }
                     })
                     .then(function(response){
+                        console.log(response);
+                        console.log(response.data.isOverlapping);
                         if (!response.data.isOverlapping) {
+                            console.log('not overlapping');
                             // Assign the created ID to the event object
                             newEvent.id = response.data.id;
 
