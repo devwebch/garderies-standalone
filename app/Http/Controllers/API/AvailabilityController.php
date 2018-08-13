@@ -73,8 +73,6 @@ class AvailabilityController extends Controller
                 ($end->lt($availability->start) && $end->gt($availability->end)) // total overlapse
             ) {
                 $isOverlapping = true;
-                /*$overlapStart   = $availability->start; // overlap on start
-                $overlapEnd     = $availability->end; // overlap on end*/
             }
         }
         
@@ -95,36 +93,6 @@ class AvailabilityController extends Controller
                 }
             }
         }
-
-        // set the start and end date depending on the overlap type
-        // TODO: determine open slots amongst the availabilities
-        /*if ($isOverlapping) {
-
-            if ($start->lte($overlapStart)) {
-                $start  = $overlapStart->copy()->subHours($default_duration);
-                $end    = $start->copy()->addHours($default_duration);
-            } else {
-                $start  = $overlapEnd->copy();
-                $end    = $start->copy()->addHours($default_duration);
-            }
-
-            if ($start->lt($opening_time) || $end->gt($closing_time)) {
-                $nextDay = $start->copy()->addDay(1);
-                $freetime = UserController::getAvailableSlots($user, $nextDay);
-
-                $slot_start     = $freetime['slots'][0]['start'];
-                $slot_end       = $freetime['slots'][0]['end'];
-                $start  = $slot_start;
-                $end    = $slot_start->copy()->addHours($default_duration);
-                if ($end->gt($slot_end)) { $end = $slot_end; }
-            }
-
-            // if the new availability ends up on a weekend, adjust day
-            if ($start->isSaturday()) { $start->addDay(2); $end->addDay(2); }
-            if ($start->isSunday()) { $start->addDay(1); $end->addDay(1); }
-
-            $isOverlapping = false;
-        }*/
 
         $availability = null;
         if (!$isOverlapping) {

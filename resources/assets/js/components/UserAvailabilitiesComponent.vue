@@ -134,8 +134,6 @@
                     let start   = date;
                     let end     = date.clone().add(2, 'hour');
 
-                    console.log('day click');
-
                     // New event object
                     let newEvent = {
                         title: 'Nouvelle disponibilité',
@@ -155,10 +153,7 @@
                         }
                     })
                     .then(function(response){
-                        console.log(response);
-                        console.log(response.data.isOverlapping);
                         if (!response.data.isOverlapping) {
-                            console.log('not overlapping');
                             // Assign the created ID to the event object
                             newEvent.id = response.data.id;
 
