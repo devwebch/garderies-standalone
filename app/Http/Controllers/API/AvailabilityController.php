@@ -79,7 +79,7 @@ class AvailabilityController extends Controller
         if ($isOverlapping) {
             $freetime = UserController::getAvailableSlots($user, $start);
             
-            if ($freetime['available_freetime'] >= 120) {
+            if ($freetime['available_freetime'] >= $default_duration) {
                 foreach ($freetime['slots'] as $free) {
                     $freestart  = Carbon::parse($free['start']);
                     $freeend    = Carbon::parse($free['end']);
