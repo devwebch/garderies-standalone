@@ -85,8 +85,14 @@ class AvailabilityController extends Controller
                     $freeend    = Carbon::parse($free['end']);
                     
                     if ($freestart->diffInHours($freeend) >= 2) {
-                        $start = $freestart;
-                        $end = $freestart->copy()->addHours($default_duration);
+                        if ($start->diffInHours($freestart) > $start->diffInHours($freeend)) {
+                            $start = $freeend->copy()->subHours($default_duration);
+                            $end = $freeend;
+                        } else {
+                            $start = $freestart;
+                            $end = $freestart->copy()->addHours($default_duration);
+                        }
+                        
                         $isOverlapping = false;
                         break;
                     }
