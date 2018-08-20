@@ -7,5 +7,10 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <meta name="csrf-token" content="{{csrf_token()}}">
 
+    <link rel="icon" href="{{asset('img/favicon-32x32.png')}}" sizes="32x32" />
+    <link rel="icon" href="{{asset('img/favicon-192x192.png')}}" sizes="192x192" />
+    <link rel="apple-touch-icon-precomposed" href="{{asset('img/favicon-180x180.png')}}" />
+    <meta name="msapplication-TileImage" content="{{asset('img/favicon-270x270.png')}}" />
+
     @yield('styles')
 </head>
