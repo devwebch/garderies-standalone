@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header d-print-none">
     <div class="header__top">
         <div class="container">
             <a class="brand" href="/">

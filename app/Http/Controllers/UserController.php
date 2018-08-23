@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Availability;
 use App\Booking;
 use App\BookingRequest;
+use App\Charts\UserBookingsChart;
 use App\Diploma;
 use App\Network;
 use App\Nursery;
@@ -90,13 +91,16 @@ class UserController extends Controller
             ->orderBy('start')
             ->get();
 
+        $chart = new UserBookingsChart($user->id);
+
         return view('user.show', [
             'user'                  => $user,
             'availabilities'        => $availabilities,
             'bookings'              => $bookings,
             'archivedBookings'      => $archivedBookings,
             'bookingRequests'       => $bookingRequests,
-            'userBookingRequests'   => $userBookingRequests
+            'userBookingRequests'   => $userBookingRequests,
+            'chart'                 => $chart
         ]);
     }
 

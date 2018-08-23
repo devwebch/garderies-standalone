@@ -80,61 +80,12 @@
                     </div>
                 </div>
                 <div class="col-xl-8 col-lg-7">
-                    {{-- Availabilities --}}
+                    {{-- Bookings --}}
                     <div class="card card-default mb-4">
-                        <div class="card-header">
-                            Vos prochaines disponibilités
-                            <div class="actions float-right">
-                                <a href="{{route('users.availabilities', $user->id)}}" class="btn btn-info btn-sm"><i class="fas fa-calendar"></i> Gérer mes disponibilités</a>
-                            </div>
-                        </div>
+                        <div class="card-header">Vos prochains remplacements</div>
                         <div class="card-body">
-                            @if (!$availabilities->count())
-                                <div class="alert alert-info">Aucune disponibilité renseignée pour le moment.</div>
-                                <a href="{{route('users.availabilities', $user->id)}}" class="btn btn-info"><i class="fas fa-calendar"></i> Gérer mes disponibilités</a>
-                            @else
-                                <table class="table table-borderless table-striped table-responsive-lg">
-                                    <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Début</th>
-                                        <th>Fin</th>
-                                        <th width="30">Status</th>
-                                    </tr>
-                                    </thead>
-                                    @foreach($availabilities as $availability)
-                                        <tr>
-                                            <td>{{$availability->start->format('d.m.Y')}}</td>
-                                            <td>{{$availability->start->format('H\hi')}}</td>
-                                            <td>{{$availability->end->format('H\hi')}}</td>
-                                            <td>
-                                                @switch($availability->status)
-                                                    @case(\App\Availability::STATUS_UNTOUCHED)
-                                                    <span class="badge badge-success">{{\App\Availability::STATUS_UNTOUCHED_LABEL}}</span>
-                                                    @break
-                                                    @case(\App\Availability::STATUS_PARTIALLY_BOOKED)
-                                                    <span class="badge badge-warning">{{\App\Availability::STATUS_PARTIALLY_BOOKED_LABEL}}</span>
-                                                    @break
-                                                    @case(\App\Availability::STATUS_BOOKED)
-                                                    <span class="badge badge-danger">{{\App\Availability::STATUS_BOOKED_LABEL}}</span>
-                                                    @break
-                                                    @case(\App\Availability::STATUS_ARCHIVED)
-                                                    <span class="badge badge-dark">{{\App\Availability::STATUS_ARCHIVED_LABEL}}</span>
-                                                    @break
-                                                @endswitch
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-                            @endif
-                        </div>
-                    </div>
-                    {{-- Own Booking request --}}
-                    <div class="card card-default mb-4">
-                        <div class="card-header">Vos demandes de remplacement</div>
-                        <div class="card-body">
-                            @if (!$userBookingRequests->count())
-                                <div class="alert alert-info">Aucune demande en attente.</div>
+                            @if (!$bookings->count())
+                                <div class="alert alert-info">Aucun remplacement prévu.</div>
                             @else
                                 <table class="table table-borderless table-striped table-responsive-lg">
                                     <thead>
@@ -143,35 +94,30 @@
                                         <th>Début</th>
                                         <th>Fin</th>
                                         <th>Garderie</th>
-                                        <th>Remplaçant</th>
                                         <th width="120">Status</th>
                                         <th width="50"></th>
                                     </tr>
                                     </thead>
-                                    @foreach($userBookingRequests as $request)
+                                    @foreach($bookings as $booking)
                                         <tr>
-                                            <td>{{$request->start->format('d.m.Y')}}</td>
-                                            <td>{{$request->start->format('H\hi')}}</td>
-                                            <td>{{$request->end->format('H\hi')}}</td>
-                                            <td><a href="{{route('nurseries.show', $request->nursery ?? 0)}}">{{$request->nursery->name ?? '-'}}</a></td>
-                                            <td><a href="{{route('users.show', $request->substitute ?? 0)}}">{{$request->substitute->name ?? '-'}}</a></td>
+                                            <td>{{$booking->start->format('d.m.Y')}}</td>
+                                            <td>{{$booking->start->format('H\hi')}}</td>
+                                            <td>{{$booking->end->format('H\hi')}}</td>
+                                            <td><a href="{{route('nurseries.show', $booking->nursery ?? 0)}}">{{$booking->nursery->name ?? '-'}}</a></td>
                                             <td>
-                                                @switch($request->status)
+                                                @switch($booking->status)
                                                     @case(\App\Booking::STATUS_PENDING)
-                                                    <span class="badge badge-info">{{\App\Booking::STATUS_PENDING_LABEL}}</span>
+                                                    <span class="badge badge-info">En attente</span>
                                                     @break
                                                     @case(\App\Booking::STATUS_APPROVED)
-                                                    <span class="badge badge-success">{{\App\Booking::STATUS_APPROVED_LABEL}}</span>
-                                                    @break
-                                                    @case(\App\Booking::STATUS_DENIED)
-                                                    <span class="badge badge-danger">{{\App\Booking::STATUS_DENIED_LABEL}}</span>
+                                                    <span class="badge badge-success">Validé</span>
                                                     @break
                                                     @case(\App\Booking::STATUS_ARCHIVED)
-                                                    <span class="badge badge-dark">{{\App\Booking::STATUS_ARCHIVED_LABEL}}</span>
+                                                    <span class="badge badge-dark">Archivé</span>
                                                     @break
                                                 @endswitch
                                             </td>
-                                            <td><a href="{{route('booking-requests.show', $request)}}">Voir</a></td>
+                                            <td><a href="{{route('bookings.show', $booking)}}">Voir</a></td>
                                         </tr>
                                     @endforeach
                                 </table>
@@ -225,12 +171,61 @@
                             @endif
                         </div>
                     </div>
-                    {{-- Bookings --}}
+                    {{-- Availabilities --}}
                     <div class="card card-default mb-4">
-                        <div class="card-header">Vos prochains remplacements</div>
+                        <div class="card-header">
+                            Vos prochaines disponibilités
+                            <div class="actions float-right">
+                                <a href="{{route('users.availabilities', $user->id)}}" class="btn btn-info btn-sm"><i class="fas fa-calendar"></i> Gérer mes disponibilités</a>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            @if (!$bookings->count())
-                                <div class="alert alert-info">Aucun remplacement prévu.</div>
+                            @if (!$availabilities->count())
+                                <div class="alert alert-info">Aucune disponibilité renseignée pour le moment.</div>
+                                <a href="{{route('users.availabilities', $user->id)}}" class="btn btn-info"><i class="fas fa-calendar"></i> Gérer mes disponibilités</a>
+                            @else
+                                <table class="table table-borderless table-striped table-responsive-lg">
+                                    <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Début</th>
+                                        <th>Fin</th>
+                                        <th width="30">Status</th>
+                                    </tr>
+                                    </thead>
+                                    @foreach($availabilities as $availability)
+                                        <tr>
+                                            <td>{{$availability->start->format('d.m.Y')}}</td>
+                                            <td>{{$availability->start->format('H\hi')}}</td>
+                                            <td>{{$availability->end->format('H\hi')}}</td>
+                                            <td>
+                                                @switch($availability->status)
+                                                    @case(\App\Availability::STATUS_UNTOUCHED)
+                                                    <span class="badge badge-success">{{\App\Availability::STATUS_UNTOUCHED_LABEL}}</span>
+                                                    @break
+                                                    @case(\App\Availability::STATUS_PARTIALLY_BOOKED)
+                                                    <span class="badge badge-warning">{{\App\Availability::STATUS_PARTIALLY_BOOKED_LABEL}}</span>
+                                                    @break
+                                                    @case(\App\Availability::STATUS_BOOKED)
+                                                    <span class="badge badge-danger">{{\App\Availability::STATUS_BOOKED_LABEL}}</span>
+                                                    @break
+                                                    @case(\App\Availability::STATUS_ARCHIVED)
+                                                    <span class="badge badge-dark">{{\App\Availability::STATUS_ARCHIVED_LABEL}}</span>
+                                                    @break
+                                                @endswitch
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            @endif
+                        </div>
+                    </div>
+                    {{-- Own Booking request --}}
+                    <div class="card card-default mb-4">
+                        <div class="card-header">Vos demandes de remplacement personnelles</div>
+                        <div class="card-body">
+                            @if (!$userBookingRequests->count())
+                                <div class="alert alert-info">Aucune demande en attente.</div>
                             @else
                                 <table class="table table-borderless table-striped table-responsive-lg">
                                     <thead>
@@ -239,30 +234,35 @@
                                         <th>Début</th>
                                         <th>Fin</th>
                                         <th>Garderie</th>
+                                        <th>Remplaçant</th>
                                         <th width="120">Status</th>
                                         <th width="50"></th>
                                     </tr>
                                     </thead>
-                                    @foreach($bookings as $booking)
+                                    @foreach($userBookingRequests as $request)
                                         <tr>
-                                            <td>{{$booking->start->format('d.m.Y')}}</td>
-                                            <td>{{$booking->start->format('H\hi')}}</td>
-                                            <td>{{$booking->end->format('H\hi')}}</td>
-                                            <td><a href="{{route('nurseries.show', $booking->nursery ?? 0)}}">{{$booking->nursery->name ?? '-'}}</a></td>
+                                            <td>{{$request->start->format('d.m.Y')}}</td>
+                                            <td>{{$request->start->format('H\hi')}}</td>
+                                            <td>{{$request->end->format('H\hi')}}</td>
+                                            <td><a href="{{route('nurseries.show', $request->nursery ?? 0)}}">{{$request->nursery->name ?? '-'}}</a></td>
+                                            <td><a href="{{route('users.show', $request->substitute ?? 0)}}">{{$request->substitute->name ?? '-'}}</a></td>
                                             <td>
-                                                @switch($booking->status)
+                                                @switch($request->status)
                                                     @case(\App\Booking::STATUS_PENDING)
-                                                    <span class="badge badge-info">En attente</span>
+                                                    <span class="badge badge-info">{{\App\Booking::STATUS_PENDING_LABEL}}</span>
                                                     @break
                                                     @case(\App\Booking::STATUS_APPROVED)
-                                                    <span class="badge badge-success">Validé</span>
+                                                    <span class="badge badge-success">{{\App\Booking::STATUS_APPROVED_LABEL}}</span>
+                                                    @break
+                                                    @case(\App\Booking::STATUS_DENIED)
+                                                    <span class="badge badge-danger">{{\App\Booking::STATUS_DENIED_LABEL}}</span>
                                                     @break
                                                     @case(\App\Booking::STATUS_ARCHIVED)
-                                                    <span class="badge badge-dark">Archivé</span>
+                                                    <span class="badge badge-dark">{{\App\Booking::STATUS_ARCHIVED_LABEL}}</span>
                                                     @break
                                                 @endswitch
                                             </td>
-                                            <td><a href="{{route('bookings.show', $booking)}}">Voir</a></td>
+                                            <td><a href="{{route('booking-requests.show', $request)}}">Voir</a></td>
                                         </tr>
                                     @endforeach
                                 </table>
@@ -316,7 +316,7 @@
 
                     <div class="card mt-4">
                         <div class="card-body">
-
+                            {!! $chart->container() !!}
                         </div>
                     </div>
 
@@ -324,4 +324,9 @@
             </div>
         </div>
     </user-show>
+@endsection
+
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js" charset="utf-8"></script>
+    {!! $chart->script() !!}
 @endsection

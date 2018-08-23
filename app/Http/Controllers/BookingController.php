@@ -106,7 +106,7 @@ class BookingController extends Controller
             $availability_end   = $booking->request->availability->end;
 
             // Durations
-            $booking_duration       = $request_start->diffInMinutes($request_end);
+            $request_duration       = $request_start->diffInMinutes($request_end);
             $availability_duration  = $availability_start->diffInMinutes($availability_end);
 
             // Differences between starting and ending hours
@@ -118,33 +118,20 @@ class BookingController extends Controller
                 : 0;
 
             // Percentages calculation
-            $matching_pct = ($availability_duration * 100) / $booking_duration;
-            $matching_start_pct = ($booking_delay_start * 100) / $booking_duration;
-            $matching_end_pct = ($booking_delay_end * 100) / $booking_duration;
+            $matching_pct = ($availability_duration * 100) / $request_duration;
+            $matching_start_pct = ($booking_delay_start * 100) / $request_duration;
+            $matching_end_pct = ($booking_delay_end * 100) / $request_duration;
         }
 
-        /**
-         * User avatars
-         * select an avatar based on the user ID, randomize it enough to get 2 different images
-         */
-        $avatars = ['img/dummy_avatar_1.jpg', 'img/dummy_avatar_2.jpg', 'img/dummy_avatar_3.jpg'];
-        $user_avatar_id_1 = $booking->user->id % 3;
-        $user_avatar_id_2 = $booking->substitute->id % 3;
-        $avatar_1 = $avatars[$user_avatar_id_1];
-        $avatar_2 = $avatars[$user_avatar_id_2];
-
-        if ($user_avatar_id_1 == $user_avatar_id_2) {
-            $others = array_values(array_except($avatars, $user_avatar_id_1)); // remove the same avatar from the array
-            $avatar_2 = head($others); // retrieve the first one
-        }
+        $booking_duration = $booking->start->diffInMinutes($booking->end);
+        $booking_duration = number_format($booking_duration / 60, 2);
 
         return view('booking.show', [
             'booking'               => $booking,
             'matching_pct'          => $matching_pct,
             'matching_start_pct'    => $matching_start_pct,
             'matching_end_pct'      => $matching_end_pct,
-            'avatar1'               => $avatar_1,
-            'avatar2'               => $avatar_2,
+            'booking_duration'      => $booking_duration
         ]);
     }
 

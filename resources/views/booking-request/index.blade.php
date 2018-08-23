@@ -85,6 +85,10 @@
                 @endforeach
                 </tbody>
             </table>
+
+            @if(!$bookingRequests->count())
+                <div class="alert alert-info">Aucune demande en attente</div>
+            @endif
         </div>
     </div>
 @endsection

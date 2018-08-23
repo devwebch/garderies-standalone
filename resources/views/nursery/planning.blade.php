@@ -3,6 +3,10 @@
 @section('title', 'Nursery')
 
 @section('content')
+    <div class="print-header d-none d-print-block">
+        <h3 class="text-center">Planning du {{$first_day_month}} au {{$last_day_month}}</h3>
+        <hr class="mb-4">
+    </div>
     <nursery-planning inline-template
                       :nursery="{{$nursery->id}}"
                       first-day="{{$first_day_month}}"
@@ -39,7 +43,7 @@
                 </div>
             </div>
             <div class="card card-default">
-                <div class="card-header">
+                <div class="card-header d-print-none">
                     Remplacements du <em><span v-html="search.date_start"></span></em> au <em><span v-html="search.date_end"></span></em>
                     <div class="actions float-right d-print-none">
                         <button class="btn btn-link" onclick="javascript:window.print();"><i class="fas fa-print"></i></button>
