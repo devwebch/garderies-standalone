@@ -22,6 +22,7 @@ class CreateBookingsTable extends Migration
             $table->integer('purpose_id')->nullable();
             $table->dateTime('start');
             $table->dateTime('end');
+            $table->text('comment')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
