@@ -24,7 +24,8 @@ class BookingController extends Controller
             ->orderBy('status', 'desc')
             ->orderBy('start')
             ->get();
-        $bookings_archive = Booking::where('start', '<', now())
+
+        $bookings_archive = Booking::where('status', Booking::STATUS_ARCHIVED)
             ->orderBy('start')
             ->get();
 

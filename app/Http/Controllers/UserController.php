@@ -68,6 +68,13 @@ class UserController extends Controller
             ->orderBy('start')
             ->get();
 
+        // Get archived future bookings
+        $archivedBookings = $user->bookings()
+            ->with('nursery')
+            ->where('status', '=', Booking::STATUS_ARCHIVED)
+            ->orderBy('start')
+            ->get();
+
         // Get pending future booking requests
         $bookingRequests = $user->bookingRequests()
             ->where('start', '>=', now())
@@ -83,15 +90,13 @@ class UserController extends Controller
             ->orderBy('start')
             ->get();
 
-        $avatars = ['img/dummy_avatar_1.jpg', 'img/dummy_avatar_2.jpg', 'img/dummy_avatar_3.jpg'];
-
         return view('user.show', [
             'user'                  => $user,
             'availabilities'        => $availabilities,
             'bookings'              => $bookings,
+            'archivedBookings'      => $archivedBookings,
             'bookingRequests'       => $bookingRequests,
-            'userBookingRequests'   => $userBookingRequests,
-            'avatar'                => $avatars[$user->id % 3]
+            'userBookingRequests'   => $userBookingRequests
         ]);
     }
 

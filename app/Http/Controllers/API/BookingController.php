@@ -18,8 +18,8 @@ class BookingController extends Controller
      */
     public function index(Request $request)
     {
-        $status = $request->status;
-        $nursery = $request->nursery;
+        $status     = $request->status;
+        $nursery    = $request->nursery;
 
         // Retrieve bookings and their relations
         $bookings = Booking::select(
@@ -34,10 +34,10 @@ class BookingController extends Controller
         if ($nursery) {
             $bookings->where('nurseries.id', '=', $nursery);
         }
-        
+
         // Filter by status
         if ($status) {
-            $bookings->where('bookings.status', '=', $status);
+            $bookings->where('bookings.status', $status);
         } else {
             $bookings->where('start', '>=', now());
         }
@@ -67,7 +67,7 @@ class BookingController extends Controller
                     break;
             }
         } else {
-            $bookings->orderBy('start', 'asc');
+            $bookings->orderBy('bookings.start', 'asc');
         }
 
         // Pagination
