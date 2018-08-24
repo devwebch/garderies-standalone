@@ -69,7 +69,7 @@ class UserController extends Controller
             ->orderBy('start')
             ->get();
 
-        // Get archived future bookings
+        // Get archived bookings
         $archivedBookings = $user->bookings()
             ->with('nursery')
             ->where('status', '=', Booking::STATUS_ARCHIVED)
@@ -205,28 +205,16 @@ class UserController extends Controller
 
     public function bookings(User $user)
     {
-        global $bookings;
-        $bookings       = [];
-
-        // TODO: retrieve bookings for the current user
-        $user->bookings()->orderBy('start')->each(function ($data){
-            global $bookings;
-
-            $start  = Carbon::parse($data->start);
-            $end    = Carbon::parse($data->end);
-
-            $bookings[] = (object)[
-                'day_start'     => $start->format('d.m.Y'),
-                'day_end'       => $end->format('d.m.Y'),
-                'hour_start'    => $start->format('H\hi'),
-                'hour_end'      => $end->format('H\hi'),
-                'nursery'       => $data->nursery,
-            ];
-        });
+        // Get archived bookings
+        $archivedBookings = $user->bookings()
+            ->with('nursery')
+            ->where('status', '=', Booking::STATUS_ARCHIVED)
+            ->orderBy('start')
+            ->get();
 
         return view('user.bookings', [
-            'user'      => $user,
-            'bookings'  => $bookings
+            'user'               => $user,
+            'archivedBookings'   => $archivedBookings
         ]);
     }
 

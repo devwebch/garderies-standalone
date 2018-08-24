@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-xl-4 col-lg-5">
 
-                    <div class="card">
+                    <div class="card mb-4">
                         <div class="profile-card text-center">
                             <div class="card-body">
 
@@ -78,6 +78,11 @@
                             </ul>
                         </div>
                     </div>
+
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item"><a href="{{route('users.bookings', $user)}}">Remplacements archivés</a></li>
+                    </ul>
+
                 </div>
                 <div class="col-xl-8 col-lg-7">
                     {{-- Bookings --}}
@@ -263,50 +268,6 @@
                                                 @endswitch
                                             </td>
                                             <td><a href="{{route('booking-requests.show', $request)}}">Voir</a></td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-                            @endif
-                        </div>
-                    </div>
-                    {{-- Archived Bookings --}}
-                    <div class="card card-default">
-                        <div class="card-header">Anciens remplacements</div>
-                        <div class="card-body">
-                            @if (!$archivedBookings->count())
-                                <div class="alert alert-info">Aucun remplacement.</div>
-                            @else
-                                <table class="table table-borderless table-striped table-responsive-lg">
-                                    <thead>
-                                    <tr>
-                                        <th>Jour</th>
-                                        <th>Début</th>
-                                        <th>Fin</th>
-                                        <th>Garderie</th>
-                                        <th width="120">Status</th>
-                                        <th width="50"></th>
-                                    </tr>
-                                    </thead>
-                                    @foreach($archivedBookings as $booking)
-                                        <tr>
-                                            <td>{{$booking->start->format('d.m.Y')}}</td>
-                                            <td>{{$booking->start->format('H\hi')}}</td>
-                                            <td>{{$booking->end->format('H\hi')}}</td>
-                                            <td><a href="{{route('nurseries.show', $booking->nursery ?? 0)}}">{{$booking->nursery->name ?? '-'}}</a></td>
-                                            <td>
-                                                @switch($booking->status)
-                                                    @case(\App\Booking::STATUS_PENDING)
-                                                    <span class="badge badge-info">En attente</span>
-                                                    @break
-                                                    @case(\App\Booking::STATUS_APPROVED)
-                                                    <span class="badge badge-success">Validé</span>
-                                                    @break
-                                                    @case(\App\Booking::STATUS_ARCHIVED)
-                                                    <span class="badge badge-dark">Archivé</span>
-                                                    @break
-                                                @endswitch
-                                            </td>
-                                            <td><a href="{{route('bookings.show', $booking)}}">Voir</a></td>
                                         </tr>
                                     @endforeach
                                 </table>

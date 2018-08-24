@@ -58,3 +58,17 @@
 @include media-breakpoint-up(lg) {}
 // Extra large devices (large desktops, 1200px and up)
 @include media-breakpoint-up(xl) {}
+// Print
+@media print {
+  .card {
+    .card-header {
+      .input-group {
+        display: none;
+      }
+    }
+
+    .pagination {
+      display: none;
+    }
+  }
+}
