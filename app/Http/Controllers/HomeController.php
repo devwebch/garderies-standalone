@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Availability;
 use App\Booking;
+use App\BookingRequest;
 use App\Charts\BookingsChart;
 use App\Library\Services\TopList;
 use App\Nursery;
@@ -28,6 +30,25 @@ class HomeController extends Controller
             'count_booking'         => $count_booking,
             'chartBookings'         => $bookingsChart,
             'topList'               => $topList,
+        ]);
+    }
+
+    public function indexUser()
+    {
+        $availabilities     = Availability::where('start', '>', now())
+            ->take(5)
+            ->get();
+        $bookings           = Booking::where('start', '>', now())
+            ->take(5)
+            ->get();
+        $bookingRequests    = BookingRequest::where('start', '>', now())
+            ->take(5)
+            ->get();
+
+        return view('home-user', [
+            'bookings'          => $bookings,
+            'bookingRequests'   => $bookingRequests,
+            'availabilities'    => $availabilities
         ]);
     }
 }

@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('/home2', 'HomeController@indexUser');
 Route::view('blog', 'blog');
 Route::view('account', 'account');
 
