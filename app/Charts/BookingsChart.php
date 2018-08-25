@@ -18,6 +18,7 @@ class BookingsChart extends Chart
 
         $monthly_bookings = DB::table('bookings')
             ->select(DB::raw("MONTH(start) as month"), DB::raw("COUNT(MONTH(start)) count"))
+            ->whereYear('start', date('Y'))
             ->whereNull('deleted_at')
             ->groupBy('month')
             ->get();
@@ -30,6 +31,7 @@ class BookingsChart extends Chart
 
         $monthly_availabilities = DB::table('availabilities')
             ->select(DB::raw("MONTH(start) as month"), DB::raw("COUNT(MONTH(start)) count"))
+            ->whereYear('start', date('Y'))
             ->whereNull('deleted_at')
             ->groupBy('month')
             ->get();
@@ -38,7 +40,7 @@ class BookingsChart extends Chart
             $monthly_availabilities_dataset[$availability->month - 1] = $availability->count;
         }
 
-        $this->labels(['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']);
+        $this->labels(['Jan.', 'Fév.', 'Mars', 'Avr.', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.']);
 
         $this->dataset('Remplacements', 'line', $monthly_bookings_dataset)
             ->options([

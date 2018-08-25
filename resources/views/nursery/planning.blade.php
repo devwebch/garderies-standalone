@@ -46,11 +46,11 @@
                 <div class="card-header d-print-none">
                     Remplacements du <em><span v-html="search.date_start"></span></em> au <em><span v-html="search.date_end"></span></em>
                     <div class="actions float-right d-print-none">
-                        <button class="btn btn-link" onclick="javascript:window.print();"><i class="fas fa-print"></i></button>
+                        <button class="btn btn-link" onclick="javascript:window.print();" title="Imprimer"><i class="fas fa-print"></i> Imprimer</button>
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    <table class="table table-bordered table-striped m-0">
+                    <table class="table table-borderedd table-striped m-0">
                         <thead>
                         <tr>
                             <th>Jour</th>
@@ -67,7 +67,7 @@
                                 <td>@{{booking.user.name}}</td>
                                 <td>@{{booking.substitute.name}}</td>
                                 <td>@{{booking.start_hour}}</td>
-                                <td>@{{booking.start_hour}}</td>
+                                <td>@{{booking.end_hour}}</td>
                                 <td>@{{booking.workgroup}}</td>
                                 <td>@{{booking.substitute.phone}}</td>
                             </tr>

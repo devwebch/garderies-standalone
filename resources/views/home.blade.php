@@ -37,7 +37,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6 mb-4">
+        <div class="col-lg-8 mb-4">
             <div class="card card-default">
                 <div class="card-header">Remplacements / disponibilités</div>
                 <div class="card-body">
@@ -45,9 +45,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="card card-default">
-                <div class="card-header">Remplacements</div>
+                <div class="card-header">Remplacants les plus actifs</div>
                 <div class="card-body">
                     <div class="">{!! $topList->topReplacements(7) !!}</div>
                 </div>

@@ -19,6 +19,7 @@ class UserBookingsChart extends Chart
         $monthly_bookings = DB::table('bookings')
             ->select(DB::raw("MONTH(start) as month"), DB::raw("COUNT(MONTH(start)) count"))
             ->where('substitute_id', $user_ID)
+            ->whereYear('start', date('Y'))
             ->whereNull('deleted_at')
             ->groupBy('month')
             ->get();

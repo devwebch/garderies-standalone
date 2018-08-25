@@ -29,7 +29,7 @@
                     @if ($last_timestamp != $request->request_group)
                         <tr class="bg-dark text-white small">
                             <td colspan="7" class="p-2">
-                                <strong>Request group : {{$request->request_group}}</strong>
+                                <strong>Groupe : {{$request->request_group}}</strong>
                             </td>
                         </tr>
                     @endif
