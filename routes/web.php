@@ -10,6 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+$domain = parse_url(config('app.url'));
+
+Route::domain('reseau.' . $domain['host'])->group(function () {
+    Route::view('/', 'network.website');
+});
 
 Route::get('/', 'HomeController@index');
 Route::get('/home2', 'HomeController@indexUser');
