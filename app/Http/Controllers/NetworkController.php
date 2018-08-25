@@ -41,10 +41,16 @@ class NetworkController extends Controller
         $validatedData = $request->validate([
             'name' => 'required',
         ]);
+
+        if ($request->color) {
+            $color = strtolower($request->color);
+        } else {
+            $color = array_random(config('network.colors'));
+        }
         
         $network = new Network();
         $network->name      = $request->name;
-        $network->color     = strtolower($request->color);
+        $network->color     = $color;
         $network->owner_id  = 1; // TODO: change to logged in user
         $network->save();
 

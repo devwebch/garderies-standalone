@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 
-                <a href="{{ route('nurseries.index') }}" class="btn btn-outline-primary">&larr; Retour</a>
+                <a href="{{ route('nurseries.index') }}" class="btn btn-outline-primary btn-back">&larr; Retour</a>
                 <button class="btn btn-primary float-right" type="submit">Enregistrer</button>
             </form>
         </div>

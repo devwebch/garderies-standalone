@@ -75,7 +75,7 @@
                         </div>
                     </div>
     
-                    <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary">&larr; Retour</a>
+                    <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary btn-back">&larr; Retour</a>
                     <button class="btn btn-primary float-right" type="submit">Enregistrer</button>
                 </form>
             </div>

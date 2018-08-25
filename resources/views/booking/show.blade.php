@@ -16,18 +16,41 @@
             </div>
             <div class="card-body">
 
-                <div class="text-center">
-                    <p class="m-0">{{$booking->start->format('d.m.Y')}}</p>
-                </div>
-
-                <div class="booking-hours text-center" style="font-size: 2em;">
-                    <span class="start">{{$booking->start->format('H:i')}}</span>
-                    <span class="operator"><i class="fas fa-arrow-right"></i></span>
-                    <span class="end">{{$booking->end->format('H:i')}}</span>
-                </div>
-
-                <div class="text-center">
-                    <p><a href="{{route('nurseries.show', $booking->nursery ?? 0)}}">{{$booking->nursery->name ?? '-'}}</a></p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table">
+                            <tr>
+                                <td><strong>Date :</strong></td>
+                                <td>{{$booking->start->format('d.m.Y')}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Horaire :</strong></td>
+                                <td>{{$booking->start->format('H:i')}} - {{$booking->end->format('H:i')}}</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Durée :</strong></td>
+                                <td>{{$booking_duration}} h</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table">
+                            <tr>
+                                <td><strong>Garderie :</strong></td>
+                                <td><a href="{{route('nurseries.show', $booking->nursery ?? 0)}}">{{$booking->nursery->name ?? '-'}}</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Groupe de travail :</strong></td>
+                                <td>{{$booking->request->workgroup->name ?? '-'}}</td>
+                            </tr>
+                            @if ($booking->request)
+                                <tr>
+                                    <td><strong>Demande originale :</strong></td>
+                                    <td>{{$booking->request->workgroup->name ?? '-'}}</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
                 </div>
 
                 @if ($matching_pct)
@@ -76,23 +99,13 @@
                 <hr>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <p><strong>Garderie :</strong>
-                            <a href="{{route('nurseries.show', $booking->nursery ?? 0)}}">{{$booking->nursery->name ?? '-'}}</a>
-                        </p>
-                        <p><strong>Groupe de travail :</strong> {{$booking->request->workgroup->name ?? '-'}}</p>
-                        @if ($booking->request)
-                            <p><strong>Demande originale :</strong> <a href="{{route('booking-requests.show', $booking->request)}}">Voir la demande</a></p>
-                        @endif
-                        <p><strong>Durée :</strong> {{$booking_duration}}</p>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <p><strong>Message pour le remplaçant :</strong></p>
                         <p class="mb-0">{{optional($booking->request)->message ?? '-'}}</p>
                     </div>
                 </div>
     
-                <a href="{{ route('bookings.index') }}" class="btn btn-outline-primary">&larr; Retour</a>
+                <a href="{{ route('bookings.index') }}" class="btn btn-outline-primary btn-back">&larr; Retour</a>
             </div>
 
         </div>

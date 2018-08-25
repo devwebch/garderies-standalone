@@ -46,7 +46,7 @@
                 </table>
             @endif
 
-            <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary">&larr; Retour</a>
+            <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary btn-back">&larr; Retour</a>
         </div>
     </div>
 @endsection

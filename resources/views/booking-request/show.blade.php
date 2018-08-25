@@ -8,7 +8,7 @@
             <div class="card-header">
                 Demande de remplacement pour le {{$bookingRequest->start->format('d.m.Y')}}
 
-                <div class="actions float-right">
+                <div class="actions float-right d-print-none">
                     @if (
                     $bookingRequest->status == \App\BookingRequest::STATUS_PENDING &&
                     $bookingRequest->availability->status != \App\Availability::STATUS_BOOKED &&
@@ -52,7 +52,7 @@
                     <div class="alert alert-info">Le remplaçant est occupé partiellement, mais peut avoir un autre crénau horaire assigné.</div>
                 @endif
 
-                <div class="progress mt-4 mb-4">
+                <div class="progress mt-4 mb-4 d-print-none">
                     <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar" style="width: {{$start_pct}}%" aria-valuenow="{{$start_pct}}" aria-valuemin="0" aria-valuemax="100">{{$bookingRequest->start->format('H:i')}}</div>
                     <div class="progress-bar bg-primary" role="progressbar" style="width: {{$completion_pct}}%" aria-valuenow="{{$completion_pct}}" aria-valuemin="0" aria-valuemax="100">{{$bookingRequest->availability->start->format('H:i')}} - {{$bookingRequest->availability->end->format('H:i')}}</div>
                     <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar" style="width: {{$end_pct}}%" aria-valuenow="{{$end_pct}}" aria-valuemin="0" aria-valuemax="100">{{$bookingRequest->end->format('H:i')}}</div>
@@ -128,7 +128,7 @@
                     </div>
                 </div>
     
-                <a href="{{ route('booking-requests.index') }}" class="btn btn-outline-primary">&larr; Retour</a>
+                <a href="{{ route('booking-requests.index') }}" class="btn btn-outline-primary btn-back">&larr; Retour</a>
             </div>
         </div>
     </booking-request-show>

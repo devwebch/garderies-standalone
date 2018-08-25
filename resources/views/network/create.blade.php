@@ -25,7 +25,7 @@
                         <swatches v-model="color" colors="material-basic" shapes="circles" popover-to="right" row-length="6" inline></swatches>
                     </div>
     
-                    <a href="{{ route('networks.index') }}" class="btn btn-outline-primary">&larr; Retour</a>
+                    <a href="{{ route('networks.index') }}" class="btn btn-outline-primary btn-back">&larr; Retour</a>
                     <button class="btn btn-primary float-right" type="submit">Enregistrer</button>
                 </form>
             </div>

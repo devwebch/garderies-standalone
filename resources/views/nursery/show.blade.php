@@ -14,21 +14,36 @@
                 </div>
 
                 <div class="card-body">
-                    <p><strong>Adresse :</strong> {{$nursery->address}}</p>
-                    <p><strong>Localité :</strong> {{$nursery->post_code . ', ' ?? ''}}{{$nursery->city}}</p>
-                    <p><strong>Téléphone :</strong> {{$nursery->phone}}</p>
-                    <p><strong>E-mail :</strong> {{$nursery->email}}</p>
-                    <p>
-                        <strong>Réseau :</strong>
-                        @if ($nursery->network)
-                            <a href="{{route('networks.show', $nursery->network)}}">
-                                <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">{{$nursery->network->name}}</span>
-                            </a>
-                        @else
-                            <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">-</span>
-                        @endif
-                        
-                    </p>
+                    <table class="table">
+                        <tr>
+                            <td><strong>Adresse :</strong></td>
+                            <td>{{$nursery->address}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Localité :</strong></td>
+                            <td>{{$nursery->post_code . ', ' ?? ''}}{{$nursery->city}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Téléphone :</strong></td>
+                            <td>{{$nursery->phone}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>E-mail :</strong></td>
+                            <td>{{$nursery->email}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Réseau :</strong></td>
+                            <td>
+                                @if ($nursery->network)
+                                    <a href="{{route('networks.show', $nursery->network)}}">
+                                        <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">{{$nursery->network->name}}</span>
+                                    </a>
+                                @else
+                                    <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">-</span>
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
     

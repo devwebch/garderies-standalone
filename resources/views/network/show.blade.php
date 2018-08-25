@@ -14,14 +14,20 @@
                 </div>
             </div>
             <div class="card-body">
-                <p><strong>Nom :</strong> {{$network->name}}</p>
-                <p><strong>Administrateur :</strong> <a href="{{route('users.show', $network->owner->id ?? 0)}}">{{$network->owner->name ?? '-'}}</a></p>
-                <p>
-                    <strong>Couleur :</strong>
-                    <span class="badge badge-pill" style="background-color: {{$network->color}};">
-                        &nbsp;
-                    </span>
-                </p>
+                <table class="table">
+                    <tr>
+                        <td><strong>Nom :</strong></td>
+                        <td>{{$network->name}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Administrateur :</strong></td>
+                        <td><a href="{{route('users.show', $network->owner->id ?? 0)}}">{{$network->owner->name ?? '-'}}</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Couleur :</strong></td>
+                        <td><span class="badge badge-pill" style="background-color: {{$network->color}};">&nbsp;</span></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </network-show>
