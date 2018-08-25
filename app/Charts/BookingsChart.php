@@ -46,7 +46,7 @@ class BookingsChart extends Chart
             ->options([
                 'backgroundColor'       => '#20aee300',
                 'borderColor'           => '#20aee390',
-                'pointBackgroundColor'  => '#20aee300',
+                'pointBackgroundColor'  => '#20aee390',
                 'pointBorderColor'      => '#20aee300',
                 'pointHoverBackgroundColor'  => '#20aee3',
                 'pointHoverBorderColor'      => '#20aee3',
@@ -59,7 +59,7 @@ class BookingsChart extends Chart
             ->options([
                 'backgroundColor'       => '#cddc3900',
                 'borderColor'           => '#cddc3990',
-                'pointBackgroundColor'  => '#8bc34a00',
+                'pointBackgroundColor'  => '#8bc34a90',
                 'pointBorderColor'      => '#8bc34a00',
                 'pointHoverBackgroundColor'  => '#8bc34a',
                 'pointHoverBorderColor'      => '#8bc34a',
@@ -88,10 +88,16 @@ class BookingsChart extends Chart
             ],
             'scales' => [
                 'yAxes' => [
-                    ['ticks' => [
-                        'beginAtZero'   => true
-                    ]]
+                    [
+                        'ticks' => ['beginAtZero' => true],
+                        'gridLines' => ['color' => 'rgba(0, 0, 0, 0.05)']
+                    ]
                 ],
+                'xAxes' => [
+                    [
+                        'gridLines' => ['color' => 'rgba(0, 0, 0, 0.0)']
+                    ]
+                ]
             ]
         ]);
     }

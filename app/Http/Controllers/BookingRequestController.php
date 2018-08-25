@@ -16,6 +16,7 @@ class BookingRequestController extends Controller
      */
     public function index()
     {
+        // Get future booking requests
         $bookingRequests = BookingRequest::with('user')
             ->where('start', '>=', now())
             ->orderBy('id', 'DESC')

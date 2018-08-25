@@ -2,6 +2,7 @@
 use Illuminate\Database\Seeder;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use App\Network;
+use Faker\Generator as Faker;
 
 class NetworkSeeder extends Seeder
 {
@@ -10,16 +11,17 @@ class NetworkSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
+
         DB::table('networks')->insert([
-            'name'      => 'Ajerco',
+            'name'      => 'Feroval',
             'slug'      => SlugService::createSlug(Network::class, 'slug', 'Ajerco'),
             'owner_id'  => 1,
             'color'     => '#2196F3',
         ]);
         DB::table('networks')->insert([
-            'name'      => 'Ajoval',
+            'name'      => 'Palorma',
             'slug'      => SlugService::createSlug(Network::class, 'slug', 'Ajoval'),
             'owner_id'  => 1,
             'color'     => '#8BC34A',

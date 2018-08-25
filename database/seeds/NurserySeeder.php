@@ -14,7 +14,7 @@ class NurserySeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        $nurseries = [
+        $nurseries_real = [
             "Croquelune",
             "Croquesoleil",
             "Les Lucioles",
@@ -41,6 +41,35 @@ class NurserySeeder extends Seeder
             "Plein Soleil",
             "Les Petits Poucets",
             "L'Attique"
+        ];
+
+        $nurseries = [
+            "Croquemi",
+            "Croquemoi",
+            "Les Colibris",
+            "La Fée",
+            "La Chenille",
+            "La Princesse",
+            "Le rigole eau",
+            "Les Marins",
+            "Les Casse cou",
+            "Croquetis",
+            "Les Artistes",
+            "Les Pelages",
+            "Les Petits chats",
+            "Les Chenapands",
+            "L'atelier Imaginaire",
+            "Perlimpimpim",
+            "L'Oasis",
+            "Guillaume Tell",
+            "Cache-cache",
+            "Les Lucioles",
+            "L'arc-en-ciel",
+            "L'oiseau rare",
+            "La marée haute",
+            "Brillant Soleil",
+            "Les sept nains",
+            "Le Grenier"
         ];
 
         for ($i = 1; $i <= 15; $i++) {

@@ -15,7 +15,7 @@
                     <th>Horaire</th>
                     <th>Remplaçant</th>
                     <th>Disponibilité</th>
-                    <th></th>
+                    <th>Status</th>
                     <th></th>
                 </tr>
                 </thead>

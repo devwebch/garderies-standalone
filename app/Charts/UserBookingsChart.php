@@ -30,7 +30,7 @@ class UserBookingsChart extends Chart
             }
         }
 
-        $this->labels(['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']);
+        $this->labels(['Jan.', 'Fév.', 'Mars', 'Avr.', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.']);
 
         $this->dataset('Remplacements', 'line', $monthly_bookings_dataset)
             ->options([
