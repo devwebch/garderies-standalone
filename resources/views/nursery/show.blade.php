@@ -65,7 +65,7 @@
               title: 'Réseaux'
             }]"></vue-table>
     
-            <vue-table title="Remplacements" api-url="/api/bookings?nursery={{$nursery->id}}" :fields="[{
+            <vue-table title="Remplacements à venir" api-url="/api/bookings?nursery={{$nursery->id}}" :fields="[{
               name: '__slot:userbookinglink',
               sortField: 'users.name',
               title: 'Employé'

@@ -14,20 +14,28 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table">
-                    <tr>
-                        <td><strong>Nom :</strong></td>
-                        <td>{{$network->name}}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Administrateur :</strong></td>
-                        <td><a href="{{route('users.show', $network->owner->id ?? 0)}}">{{$network->owner->name ?? '-'}}</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Couleur :</strong></td>
-                        <td><span class="badge badge-pill" style="background-color: {{$network->color}};">&nbsp;</span></td>
-                    </tr>
-                </table>
+                <div class="row align-items-center">
+                    <div class="col-md-4 text-center">
+                        <div class="mb-2"><i class="fas fa-home" style="font-size: 5em; color: {{$network->color}};"></i></div>
+                        <div><strong>{{$network->name}}</strong></div>
+                    </div>
+                    <div class="col-md-8">
+                        <table class="table">
+                            <tr>
+                                <td><strong>Nom :</strong></td>
+                                <td>{{$network->name}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Administrateur :</strong></td>
+                                <td><a href="{{route('users.show', $network->owner->id ?? 0)}}">{{$network->owner->name ?? '-'}}</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Couleur :</strong></td>
+                                <td><span class="badge badge-pill" style="background-color: {{$network->color}};">&nbsp;</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </network-show>

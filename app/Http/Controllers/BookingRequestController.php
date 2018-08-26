@@ -17,15 +17,30 @@ class BookingRequestController extends Controller
     public function index()
     {
         // Get future booking requests
-        $bookingRequests = BookingRequest::with('user')
+        $pendingBookingRequests = BookingRequest::with('user')
             ->where('start', '>=', now())
+            ->where('status', BookingRequest::STATUS_PENDING)
             ->orderBy('id', 'DESC')
             ->orderBy('request_group')
             ->orderBy('start')
             ->orderBy('status')
             ->with('availability')
             ->get();
-        return view('booking-request.index', ['bookingRequests' => $bookingRequests]);
+
+        $bookingRequests = BookingRequest::with('user')
+            ->where('start', '>=', now())
+            ->where('status', '!=', BookingRequest::STATUS_PENDING)
+            ->orderBy('id', 'DESC')
+            ->orderBy('request_group')
+            ->orderBy('start')
+            ->orderBy('status')
+            ->with('availability')
+            ->get();
+
+        return view('booking-request.index', [
+            'pendingBookingRequests'    => $pendingBookingRequests,
+            'bookingRequests'           => $bookingRequests
+        ]);
     }
 
     /**

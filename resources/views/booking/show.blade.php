@@ -98,7 +98,7 @@
 
                 <hr>
 
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col-md-12">
                         <p><strong>Message pour le remplaçant :</strong></p>
                         <p class="mb-0">{{optional($booking->request)->message ?? '-'}}</p>
