@@ -14,36 +14,45 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <td><strong>Adresse :</strong></td>
-                            <td>{{$nursery->address}}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Localité :</strong></td>
-                            <td>{{$nursery->post_code . ', ' ?? ''}}{{$nursery->city}}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Téléphone :</strong></td>
-                            <td>{{$nursery->phone}}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>E-mail :</strong></td>
-                            <td>{{$nursery->email}}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Réseau :</strong></td>
-                            <td>
-                                @if ($nursery->network)
-                                    <a href="{{route('networks.show', $nursery->network)}}">
-                                        <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">{{$nursery->network->name}}</span>
-                                    </a>
-                                @else
-                                    <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">-</span>
-                                @endif
-                            </td>
-                        </tr>
-                    </table>
+
+                    <div class="row align-items-center">
+                        <div class="col-md-4 mb-4 mb-md-0 text-center">
+                            <div class="mb-2"><i class="fas fa-building text-secondary" style="font-size: 5em;"></i></div>
+                            <div><strong>{{$nursery->name}}</strong></div>
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table">
+                                <tr>
+                                    <td><strong>Adresse :</strong></td>
+                                    <td>{{$nursery->address}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Localité :</strong></td>
+                                    <td>{{$nursery->post_code . ', ' ?? ''}}{{$nursery->city}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Téléphone :</strong></td>
+                                    <td>{{$nursery->phone}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>E-mail :</strong></td>
+                                    <td>{{$nursery->email}}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Réseau :</strong></td>
+                                    <td>
+                                        @if ($nursery->network)
+                                            <a href="{{route('networks.show', $nursery->network)}}">
+                                                <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">{{$nursery->network->name}}</span>
+                                            </a>
+                                        @else
+                                            <span class="badge text-white" style="background-color: {{$nursery->network->color ?? '#ccc'}};">-</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
     

@@ -15,8 +15,8 @@
             </div>
             <div class="card-body">
                 <div class="row align-items-center">
-                    <div class="col-md-4 text-center">
-                        <div class="mb-2"><i class="fas fa-home" style="font-size: 5em; color: {{$network->color}};"></i></div>
+                    <div class="col-md-4 mb-4 mb-md-0 text-center">
+                        <div class="mb-2"><i class="fas fa-sitemap text-secondary" style="font-size: 5em;"></i></div>
                         <div><strong>{{$network->name}}</strong></div>
                     </div>
                     <div class="col-md-8">

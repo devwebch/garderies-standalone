@@ -92,7 +92,7 @@
         </div>
     </div>
     <div class="card card-default mb-4">
-        <div class="card-header bg-dark text-white">Demandes de remplacements</div>
+        <div class="card-header bg-secondary text-white">Demandes de remplacements traitées</div>
         <div class="card-body">
             <table class="table table-borderless table-striped table-responsive-lg">
                 <thead>
@@ -114,7 +114,7 @@
                 @foreach($bookingRequests as $request)
 
                     @if ($last_timestamp != $request->request_group)
-                        <tr class="bg-dark text-white small">
+                        <tr class="bg-secondary text-white small">
                             <td colspan="7" class="p-2">
                                 <strong>Groupe : {{$request->request_group}}</strong>
                             </td>

@@ -7,18 +7,16 @@
             name: '__slot:nurserylink',
             sortField: 'nurseries.name',
             title: 'Nom',
-            width: '50%'
+            width: '200'
         }, {
             name: 'users_count',
             sortField: 'users_count',
             title: 'Employés',
-            titleClass: 'text-right',
-            dataClass: 'text-right',
+            width: '150px'
         }, {
             name: '__slot:networklinkrelation',
             sortField: 'networks.name',
-            title: 'Réseau',
-            width: '200px'
+            title: 'Réseau'
         }]">
     </vue-table>
 @endsection

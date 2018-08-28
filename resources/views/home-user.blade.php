@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-calendar-alt"></i> Vos prochains remplacements</div>
+                <div class="card-header"><i class="fas fa-calendar-alt mr-2"></i> Vos prochains remplacements</div>
                 <div class="card-body">
                     <table class="table mb-0">
                         <thead>
@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-4">
             <div class="card mb-4 bg-primary text-white">
-                <div class="card-header"><i class="fas fa-user-clock"></i> Vos disponibilités</div>
+                <div class="card-header"><i class="fas fa-user-clock mr-2"></i> Vos disponibilités</div>
                 <div class="card-body">
                     <table class="table mb-0">
                         <thead>
@@ -60,7 +60,7 @@
     <div class="row">
         <div class="col">
             <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-list"></i> Demandes de remplacement en attente</div>
+                <div class="card-header"><i class="fas fa-list mr-2"></i> Demandes de remplacement en attente</div>
                 <div class="card-body">
                     <table class="table mb-0">
                         <thead>

@@ -1,4 +1,4 @@
-<table class="table table-borderless table-striped table-responsive-md">
+<table class="table table-borderless table-striped">
     <thead>
         <tr>
             <th>Nom et prénom</th>

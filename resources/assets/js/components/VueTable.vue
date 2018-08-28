@@ -1,6 +1,6 @@
 <template>
     <div class="card card-default mb-4">
-        <div class="card-header bg-dark text-white">
+        <div class="card-header text-white" v-bind:class="this.cardBgClass ? this.cardBgClass : 'bg-dark'">
             <div class="row">
                 <div class="col-sm-12 col-md-6">{{this.title}}</div>
                 <div class="col-sm-12 col-md-6"><filter-bar v-on:filter="setFilter"></filter-bar></div>
@@ -22,7 +22,9 @@
                 </template>
 
                 <template slot="networklink" slot-scope="props">
-                    <a :href="'/networks/' + props.rowData.slug">{{props.rowData.name}}</a>
+                    <a :href="'/networks/' + props.rowData.slug">
+                        <span class="badge badge-pill text-white" v-bind:style="{background: props.rowData.color, verticalAlign: 'middle'}">{{props.rowData.name}}</span>
+                    </a>
                 </template>
 
                 <template slot="userlink" slot-scope="props">
@@ -81,7 +83,7 @@
                 <vuetable-pagination-info
                         ref="paginationInfo"
                         info-class="pagination-info"
-                        info-template="Affichage des données de {from} à {to} sur un total de {total}."
+                        info-template="Résultats de {from} à {to} sur un total de {total}."
                 no-data-template="Aucune donnée disponible"></vuetable-pagination-info>
                 <vuetable-pagination-bootstrap ref="pagination" :css="css.pagination" @vuetable-pagination:change-page="onChangePage" :on-each-side="1"></vuetable-pagination-bootstrap>
             </div>
@@ -101,9 +103,10 @@
     export default {
         props: {
             fields: Array,
-            apiUrl:  String,
+            apiUrl: String,
             title: String,
-            statuses: Object
+            statuses: Object,
+            cardBgClass: String
         },
         components: {
             Vuetable,

@@ -46,7 +46,7 @@
             }]"></vue-table>
 
 
-    <vue-table title="Remplacements archivés" api-url="/api/bookings?status=3" :statuses="{
+    <vue-table title="Remplacements archivés" api-url="/api/bookings?status=3" card-bg-class="bg-secondary" :statuses="{
         pending: {{ \App\Booking::STATUS_PENDING }},
         approved: {{ \App\Booking::STATUS_APPROVED }},
         denied: {{ \App\Booking::STATUS_DENIED }},
