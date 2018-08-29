@@ -1,19 +1,31 @@
 <script>
     import swal from 'sweetalert2';
     import 'sweetalert2/dist/sweetalert2.min.css';
+    import vueStars from 'vue-stars';
 
-    let data = {};
+    let vm;
+    let data = {
+        feedback: {
+            name: '',
+            description: '',
+            rating: 0
+        }
+    };
 
     export default {
         data() {
             return data;
         },
+        props: {
+            bookingId: Number,
+            userId: Number,
+            substituteId: Number
+        },
         mounted() {
-            console.log('Booking show component mounted.');
+            vm = this;
         },
         methods: {
             validateBooking: function (booking) {
-                console.log('validate this shit');
                 axios.post('/api/bookings/approve/' + booking)
                     .then(function (response) {
                         console.log(response);
@@ -25,12 +37,9 @@
                         }).then((result) => {
                             location.reload();
                         });
-
-                        //window.location.replace(response.data.redirect);
                     });
             },
             deleteBooking: function (booking) {
-                console.log('try to delete');
                 if (!booking) {
                     return;
                 }
@@ -50,7 +59,41 @@
                             });
                     }
                 });
+            },
+            addFeedback: function (booking) {
+                console.log('Add feedback', booking);
+                $('.modal').modal('show');
+            },
+            saveFeedback: function () {
+                axios.post('/api/feedbacks', {
+                        params: {
+                            feedback: data.feedback,
+                            bookingId: vm.bookingId,
+                            userId: vm.userId,
+                            substituteId: vm.substituteId
+                        }
+                    })
+                    .then(function (response) {
+                        // close the modal
+                        $('.modal').modal('hide');
+
+                        // display a success alert
+                        swal({
+                            title: "Rapport sauvegardé",
+                            text: "Le rapport a bien été enregistré pour ce remplacement.",
+                            type: "success"
+                        })
+                    })
             }
+        },
+        components: {
+            vueStars
         }
     }
 </script>
+<style lang="scss">
+    .vue-stars label {
+        margin: 0;
+        cursor: pointer;
+        font-size: 1.3em; }
+</style>

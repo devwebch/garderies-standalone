@@ -42,6 +42,10 @@ class BookingController extends Controller
             $bookings->where('start', '>=', now());
         }
 
+        if ($status == Booking::STATUS_ARCHIVED) {
+            $bookings->orderBy('start', 'desc');
+        }
+
         // Handle user search
         if ($request->exists('filter')) {
             $bookings->where(function($q) use($request) {

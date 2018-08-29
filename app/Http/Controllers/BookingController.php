@@ -126,12 +126,15 @@ class BookingController extends Controller
         $booking_duration = $booking->start->diffInMinutes($booking->end);
         $booking_duration = number_format($booking_duration / 60, 2);
 
+        $feedbacks = $booking->feedbacks;
+
         return view('booking.show', [
             'booking'               => $booking,
             'matching_pct'          => $matching_pct,
             'matching_start_pct'    => $matching_start_pct,
             'matching_end_pct'      => $matching_end_pct,
-            'booking_duration'      => $booking_duration
+            'booking_duration'      => $booking_duration,
+            'feedbacks'             => $feedbacks
         ]);
     }
 

@@ -9,6 +9,8 @@ class Feedback extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'feedbacks';
+
     public function user()
     {
         return $this->belongsTo('App\User');
