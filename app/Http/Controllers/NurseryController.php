@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\BookingPurposesPerNursery;
 use App\Charts\DiplomasPerNursery;
 use App\Network;
 use App\Nursery;
@@ -68,11 +69,13 @@ class NurseryController extends Controller
         $bookings = $nursery->bookings;
 
         $diplomas_chart = new DiplomasPerNursery($nursery->id);
+        $bookings_chart = new BookingPurposesPerNursery($nursery->id);
 
         return view('nursery.show', [
             'nursery'           => $nursery,
             'bookings'          => $bookings,
-            'diplomas_chart'    => $diplomas_chart
+            'diplomas_chart'    => $diplomas_chart,
+            'bookings_chart'    => $bookings_chart,
         ]);
     }
 

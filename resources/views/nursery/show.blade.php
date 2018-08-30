@@ -101,10 +101,22 @@
               title: ''
             }]"></vue-table>
 
-            <div class="card">
-                <div class="card-header">Répartition des diplômes</div>
-                <div class="card-body">
-                    {!! $diplomas_chart->container() !!}
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">Absences par type</div>
+                        <div class="card-body">
+                            {!! $bookings_chart->container() !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">Répartition des diplômes</div>
+                        <div class="card-body">
+                            {!! $diplomas_chart->container() !!}
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -118,5 +130,6 @@
 
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js" charset="utf-8"></script>
+    {!! $bookings_chart->script() !!}
     {!! $diplomas_chart->script() !!}
 @endsection

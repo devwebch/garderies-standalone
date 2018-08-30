@@ -43,6 +43,11 @@ class Booking extends Model
         return $this->belongsTo('App\BookingRequest', 'request_id');
     }
 
+    public function purpose()
+    {
+        return $this->belongsTo('App\Purpose');
+    }
+
     public function feedbacks()
     {
         return $this->hasMany('App\Feedback');

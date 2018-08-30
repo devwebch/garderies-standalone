@@ -40,6 +40,12 @@
                                     <td><strong>Durée :</strong></td>
                                     <td>{{$booking_duration}} h</td>
                                 </tr>
+                                @if ($booking->request)
+                                    <tr>
+                                        <td><strong>Demande originale :</strong></td>
+                                        <td>{{$booking->request->workgroup->name ?? '-'}}</td>
+                                    </tr>
+                                @endif
                             </table>
                         </div>
                         <div class="col-md-6">
@@ -54,12 +60,10 @@
                                     <td><strong>Groupe de travail :</strong></td>
                                     <td>{{$booking->request->workgroup->name ?? '-'}}</td>
                                 </tr>
-                                @if ($booking->request)
-                                    <tr>
-                                        <td><strong>Demande originale :</strong></td>
-                                        <td>{{$booking->request->workgroup->name ?? '-'}}</td>
-                                    </tr>
-                                @endif
+                                <tr>
+                                    <td><strong>Raison :</strong></td>
+                                    <td>{{$booking->purpose->name ?? '-'}}</td>
+                                </tr>
                             </table>
                         </div>
                     </div>

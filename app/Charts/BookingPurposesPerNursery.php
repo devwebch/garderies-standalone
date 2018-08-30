@@ -5,7 +5,7 @@ namespace App\Charts;
 use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 use Illuminate\Support\Facades\DB;
 
-class DiplomasPerNursery extends Chart
+class BookingPurposesPerNursery extends Chart
 {
     /**
      * Initializes the chart.
@@ -16,27 +16,25 @@ class DiplomasPerNursery extends Chart
     {
         parent::__construct();
 
-        $users = DB::table('users')
-            ->join('diplomas', 'users.diploma_id', '=', 'diplomas.id')
-            ->select(DB::raw("COUNT(users.id) count"), 'diploma_id')
+        $bookings = DB::table('bookings')
+            ->join('purposes', 'bookings.purpose_id', '=', 'purposes.id')
+            ->select(DB::raw("COUNT(bookings.id) count"), 'purpose_id')
             ->where('nursery_id', $nursery)
-            ->groupBy('diploma_id')
-            ->orderBy('diploma_id')
+            ->groupBy('purpose_id')
+            ->orderBy('purpose_id')
             ->get();
 
-        $this->labels(['Auxiliaire', 'ASE', 'Educatrice ES']);
+        $this->labels(['Maladie', 'Vacances', 'Congé maternité', 'Service militaire / civil']);
 
-        $dataset = [0, 0, 0];
+        $dataset = [0, 0, 0, 0];
 
-        foreach ($users as $user) {
-            $dataset[$user->diploma_id - 1] = $user->count;
+        foreach ($bookings as $booking) {
+            $dataset[$booking->purpose_id - 1] = $booking->count;
         }
 
-        $this->dataset('Diplomes', 'bar', $dataset)
+        $this->dataset('Absences', 'bar', $dataset)
             ->options([
-                'backgroundColor'       => ['#20aee3', '#4caf50', '#e81e63'],
-                'borderWidth'           => 0,
-                'lineTension'           => 0.3
+                'backgroundColor' => ['#20aee3', '#4caf50', '#e81e63', '#607d8b'],
             ]);
 
         $this->options([
