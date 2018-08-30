@@ -73,7 +73,11 @@
                         <thead>
                         <tr>
                             <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>
-                            <th width="30"></th>
+                            <th width="30">
+                                <a href="#" v-on:click.prevent="filterByFavorite" class="text-warning">
+                                    <i :class="[favoriteOnly ? 'fas fa-star' : 'far fa-star']"></i>
+                                </a>
+                            </th>
                             <th>Remplaçant</th>
                             <th class="d-none d-lg-table-cell">Date</th>
                             <th><span data-toggle="tooltip" title="Horaire libre">Disponibilité</span></th>
@@ -82,7 +86,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="item in availabilities">
+                        <tr v-for="item in filteredResults">
                             <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
                             <td>
                                 <i class="far fa-star" style="color: #ccc;" v-show="!item.favorite"></i>
@@ -216,7 +220,7 @@
         },
         peopleSelected: false,
         selectedAvailabilities: [],
-        availabilities: {},
+        availabilities: [],
         search: {
             day_start: formattedDate(today),
             hour_start: formattedHour(today),
@@ -230,7 +234,8 @@
         purposes: [],
         purpose: 0,
         message: null,
-        loaded: true
+        loaded: true,
+        favoriteOnly: false,
     };
 
     export default {
@@ -247,6 +252,19 @@
                 // init selectpicker
                 $('.selectpicker').selectpicker({});
             });
+        },
+        computed: {
+            filteredResults: function () {
+                if (data.availabilities.length) {
+                    return data.availabilities.filter(function (item) {
+                        if (data.favoriteOnly) {
+                            return item.favorite === true;
+                        }
+
+                        return true;
+                    });
+                }
+            }
         },
         updated() {
             $(this.$el).find('.selectpicker').selectpicker('refresh');
@@ -279,7 +297,8 @@
                 if (data.peopleSelected) {
                     data.selectedAvailabilities = [];
                 } else {
-                    data.availabilities.forEach(function (item) {
+                    data.selectedAvailabilities = [];
+                    vm.filteredResults.forEach(function (item) {
                         data.selectedAvailabilities.push(item);
                     });
                 }
@@ -322,6 +341,9 @@
                         data.message = null;
                     });
                 });
+            },
+            filterByFavorite: function () {
+                data.favoriteOnly = !data.favoriteOnly;
             }
         },
         components: {

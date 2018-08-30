@@ -82,10 +82,6 @@
         mounted() {
             vm = this;
 
-            $('.modal-event').on('shown.bs.modal', function () {
-
-            });
-
             // Instantiate the calendar
             calendar = $('#calendar').fullCalendar({
                 themeSystem: 'bootstrap4',
