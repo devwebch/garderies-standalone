@@ -41,8 +41,8 @@
                                     <td>{{$booking_duration}} h</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
-                                        <a href="{{$calendar_link->ics()}}" class="btn btn-outline-info btn-sm mr-2">
+                                    <td colspan="2" class="text-center text-md-left">
+                                        <a href="{{$calendar_link->ics()}}" class="btn btn-outline-info btn-sm mr-2 mb-3 mb-md-0">
                                             <i class="far fa-calendar-check mr-2"></i> Ajouter au calendrier
                                         </a>
                                         <a href="{{$calendar_link->google()}}" target="_blank" class="btn btn-outline-danger btn-sm">
