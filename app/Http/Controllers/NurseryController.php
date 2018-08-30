@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\DiplomasPerNursery;
 use App\Network;
 use App\Nursery;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NurseryController extends Controller
 {
@@ -65,9 +67,12 @@ class NurseryController extends Controller
     {
         $bookings = $nursery->bookings;
 
+        $diplomas_chart = new DiplomasPerNursery($nursery->id);
+
         return view('nursery.show', [
-            'nursery'   => $nursery,
-            'bookings'  => $bookings
+            'nursery'           => $nursery,
+            'bookings'          => $bookings,
+            'diplomas_chart'    => $diplomas_chart
         ]);
     }
 

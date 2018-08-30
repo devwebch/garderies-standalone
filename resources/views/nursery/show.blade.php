@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <vue-table title="Employés" api-url="/api/users?nursery={{$nursery->id}}&network=0" :fields="[{
               name: '__slot:userlink',
               sortField: 'users.name',
@@ -100,10 +100,23 @@
               name: '__slot:bookingShowlink',
               title: ''
             }]"></vue-table>
+
+            <div class="card">
+                <div class="card-header">Répartition des diplômes</div>
+                <div class="card-body">
+                    {!! $diplomas_chart->container() !!}
+                </div>
+            </div>
+
         </div>
     </nursery-show>
 @endsection
 
 @section('nav-lateral')
     @include('nursery.nav')
+@endsection
+
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js" charset="utf-8"></script>
+    {!! $diplomas_chart->script() !!}
 @endsection
