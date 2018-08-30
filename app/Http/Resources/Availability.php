@@ -35,6 +35,13 @@ class Availability extends JsonResource
         $data['nursery']            = $this->user->nursery;
         $data['nursery']['link']    = route('nurseries.show', $this->user->nursery ?? 0);
         $data['networks']           = $this->user->networks;
+
+        if ($this->user->id % 3 == 0) {
+            $data['favorite'] = true;
+        } else {
+            $data['favorite'] = false;
+        }
+
         return $data;
     }
 }

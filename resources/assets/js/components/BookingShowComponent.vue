@@ -60,9 +60,8 @@
                     }
                 });
             },
-            addFeedback: function (booking) {
-                console.log('Add feedback', booking);
-                $('.modal').modal('show');
+            addFeedback: function () {
+                $('.feedback-modal').modal('show');
             },
             saveFeedback: function () {
                 axios.post('/api/feedbacks', {
@@ -75,7 +74,7 @@
                     })
                     .then(function (response) {
                         // close the modal
-                        $('.modal').modal('hide');
+                        $('.feedback-modal').modal('hide');
 
                         // display a success alert
                         swal({

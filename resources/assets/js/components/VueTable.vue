@@ -17,6 +17,11 @@
                       :append-params="moreParams"
                       @vuetable:pagination-data="onPaginationData"
                       no-data-template="Aucune donnée disponible">
+
+                <template slot="favorite" slot-scope="props">
+                    <i class="far fa-star text-warning"></i>
+                </template>
+
                 <template slot="nurserylink" slot-scope="props">
                     <a :href="'/nurseries/' + props.rowData.slug">{{props.rowData.name}}</a>
                 </template>

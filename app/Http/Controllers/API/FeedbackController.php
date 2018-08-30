@@ -41,7 +41,7 @@ class FeedbackController extends Controller
         $feedback->booking_id       = $booking_id;
         $feedback->user_id          = $user_id;
         $feedback->substitute_id    = $substitute_id;
-        //$feedback->rating       = $rating;
+        $feedback->rating           = $rating;
         $feedback->save();
 
         return response()->json($request->params);

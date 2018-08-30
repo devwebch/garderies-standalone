@@ -73,6 +73,7 @@
                         <thead>
                         <tr>
                             <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>
+                            <th width="30"></th>
                             <th>Remplaçant</th>
                             <th class="d-none d-lg-table-cell">Date</th>
                             <th><span data-toggle="tooltip" title="Horaire libre">Disponibilité</span></th>
@@ -83,6 +84,10 @@
                         <tbody>
                         <tr v-for="item in availabilities">
                             <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
+                            <td>
+                                <i class="far fa-star" style="color: #ccc;" v-show="!item.favorite"></i>
+                                <i class="fas fa-star text-warning" v-show="item.favorite"></i>
+                            </td>
                             <td>
                                 <a v-if="item.user" :href="item.user.link" target="_blank">{{item.user.name}}</a>
                                 <span v-if="!item.user" class="text-muted">Aucun</span>

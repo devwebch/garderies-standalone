@@ -3,7 +3,8 @@
 @section('title', 'Booking')
 
 @section('content')
-    <booking-show inline-template :booking-id="{{$booking->id}}" :user-id="{{$booking->user->id}}" :substitute-id="{{$booking->substitute->id}}">
+    <booking-show inline-template :booking-id="{{$booking->id}}" :user-id="{{$booking->user->id}}"
+                  :substitute-id="{{$booking->substitute->id}}">
         <div>
             <div class="card card-default">
                 <div class="card-header">Remplacement du {{$booking->start->format('d.m.Y')}}
@@ -14,8 +15,10 @@
                             <a href="#" v-on:click.prevent="validateBooking({{$booking->id}})"
                                class="btn btn-success btn-sm mr-2"><i class="fas fa-check"></i> Valider</a>
                         @endif
+                        @if ($booking->status == \App\Booking::STATUS_APPROVED && !$booking->feedbacks->count())
                         <a href="#" v-on:click.prevent="addFeedback({{$booking->id}})" class="btn btn-info btn-sm"><i
                                     class="far fa-clipboard"></i> Ajouter un rapport</a>
+                            @endif
                         <a href="#" v-on:click.prevent="deleteBooking({{$booking->id}})"
                            class="btn btn-danger btn-sm"><i class="fas fa-edit"></i> Supprimer</a>
                     </div>
@@ -114,7 +117,7 @@
                     <hr>
 
                     <div class="row mb-4">
-                        <div class="col-md-12">
+                        <div class="col">
                             <p><strong>Message pour le remplaçant :</strong></p>
                             <p class="mb-0">{{optional($booking->request)->message ?? '-'}}</p>
                         </div>
@@ -122,12 +125,22 @@
 
                     <div class="row mb-4">
                         <div class="col">
-                            <strong>Rapports</strong>
-                            <ul>
-                                @foreach($feedbacks as $feedback)
-                                <li>{{$feedback->created_at->format('d.m.y H:i')}}</li>
-                                @endforeach
-                            </ul>
+                            <h4>Rapports</h4>
+                            @foreach($feedbacks as $feedback)
+                                <div class="card feedback mb-2">
+                                    <div class="card-body">
+                                        <span class="date float-right">{{$feedback->created_at->format('d.m.Y H:i')}}</span>
+                                        <strong>{{$feedback->name}}</strong>
+                                        <div>{{$feedback->description}}</div>
+                                        <div class="rating text-warning">
+                                            @for($i = 0; $i < $feedback->rating; $i++)
+                                                <i class="fas fa-star"></i>
+                                            @endfor
+                                        </div>
+                                        <a href="#" class="btn btn-primary btn-sm">Voir le rapport</a>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -135,7 +148,7 @@
                 </div>
             </div>
 
-            <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal feedback-modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -176,6 +189,26 @@
                                     <span v-show="feedback.rating == 5"><em>Très bien</em></span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-primary" v-on:click="saveFeedback">Enregistrer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal feedback-show-modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Rapport de remplacement</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Lorem ipsum
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
