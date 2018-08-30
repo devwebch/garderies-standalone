@@ -42,8 +42,11 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <a href="{{$calendar_link->ics()}}" class="btn btn-outline-info">
+                                        <a href="{{$calendar_link->ics()}}" class="btn btn-outline-info btn-sm mr-2">
                                             <i class="far fa-calendar-check mr-2"></i> Ajouter au calendrier
+                                        </a>
+                                        <a href="{{$calendar_link->google()}}" target="_blank" class="btn btn-outline-danger btn-sm">
+                                            <i class="fab fa-google mr-2"></i> Google calendar
                                         </a>
                                     </td>
                                 </tr>
