@@ -20,6 +20,7 @@ class BookingPurposesPerNursery extends Chart
             ->join('purposes', 'bookings.purpose_id', '=', 'purposes.id')
             ->select(DB::raw("COUNT(bookings.id) count"), 'purpose_id')
             ->where('nursery_id', $nursery)
+            ->whereYear('start', '2018')
             ->groupBy('purpose_id')
             ->orderBy('purpose_id')
             ->get();
