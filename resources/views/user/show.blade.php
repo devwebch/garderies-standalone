@@ -3,7 +3,7 @@
 @section('title', $user->name)
 
 @section('content')
-    <user-show inline-template>
+    <user-show inline-template :is-favorite="{{$isFavorite}}">
         <div>
             <div class="row">
                 <div class="col mb-2">
@@ -74,6 +74,12 @@
                                     @empty
                                         -
                                     @endforelse
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" v-on:click.prevent="addToFavorite({{$user->id}})">
+                                        <i class="text-warning" :class="[favorite ? 'fas fa-star' : 'far fa-star']"></i>
+                                        Ajouter aux favoris
+                                    </a>
                                 </li>
                             </ul>
                         </div>

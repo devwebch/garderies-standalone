@@ -93,6 +93,9 @@ class UserController extends Controller
 
         $chart = new UserBookingsChart($user->id);
 
+        $authUser = User::find(1);
+        $isFavorite = $authUser->favorite_substitutes->where('id', $user->id)->count();
+
         return view('user.show', [
             'user'                  => $user,
             'availabilities'        => $availabilities,
@@ -100,7 +103,8 @@ class UserController extends Controller
             'archivedBookings'      => $archivedBookings,
             'bookingRequests'       => $bookingRequests,
             'userBookingRequests'   => $userBookingRequests,
-            'chart'                 => $chart
+            'chart'                 => $chart,
+            'isFavorite'            => $isFavorite
         ]);
     }
 

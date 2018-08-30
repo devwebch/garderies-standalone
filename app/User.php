@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Workgroup');
     }
+
+    public function favorite_substitutes()
+    {
+        return $this->belongsToMany('App\User', 'user_favorites','user_id', 'substitute_id');
+    }
 }

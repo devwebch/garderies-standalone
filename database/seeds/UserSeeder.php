@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'id'            => 1,
             'name'          => 'Gestionnaire',
-            'email'         => 'admin@ajerco.ch',
+            'email'         => 'admin@garderie.ch',
             'phone'         => '+41211234567',
             'password'      => bcrypt('123456'),
             'created_at'    => \Carbon\Carbon::now()

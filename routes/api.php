@@ -22,6 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('nurseries/planning', 'API\NurseryController@planning');
 Route::resource('nurseries', 'API\NurseryController');
 Route::resource('users', 'API\UserController');
+Route::post('users/favorites', 'API\UserController@addToFavorites');
 Route::resource('networks', 'API\NetworkController');
 Route::resource('workgroups', 'API\WorkgroupController');
 

@@ -4,6 +4,20 @@
 
 @section('content')
 
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <ul>
+                    @foreach($favorites as $user)
+                        <li>[{{$user->id}}] {{$user->name}}</li>
+                    @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-8">
             <div class="card mb-4">
@@ -11,23 +25,27 @@
                 <div class="card-body">
                     <table class="table mb-0">
                         <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Garderie</th>
-                                <th>Début</th>
-                                <th>Fin</th>
-                                <th width="50"></th>
-                            </tr>
-                        </thead>
-                        @foreach($bookings as $booking)
                         <tr>
-                            <td>{{$booking->start->format('d.m.Y')}}</td>
-                            <td><a href="#">{{$booking->nursery->name ?? '-'}}</a></td>
-                            <td>{{$booking->start->format('H:i')}}</td>
-                            <td>{{$booking->end->format('H:i')}}</td>
-                            <td><a href="#">Voir</a></td>
+                            <th>Date</th>
+                            <th>Garderie</th>
+                            <th>Début</th>
+                            <th>Fin</th>
+                            <th width="50"></th>
                         </tr>
-                        @endforeach
+                        </thead>
+                        @forelse($bookings as $booking)
+                            <tr>
+                                <td>{{$booking->start->format('d.m.Y')}}</td>
+                                <td><a href="#">{{$booking->nursery->name ?? '-'}}</a></td>
+                                <td>{{$booking->start->format('H:i')}}</td>
+                                <td>{{$booking->end->format('H:i')}}</td>
+                                <td><a href="#">Voir</a></td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5">Aucun remplacement prévu</td>
+                            </tr>
+                        @endforelse
                     </table>
                 </div>
             </div>
@@ -44,13 +62,17 @@
                             <th>Fin</th>
                         </tr>
                         </thead>
-                        @foreach($availabilities as $availability)
+                        @forelse($availabilities as $availability)
                             <tr>
                                 <td>{{$availability->start->format('d.m.Y')}}</td>
                                 <td>{{$availability->start->format('H:i')}}</td>
                                 <td>{{$availability->end->format('H:i')}}</td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="5">Aucune disponibilité</td>
+                            </tr>
+                        @endforelse
                     </table>
                 </div>
             </div>
@@ -73,7 +95,7 @@
                             <th width="50"></th>
                         </tr>
                         </thead>
-                        @foreach($bookingRequests as $bookingRequest)
+                        @forelse($bookingRequests as $bookingRequest)
                             <tr>
                                 <td>{{$bookingRequest->start->format('d.m.Y')}}</td>
                                 <td>{{$bookingRequest->nursery->name ?? '-'}}</td>
@@ -82,7 +104,11 @@
                                 <td>{{$bookingRequest->end->format('H:i')}}</td>
                                 <td><a href="#">Voir</a></td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="5">Aucune demande en attente</td>
+                            </tr>
+                        @endforelse
                     </table>
                 </div>
             </div>

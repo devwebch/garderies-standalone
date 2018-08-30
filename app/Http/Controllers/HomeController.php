@@ -45,10 +45,15 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
+        $user = User::find(1);
+
+        $favorites = $user->favorite_substitutes;
+
         return view('home-user', [
             'bookings'          => $bookings,
             'bookingRequests'   => $bookingRequests,
-            'availabilities'    => $availabilities
+            'availabilities'    => $availabilities,
+            'favorites'         => $favorites
         ]);
     }
 }

@@ -2,18 +2,22 @@
     import swal from 'sweetalert2';
     import 'sweetalert2/dist/sweetalert2.min.css';
 
-    let data = {};
+    let data = {
+        favorite: false
+    };
 
     export default {
         data() {
             return data;
         },
+        props: {
+            isFavorite: Number
+        },
         mounted() {
-            console.log('User show component mounted.');
+            data.favorite = this.isFavorite;
         },
         methods: {
             deleteUser: function (user) {
-                console.log('try to delete');
                 if (!user) { return; }
                 swal({
                     title: 'Attention !',
@@ -30,6 +34,33 @@
                             window.location.replace(response.data.redirect);
                         });
                     }
+                });
+            },
+            addToFavorite: function (user) {
+                console.log('Add to favorite', user);
+                axios.post('/api/users/favorites', {
+                    params: {
+                        substituteId: user
+                    }
+                })
+                .then(function (response) {
+                    let attached = response.data;
+                    data.favorite = attached;
+
+                    let message = "Ajouté aux favoris";
+                    if (!attached) {
+                        message ="Supprimé des favoris";
+                    }
+
+                    swal({
+                        type: "success",
+                        toast: true,
+                        title: message,
+                        position: "top-right",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+
                 });
             }
         }

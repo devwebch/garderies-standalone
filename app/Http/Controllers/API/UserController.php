@@ -111,4 +111,18 @@ class UserController extends Controller
             'redirect'  => route('users.index')
         ]);
     }
+
+    public function addToFavorites(Request $request)
+    {
+        $params     = $request->params;
+        $user       = User::find(1); // swap to the current user
+        $substitute = $params['substituteId'];
+
+        $toggle = $user->favorite_substitutes()->toggle($substitute);
+
+        $attached = true;
+        if (count($toggle['detached'])) { $attached = false; }
+
+        return response()->json($attached);
+    }
 }

@@ -253,8 +253,8 @@ class AvailabilityController extends Controller
         // if the search perimeter is correctly defined, proceed
         if ($date_start && $date_end) {
 
-            $date_start_extended    = $date_start->copy()->addMinutes(30);
-            $date_end_extended      = $date_end->copy()->subMinutes(30);
+            $date_start_extended    = $date_start->copy()->addHour(1);
+            $date_end_extended      = $date_end->copy()->subHour(1);
             
             // availabilities request
             if (!$ext_search) {

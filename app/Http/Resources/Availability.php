@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\User;
 
 class Availability extends JsonResource
 {
@@ -36,10 +37,11 @@ class Availability extends JsonResource
         $data['nursery']['link']    = route('nurseries.show', $this->user->nursery ?? 0);
         $data['networks']           = $this->user->networks;
 
-        if ($this->user->id % 3 == 0) {
+        // TODO: update the the current logged user
+        $authUser = User::find(1);
+        $data['favorite'] = false;
+        if ( $authUser->favorite_substitutes->where('id', $this->user->id)->count() ) {
             $data['favorite'] = true;
-        } else {
-            $data['favorite'] = false;
         }
 
         return $data;
