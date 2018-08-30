@@ -40,6 +40,13 @@
                                     <td><strong>Durée :</strong></td>
                                     <td>{{$booking_duration}} h</td>
                                 </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <a href="{{$calendar_link->ics()}}" class="btn btn-outline-info">
+                                            <i class="far fa-calendar-check mr-2"></i> Ajouter au calendrier
+                                        </a>
+                                    </td>
+                                </tr>
                                 @if ($booking->request)
                                     <tr>
                                         <td><strong>Demande originale :</strong></td>

@@ -10,6 +10,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Spatie\CalendarLinks\Link;
 
 class BookingController extends Controller
 {
@@ -128,13 +129,23 @@ class BookingController extends Controller
 
         $feedbacks = $booking->feedbacks;
 
+        // generate calendar link
+        $calendar_link = new Link(
+            'Remplacement',
+            $booking->start,
+            $booking->end
+        );
+        $calendar_link->description('Remplacement de ' . $booking->user->name . ', à la garderie ' . $booking->nursery->name);
+        $calendar_link->address($booking->nursery->address . ', ' . $booking->nursery->post_code . ' ' . $booking->nursery->city);
+
         return view('booking.show', [
             'booking'               => $booking,
             'matching_pct'          => $matching_pct,
             'matching_start_pct'    => $matching_start_pct,
             'matching_end_pct'      => $matching_end_pct,
             'booking_duration'      => $booking_duration,
-            'feedbacks'             => $feedbacks
+            'feedbacks'             => $feedbacks,
+            'calendar_link'         => $calendar_link
         ]);
     }
 

@@ -43,10 +43,10 @@ class BookingPurposesPerNursery extends Chart
             'legend'    => ['display' => false],
             'layout'    => [
                 'padding' => [
-                    'top'       => 10,
-                    'right'     => 10,
-                    'bottom'    => 10,
-                    'left'      => 10
+                    'top'       => 0,
+                    'right'     => 0,
+                    'bottom'    => 0,
+                    'left'      => 0
                 ]
             ],
             'elements' => [

@@ -24,6 +24,7 @@ class NetworkController extends Controller
         }
     
         $query->join('users', 'users.id', '=', 'owner_id');
+        $query->join('nurseries', 'nurseries.id', '=', 'network_id');
 
         if ($request->exists('filter')) {
             $query->where(function($q) use($request) {
@@ -35,7 +36,7 @@ class NetworkController extends Controller
 
         $perPage = $request->has('per_page') ? (int) $request->per_page : null;
 
-        $data = $query->withCount('users')->paginate($perPage);
+        $data = $query->withCount('users')->withCount('nurseries')->paginate($perPage);
 
         return response()->json($data);
     }

@@ -34,11 +34,16 @@ class BookingSeeder extends Seeder
 
                 $status = ($start < now()) ? \App\Booking::STATUS_ARCHIVED : \App\Booking::STATUS_APPROVED;
 
+                $user_id        = rand(2, $users);
+                $substitute_id  = rand(2, $users);
+                $nursery_id     = rand(1, $nurseries);
+                $purpose_id     = rand(1, 3);
+
                 DB::table('bookings')->insert([
-                    'user_id'           => rand(2, $users),
-                    'substitute_id'     => rand(2, $users),
-                    'nursery_id'        => rand(1, $nurseries),
-                    'purpose_id'        => rand(1, 3),
+                    'user_id'           => $user_id,
+                    'substitute_id'     => $substitute_id,
+                    'nursery_id'        => $nursery_id,
+                    'purpose_id'        => $purpose_id,
                     'start'             => $start,
                     'end'               => $end,
                     'status'            => $status,

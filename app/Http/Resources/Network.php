@@ -16,10 +16,10 @@ class Network extends JsonResource
     {
         $data = parent::toArray($request);
 
-        $data['link']            = route('networks.show', $this->id);
-        $data['owner']['name']   = $this->owner->name ?? '-';
-        $data['owner']['link'] = route('users.show', $this->owner->id);
-        $data['employees']        = $this->users()->count();
+        $data['link']               = route('networks.show', $this->id);
+        $data['owner']['name']      = $this->owner->name ?? '-';
+        $data['owner']['link']      = route('users.show', $this->owner->id);
+        $data['employees']          = $this->users()->count();
 
         return $data;
     }
