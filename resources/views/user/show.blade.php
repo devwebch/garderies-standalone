@@ -70,7 +70,7 @@
                                 <li class="list-group-item">
                                     <strong>Réseaux :</strong>
                                     @forelse ($user->networks as $network)
-                                        <span class="badge badge-info">{{$network->name}}</span>
+                                        <span class="badge text-white" style="background: {{$network->color}};">{{$network->name}}</span>
                                     @empty
                                         -
                                     @endforelse

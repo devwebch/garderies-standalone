@@ -33,11 +33,7 @@ class DiplomasPerNursery extends Chart
         }
 
         $this->dataset('Diplomes', 'bar', $dataset)
-            ->options([
-                'backgroundColor'       => ['#20aee3', '#4caf50', '#e81e63'],
-                'borderWidth'           => 0,
-                'lineTension'           => 0.3
-            ]);
+            ->options(['backgroundColor' => ['#20aee3', '#4caf50', '#e81e63']]);
 
         $this->options([
             'animation' => ['duration' => 1000],

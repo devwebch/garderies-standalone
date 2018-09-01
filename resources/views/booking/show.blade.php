@@ -25,6 +25,54 @@
                 </div>
                 <div class="card-body">
 
+                    @if ($matching_pct)
+                        <div class="progress d-print-none mb-4">
+                            <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar"
+                                 style="width: {{$matching_start_pct}}%" aria-valuenow="{{$matching_start_pct}}"
+                                 aria-valuemin="0" aria-valuemax="100">{{$booking->request->start->format('H:i')}}</div>
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: {{$matching_pct}}%"
+                                 aria-valuenow="{{$matching_pct}}" aria-valuemin="0"
+                                 aria-valuemax="100">{{$booking->start->format('H:i')}}
+                                - {{$booking->end->format('H:i')}}</div>
+                            <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar"
+                                 style="width: {{$matching_end_pct}}%" aria-valuenow="{{$matching_end_pct}}"
+                                 aria-valuemin="0" aria-valuemax="100">{{$booking->request->end->format('H:i')}}</div>
+                        </div>
+                    @endif
+
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-4 mb-sm-0 text-center">
+                            @if ($booking->substitute)
+                                <div class="card bg-light">
+                                    <div class="card-header text-center">Remplaçant</div>
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <div class="avatar avatar--sm mb-2">
+                                                {!! Avatar::create($booking->substitute->name)->toSvg() !!}
+                                            </div>
+                                            <h4>{{$booking->substitute->name ?? '-'}}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="col-md-6 text-center">
+                            @if ($booking->user)
+                                <div class="card bg-light">
+                                    <div class="card-header text-center">Employé</div>
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <div class="avatar avatar--sm mb-2">
+                                                {!! Avatar::create($booking->user->name)->toSvg() !!}
+                                            </div>
+                                            <h4>{{$booking->user->name ?? '-'}}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <table class="table">
@@ -40,20 +88,10 @@
                                     <td><strong>Durée :</strong></td>
                                     <td>{{$booking_duration}} h</td>
                                 </tr>
-                                <tr>
-                                    <td colspan="2" class="text-center text-md-left">
-                                        <a href="{{$calendar_link->ics()}}" class="btn btn-outline-info btn-sm mr-2 mb-3 mb-md-0">
-                                            <i class="far fa-calendar-check mr-2"></i> Ajouter au calendrier
-                                        </a>
-                                        <a href="{{$calendar_link->google()}}" target="_blank" class="btn btn-outline-danger btn-sm">
-                                            <i class="fab fa-google mr-2"></i> Google calendar
-                                        </a>
-                                    </td>
-                                </tr>
                                 @if ($booking->request)
                                     <tr>
                                         <td><strong>Demande originale :</strong></td>
-                                        <td>{{$booking->request->workgroup->name ?? '-'}}</td>
+                                        <td><a href="{{route('booking-requests.show', $booking->request)}}">Voir la demande</a></td>
                                     </tr>
                                 @endif
                             </table>
@@ -74,61 +112,17 @@
                                     <td><strong>Raison :</strong></td>
                                     <td>{{$booking->purpose->name ?? '-'}}</td>
                                 </tr>
+                                <tr>
+                                    <td><strong>Calendrier :</strong></td>
+                                    <td class="text-center text-md-left">
+                                        <a href="{{$calendar_link->ics()}}" class="btn btn-outline-info btn-sm mr-2 mb-3 mb-md-0">
+                                            <i class="far fa-calendar-check mr-2"></i> Ajouter au calendrier
+                                        </a>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
-
-                    @if ($matching_pct)
-                        <div class="progress d-print-none">
-                            <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar"
-                                 style="width: {{$matching_start_pct}}%" aria-valuenow="{{$matching_start_pct}}"
-                                 aria-valuemin="0" aria-valuemax="100">{{$booking->request->start->format('H:i')}}</div>
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: {{$matching_pct}}%"
-                                 aria-valuenow="{{$matching_pct}}" aria-valuemin="0"
-                                 aria-valuemax="100">{{$booking->start->format('H:i')}}
-                                - {{$booking->end->format('H:i')}}</div>
-                            <div class="progress-bar progress-bar-striped bg-transparent text-dark" role="progressbar"
-                                 style="width: {{$matching_end_pct}}%" aria-valuenow="{{$matching_end_pct}}"
-                                 aria-valuemin="0" aria-valuemax="100">{{$booking->request->end->format('H:i')}}</div>
-                        </div>
-                    @endif
-
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-md-6 text-center">
-                            @if ($booking->substitute)
-                                <div class="card bg-light">
-                                    <div class="card-header text-center">Remplaçant</div>
-                                    <div class="card-body">
-                                        <div class="text-center">
-                                            <div class="avatar avatar--sm mb-2">
-                                                {!! Avatar::create($booking->substitute->name)->toSvg() !!}
-                                            </div>
-                                            <h4>{{$booking->substitute->name ?? '-'}}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="col-md-6 mb-4 mb-sm-0 text-center">
-                            @if ($booking->user)
-                                <div class="card bg-light">
-                                    <div class="card-header text-center">Employé</div>
-                                    <div class="card-body">
-                                        <div class="text-center">
-                                            <div class="avatar avatar--sm mb-2">
-                                                {!! Avatar::create($booking->user->name)->toSvg() !!}
-                                            </div>
-                                            <h4>{{$booking->user->name ?? '-'}}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-
-                    <hr>
 
                     <div class="row mb-4">
                         <div class="col">
@@ -137,6 +131,7 @@
                         </div>
                     </div>
 
+                    @if ($feedbacks->count())
                     <div class="row mb-4">
                         <div class="col">
                             <h4>Rapports</h4>
@@ -157,6 +152,7 @@
                             @endforeach
                         </div>
                     </div>
+                    @endif
 
                     <a href="{{ route('bookings.index') }}" class="btn btn-outline-primary btn-back">&larr; Retour</a>
                 </div>

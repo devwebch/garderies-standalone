@@ -16,7 +16,8 @@
         }, {
             name: '__slot:networklinkrelation',
             sortField: 'networks.name',
-            title: 'Réseau'
+            title: 'Réseau',
+            width: '150px'
         }]">
     </vue-table>
 @endsection

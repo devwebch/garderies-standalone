@@ -23,7 +23,8 @@
             }, {
               name: '__slot:networkslinkrelation',
               sortField: 'networks.name',
-              title: 'Réseaux'
+              title: 'Réseaux',
+              width: '150px'
             }]"></vue-table>
 @endsection
 

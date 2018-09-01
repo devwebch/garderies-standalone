@@ -102,7 +102,7 @@
             }]"></vue-table>
 
             <div class="row">
-                <div class="col">
+                <div class="col mb-4 mb-md-0">
                     <div class="card">
                         <div class="card-header">Absences par type</div>
                         <div class="card-body">
