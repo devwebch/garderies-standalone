@@ -21,6 +21,6 @@ class UserSeeder extends Seeder
             'created_at'    => \Carbon\Carbon::now()
         ]);
 
-        factory(App\User::class, 99)->create();
+        factory(App\User::class, 100)->create();
     }
 }
