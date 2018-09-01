@@ -5,10 +5,11 @@
 @section('content')
     <div class="row">
         <div class="col-md-8">
+            {{-- Next bookings --}}
             <div class="card mb-4">
                 <div class="card-header"><i class="fas fa-calendar-alt mr-2"></i> Vos prochains remplacements</div>
                 <div class="card-body">
-                    <table class="table mb-0">
+                    <table class="table mb-0 table-responsive-md">
                         <thead>
                         <tr>
                             <th>Date</th>
@@ -34,37 +35,59 @@
                     </table>
                 </div>
             </div>
+            {{-- Pending booking requests --}}
             <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-list mr-2"></i> Demandes de remplacement en attente</div>
+                <div class="card-header bg-dark text-white">Demandes de remplacements en attente</div>
                 <div class="card-body">
-                    <table class="table mb-0">
+                    <table class="table table-borderless table-striped table-responsive-lg">
                         <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Garderie</th>
-                            <th>Employé</th>
-                            <th>Début</th>
-                            <th>Fin</th>
-                            <th width="50"></th>
-                        </tr>
+                            <tr>
+                                <th>Employé</th>
+                                <th>Date</th>
+                                <th>Horaire</th>
+                                <th>Disponibilité</th>
+                                <th></th>
+                            </tr>
                         </thead>
-                        @forelse($bookingRequests as $bookingRequest)
+                        <tbody>
+                        @foreach($bookingRequests as $request)
                             <tr>
-                                <td>{{$bookingRequest->start->format('d.m.Y')}}</td>
-                                <td>{{$bookingRequest->nursery->name ?? '-'}}</td>
-                                <td>{{$bookingRequest->user->name ?? '-'}}</td>
-                                <td>{{$bookingRequest->start->format('H:i')}}</td>
-                                <td>{{$bookingRequest->end->format('H:i')}}</td>
-                                <td><a href="{{route('booking-requests.show', $bookingRequest)}}">Voir</a></td>
+                                <td>
+                                    <a href="{{route('users.show', $request->user->id ?? 0)}}">
+                                        {{$request->user->name ?? 'Aucun'}}
+                                    </a>
+                                </td>
+                                <td>{{$request->start->format('d.m.Y')}}</td>
+                                <td>
+                                    <span style="font-size: 0.9em;">
+                                        {{$request->start->format('H\hi')}} <i
+                                                class="fas fa-arrow-right"
+                                                style="font-size: .7em;"></i> {{$request->end->format('H\hi')}}
+                                    </span>
+                                </td>
+                                <td>
+                                    @if ($request->availability)
+                                        <span style="font-size: 0.9em;">
+                                            {{$request->availability->start->format('H\hi')}}
+                                            <i class="fas fa-arrow-right" style="font-size: .7em;"></i>
+                                            {{$request->availability->end->format('H\hi')}}
+                                        </span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{route('booking-requests.show', $request)}}">Voir</a>
+                                </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5">Aucune demande en attente</td>
-                            </tr>
-                        @endforelse
+                        @endforeach
+                        </tbody>
                     </table>
+
+                    @if(!$bookingRequests->count())
+                        <div class="alert alert-info">Aucune demande</div>
+                    @endif
                 </div>
             </div>
+            {{-- Favorite substitutes --}}
             <div class="card">
                 <div class="card-header"><i class="fas fa-star mr-2"></i> Vos remplacants favoris</div>
                 <div class="card-body">
@@ -95,7 +118,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 order-first order-md-last">
+            {{-- Next booking --}}
             @if ($bookings->count())
             <div class="card mb-4 bg-warning text-white">
                 <div class="card-body text-center">Prochain remplacement</div>
@@ -105,10 +129,12 @@
                 </div>
             </div>
             @endif
+
+            {{-- User's availabilities --}}
             <div class="card mb-4 bg-primary text-white">
                 <div class="card-header"><i class="fas fa-user-clock mr-2"></i> Vos disponibilités</div>
                 <div class="card-body">
-                    <table class="table mb-0">
+                    <table class="table mb-0 table-responsive-lg">
                         <thead>
                         <tr>
                             <th>Date</th>
@@ -130,10 +156,6 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row mb-4">
-        <div class="col">
         </div>
     </div>
 

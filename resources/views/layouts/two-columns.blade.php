@@ -11,7 +11,7 @@
                         <div class="col-md-3 col-xl-2 mb-4 mb-lg-0 d-print-none">
                             @yield('nav-lateral')
                         </div>
-                        <div class="col-md-9 col-xl-10 content">
+                        <div class="col-md-9 col-xl-10 content d-print-block">
                             @yield('content')
                         </div>
                     </div>

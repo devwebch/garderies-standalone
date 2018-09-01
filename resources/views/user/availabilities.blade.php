@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="wrapper">
-        <div class="row">
+        <div class="row d-print-none">
             <div class="col mb-2">
                 <a href="{{route('users.show', $user)}}" class="btn btn-info btn-sm">&larr; Retour au profil</a>
             </div>

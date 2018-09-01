@@ -90,8 +90,8 @@ class BookingRequestController extends Controller
 
         // Percentages calculation
         $completion_pct     = ($availability_duration * 100) / $booking_duration;
-        $start_delay_pct    = ($booking_delay_start * 100) / $booking_duration;
-        $end_delay_pct      = ($booking_delay_end * 100) / $booking_duration;
+        $start_pct          = ($booking_delay_start * 100) / $booking_duration;
+        $end_pct            = ($booking_delay_end * 100) / $booking_duration;
 
         /**
          * Check for conflicts between request and availability
@@ -115,20 +115,14 @@ class BookingRequestController extends Controller
 
         $availability   = $bookingRequest->availability;
 
-        /**
-         * Check for existing requests on a specific availability
-         * TODO: Clean up this shit
-         */
-        $existing_requests = $availability->requests->where('status', BookingRequest::STATUS_APPROVED);
-
         return view('booking-request.show', [
             'bookingRequest'            => $bookingRequest,
             'availability'              => $availability,
             'conflict_start'            => $conflict_start,
             'conflict_end'              => $conflict_end,
             'completion_pct'            => $completion_pct,
-            'start_pct'                 => $start_delay_pct,
-            'end_pct'                   => $end_delay_pct,
+            'start_pct'                 => $start_pct,
+            'end_pct'                   => $end_pct,
             'conflicts'                 => $this->hasBookingConflicts($bookingRequest, $availability),
             'other_request_approved'    => $other_request_approved
         ]);
