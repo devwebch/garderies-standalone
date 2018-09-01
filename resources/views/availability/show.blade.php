@@ -5,7 +5,7 @@
 @section('content')
     <div class="card card-default">
         <div class="card-header">{{$availability->id}}
-            <div class="actions float-right">
+            <div class="actions float-right d-print-none">
                 <a href="{{route('availabilities.edit', [$availability->id])}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-edit"></i> Edit</a>
 
                 <div class="float-right">

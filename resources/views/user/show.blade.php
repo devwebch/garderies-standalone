@@ -5,7 +5,7 @@
 @section('content')
     <user-show inline-template :is-favorite="{{$isFavorite}}">
         <div>
-            <div class="row">
+            <div class="row d-print-none">
                 <div class="col mb-2">
                     <a href="{{route('users.index')}}" class="btn btn-info btn-sm">&larr; Retour aux utilisateurs</a>
                 </div>
@@ -23,7 +23,7 @@
                                 <div>
                                     <h5>{{$user->name}}</h5>
                                 </div>
-                                <div class="actions pt-2">
+                                <div class="actions pt-2 d-print-none">
                                     <a href="{{route('users.edit', [$user->id])}}" class="btn btn-info btn-sm mr-2"><i class="fas fa-edit"></i> Editer</a>
                                     <a href="#" v-on:click.prevent="deleteUser({{$user->id}})" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Supprimer</a>
                                 </div>
