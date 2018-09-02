@@ -7,7 +7,7 @@
         <div class="col-md-8">
             {{-- Next bookings --}}
             <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-calendar-alt mr-2"></i> Vos prochains remplacements</div>
+                <div class="card-header bg-dark text-white"><i class="fas fa-calendar-alt mr-2"></i> Vos prochains remplacements</div>
                 <div class="card-body">
                     <table class="table mb-0 table-responsive-md">
                         <thead>
@@ -37,7 +37,7 @@
             </div>
             {{-- Pending booking requests --}}
             <div class="card mb-4">
-                <div class="card-header bg-dark text-white">Demandes de remplacements en attente</div>
+                <div class="card-header bg-dark text-white"><i class="fas fa-user-clock mr-2"></i> Demandes de remplacements en attente</div>
                 <div class="card-body">
                     <table class="table table-borderless table-striped table-responsive-lg">
                         <thead>
@@ -89,7 +89,7 @@
             </div>
             {{-- Favorite substitutes --}}
             <div class="card">
-                <div class="card-header"><i class="fas fa-star mr-2"></i> Vos remplacants favoris</div>
+                <div class="card-header bg-dark text-white"><i class="fas fa-star mr-2"></i> Vos remplacants favoris</div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
@@ -121,17 +121,17 @@
         <div class="col-md-4 order-first order-md-last">
             {{-- Next booking --}}
             @if ($bookings->count())
-            <div class="card mb-4 bg-warning text-white">
+            <div class="card mb-4 bg-info text-white">
                 <div class="card-body text-center">Prochain remplacement</div>
                 <div class="card-body text-center pt-0">
                     <h1 style="font-size: 4rem;">{{$bookings->first()->start->format('d')}}</h1>
-                    <div>{{$bookings->first()->start->format('F')}}</div>
+                    <div>{{$months[$bookings->first()->start->month - 1]}}</div>
                 </div>
             </div>
             @endif
 
             {{-- User's availabilities --}}
-            <div class="card mb-4 bg-primary text-white">
+            <div class="card mb-4">
                 <div class="card-header"><i class="fas fa-user-clock mr-2"></i> Vos disponibilités</div>
                 <div class="card-body">
                     <table class="table mb-0 table-responsive-lg">
@@ -154,6 +154,8 @@
                             </tr>
                         @endforelse
                     </table>
+
+                    <a href="#" class="btn btn-info btn-block mt-3">Gérer mes disponibilités</a>
                 </div>
             </div>
         </div>

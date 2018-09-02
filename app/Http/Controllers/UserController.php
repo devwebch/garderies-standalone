@@ -93,7 +93,9 @@ class UserController extends Controller
 
         $chart = new UserBookingsChart($user->id);
 
+        // TODO: update to the logged in user
         $authUser = User::find(1);
+        // check if the user being viewed is one of the user favorites
         $isFavorite = $authUser->favorite_substitutes->where('id', $user->id)->count();
 
         return view('user.show', [
@@ -122,6 +124,7 @@ class UserController extends Controller
         $workgroups         = Workgroup::all();
         $diplomas           = Diploma::all();
 
+        // TODO: check if we can have the same result with pluck() on the collection
         $currentNetworksKeys    = array_values(array_flatten((array)$user->networks->keyBy('id')->keys()));
         $currentWorkgroups      = array_values(array_flatten((array)$user->workgroups->keyBy('id')->keys()));
 
@@ -145,7 +148,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $validatedData = $request->validate([
+        // validate the request
+        $request->validate([
             'name' => 'required',
             'email' => 'required|email',
         ]);
@@ -232,6 +236,7 @@ class UserController extends Controller
      */
     public static function getAvailableSlots(User $user, Carbon $date)
     {
+        // get the opening and closing hours
         $day_start  = $date->copy()->hour(config('nursery.opening_time'))->minute(0);
         $day_end    = $date->copy()->hour(config('nursery.closing_time'))->minute(0);
 

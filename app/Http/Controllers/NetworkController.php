@@ -38,10 +38,12 @@ class NetworkController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        // validate the request
+        $request->validate([
             'name' => 'required',
         ]);
 
+        // if no color is defined, choose one randomly
         if ($request->color) {
             $color = strtolower($request->color);
         } else {
@@ -88,7 +90,8 @@ class NetworkController extends Controller
      */
     public function update(Request $request, Network $network)
     {
-        $validatedData = $request->validate([
+        // validate the request
+        $request->validate([
             'name' => 'required',
         ]);
         

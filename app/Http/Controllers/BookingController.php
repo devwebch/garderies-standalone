@@ -21,11 +21,13 @@ class BookingController extends Controller
      */
     public function index()
     {
+        // Get future bookings
         $bookings = Booking::where('start', '>=', now())
             ->orderBy('status', 'desc')
             ->orderBy('start')
             ->get();
 
+        // Get archived bookings
         $bookings_archive = Booking::where('status', Booking::STATUS_ARCHIVED)
             ->orderBy('start')
             ->get();
@@ -43,7 +45,9 @@ class BookingController extends Controller
      */
     public function create()
     {
+        // Get users except for the ID 1, for demo purposes
         $users      = User::where('id', '!=', 1)->orderBy('name')->get();
+        // Get nuseries
         $nurseries  = Nursery::orderBy('name')->get();
 
         return view('booking.create', ['users' => $users, 'nurseries' => $nurseries]);
@@ -57,23 +61,28 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        /**
+         * Validate the request
+         * TODO: check if we can simplify this by using the default validations strings
+         */
         Validator::make($request->all(), [
-            'user' => 'required',
-            'substitute' => 'required|not_in:' . $request->user,
-            'nursery' => 'required',
-            'date_start' => 'required|date|after:yesterday',
-            'date_end' => 'required|date|after:date_start',
+            'user'          => 'required',
+            'substitute'    => 'required|not_in:' . $request->user,
+            'nursery'       => 'required',
+            'date_start'    => 'required|date|after:yesterday',
+            'date_end'      => 'required|date|after:date_start',
         ], [
-            'user.required' => 'Veuillez sélectionner un employé.',
-            'substitute.required' => 'Veuillez sélectionner un remplaçant.',
-            'substitute.not_in' => 'Veuillez sélectionner un remplaçant différent de l\'employé.',
-            'nursery.required' => 'Veuillez sélectionner une garderie.',
-            'date_start.required' => 'Veuillez sélectionner une date de début.',
-            'date_start.after' => 'Veuillez sélectionner une date à partie d\'aujourd\'hui.',
-            'date_end.required' => 'Veuillez sélectionner une date de fin.',
-            'date_end.after' => 'La date de fin doit être après la date de début.',
+            'user.required'         => 'Veuillez sélectionner un employé.',
+            'substitute.required'   => 'Veuillez sélectionner un remplaçant.',
+            'substitute.not_in'     => 'Veuillez sélectionner un remplaçant différent de l\'employé.',
+            'nursery.required'      => 'Veuillez sélectionner une garderie.',
+            'date_start.required'   => 'Veuillez sélectionner une date de début.',
+            'date_start.after'      => 'Veuillez sélectionner une date à partie d\'aujourd\'hui.',
+            'date_end.required'     => 'Veuillez sélectionner une date de fin.',
+            'date_end.after'        => 'La date de fin doit être après la date de début.',
         ])->validate();
-        
+
+        // Save the new object
         $booking = new Booking();
         $booking->user_id       = $request->user;
         $booking->substitute_id = $request->substitute;
@@ -100,6 +109,7 @@ class BookingController extends Controller
         $matching_start_pct = 0;
         $matching_end_pct = 0;
 
+        // check if a booking request is associated to this booking
         if ($booking->request) {
             $request_start      = $booking->request->start;
             $request_end        = $booking->request->end;
@@ -124,17 +134,15 @@ class BookingController extends Controller
             $matching_end_pct = ($booking_delay_end * 100) / $request_duration;
         }
 
+        // calculate the booking duration in hours, with 2 decimals
         $booking_duration = $booking->start->diffInMinutes($booking->end);
         $booking_duration = number_format($booking_duration / 60, 2);
 
+        // retrieve the booking's feedbacks
         $feedbacks = $booking->feedbacks;
 
         // generate calendar link
-        $calendar_link = new Link(
-            'Remplacement',
-            $booking->start,
-            $booking->end
-        );
+        $calendar_link = new Link('Remplacement', $booking->start, $booking->end);
         $calendar_link->description('Remplacement de ' . $booking->user->name . ', à la garderie ' . $booking->nursery->name);
         $calendar_link->address($booking->nursery->address . ', ' . $booking->nursery->post_code . ' ' . $booking->nursery->city);
 

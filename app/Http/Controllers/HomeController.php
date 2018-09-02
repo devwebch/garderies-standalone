@@ -32,26 +32,20 @@ class HomeController extends Controller
 
     public function indexUser()
     {
-        $availabilities     = Availability::where('start', '>', now())
-            ->take(5)
-            ->get();
-        $bookings           = Booking::where('start', '>', now())
-            ->take(5)
-            ->get();
-        $bookingRequests    = BookingRequest::where('start', '>', now())
-            ->take(5)
-            ->get();
-
         $user = User::find(1);
+        $availabilities     = Availability::where('start', '>', now())->take(5)->get();
+        $bookings           = Booking::where('start', '>', now())->take(5)->get();
+        $bookingRequests    = BookingRequest::where('start', '>', now())->take(5)->get();
+        $favorites          = $user->favorite_substitutes;
 
-        $favorites = $user->favorite_substitutes;
-        setlocale(LC_TIME, 'fr');
+        $months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
 
         return view('home-user', [
             'bookings'          => $bookings,
             'bookingRequests'   => $bookingRequests,
             'availabilities'    => $availabilities,
-            'favorites'         => $favorites
+            'favorites'         => $favorites,
+            'months'            => $months
         ]);
     }
 }

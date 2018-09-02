@@ -48,6 +48,7 @@ class AvailabilityController extends Controller
      */
     public function show(Availability $availability)
     {
+        // Get bookings ordered by most recent
         $bookings   = $availability->bookings()->orderBy('start')->get();
         $slots      = $this->getAvailableBookingSlots($availability);
 

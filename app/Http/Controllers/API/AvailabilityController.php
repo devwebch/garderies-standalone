@@ -42,6 +42,7 @@ class AvailabilityController extends Controller
         $start  = Carbon::parse($event['start']);
         $end    = Carbon::parse($event['end']);
 
+        // get business hours
         $opening_time = $start->copy()->hour(config('nursery.opening_time'))->minute(0);
         $closing_time = $end->copy()->hour(config('nursery.closing_time'))->minute(0);
 
@@ -117,19 +118,17 @@ class AvailabilityController extends Controller
         ]);
     }
     
-    function rangesNotOverlapOpen($start_time1,$end_time1,$start_time2,$end_time2)
+    function rangesNotOverlapOpen($start_time1, $end_time1, $start_time2, $end_time2)
     {
-        $utc = new DateTimeZone('UTC');
+        $utc        = new DateTimeZone('UTC');
         
-        $start1 = new DateTime($start_time1,$utc);
-        $end1 = new DateTime($end_time1,$utc);
-        if($end1 < $start1)
-            throw new Exception('Range is negative.');
+        $start1     = new DateTime($start_time1,$utc);
+        $end1       = new DateTime($end_time1,$utc);
+        if ($end1 < $start1) { throw new Exception('Range is negative.'); }
         
-        $start2 = new DateTime($start_time2,$utc);
-        $end2 = new DateTime($end_time2,$utc);
-        if($end2 < $start2)
-            throw new Exception('Range is negative.');
+        $start2     = new DateTime($start_time2,$utc);
+        $end2       = new DateTime($end_time2,$utc);
+        if ($end2 < $start2) { throw new Exception('Range is negative.'); }
         
         return ($end1 <= $start2) || ($end2 <= $start1);
     }
@@ -154,8 +153,8 @@ class AvailabilityController extends Controller
      */
     public function update(Request $request, Availability $availability)
     {
-        $start = Carbon::parse($request->params['start']);
-        $end = Carbon::parse($request->params['end']);
+        $start  = Carbon::parse($request->params['start']);
+        $end    = Carbon::parse($request->params['end']);
         
         //TODO: add constraint check
         
@@ -165,12 +164,13 @@ class AvailabilityController extends Controller
         
         return response('Availability updated');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Availability $availability
-     * @return \Illuminate\Http\Response
+     * @param Availability $availability
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws Exception
      */
     public function destroy(Availability $availability)
     {

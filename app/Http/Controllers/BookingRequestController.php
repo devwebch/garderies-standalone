@@ -16,7 +16,7 @@ class BookingRequestController extends Controller
      */
     public function index()
     {
-        // Get future booking requests
+        // Get future pending booking requests
         $pendingBookingRequests = BookingRequest::with('user')
             ->where('start', '>=', now())
             ->where('status', BookingRequest::STATUS_PENDING)
@@ -27,6 +27,7 @@ class BookingRequestController extends Controller
             ->with('availability')
             ->get();
 
+        // Get future booking requests that are not pending
         $bookingRequests = BookingRequest::with('user')
             ->where('start', '>=', now())
             ->where('status', '!=', BookingRequest::STATUS_PENDING)
@@ -174,6 +175,7 @@ class BookingRequestController extends Controller
 
         // init the conflicting bookings array
         $conflicting_bookings = [];
+
         // loop through each booking and store the conflicting ones
         foreach ($bookings as $booking) {
             if (

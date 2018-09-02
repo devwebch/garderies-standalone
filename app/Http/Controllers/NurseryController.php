@@ -41,7 +41,8 @@ class NurseryController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        // validate the request
+        $request->validate([
             'name' => 'required',
         ]);
 
@@ -66,9 +67,11 @@ class NurseryController extends Controller
      */
     public function show(Nursery $nursery)
     {
+        // get bookings
         $bookings = $nursery->bookings;
-
+        // get the DiplomasPerNursery Chart
         $diplomas_chart = new DiplomasPerNursery($nursery->id);
+        // get the BookingPurposesPerNursery Chart
         $bookings_chart = new BookingPurposesPerNursery($nursery->id);
 
         return view('nursery.show', [
@@ -100,7 +103,8 @@ class NurseryController extends Controller
      */
     public function update(Request $request, Nursery $nursery)
     {
-        $validatedData = $request->validate([
+        // validate the request
+        $request->validate([
             'name' => 'required',
         ]);
         
@@ -147,16 +151,18 @@ class NurseryController extends Controller
 
     public function planning(Nursery $nursery)
     {
-        setlocale(LC_TIME, 'fr');
-        $bookings = $nursery->bookings;
-        $first_day_month = Carbon::now()->day(1)->format('d.m.Y');
-        $last_day_month = Carbon::now()->lastOfMonth()->format('d.m.Y');
+        // get bookings
+        $bookings           = $nursery->bookings;
+        // get the first day of the current month
+        $first_day_month    = Carbon::now()->day(1)->format('d.m.Y');
+        // get the last day of the current month
+        $last_day_month     = Carbon::now()->lastOfMonth()->format('d.m.Y');
 
         return view('nursery.planning', [
-            'nursery'   => $nursery,
-            'bookings'  => $bookings,
+            'nursery'           => $nursery,
+            'bookings'          => $bookings,
             'first_day_month'   => $first_day_month,
-            'last_day_month'   => $last_day_month,
+            'last_day_month'    => $last_day_month,
         ]);
     }
 }
