@@ -46,8 +46,8 @@ class NurseryController extends Controller
     
         $perPage = $request->has('per_page') ? (int) $request->per_page : null;
     
-        $data = $query->withCount('users')->paginate($perPage);
-    
+        $data = $query->withCount('users')->withCount('ads')->paginate($perPage);
+
         return response()->json($data);
     }
 

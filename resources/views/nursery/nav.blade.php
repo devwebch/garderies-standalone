@@ -8,7 +8,7 @@
             <a href="{{route('nurseries.planning', $nursery)}}"><i class="fas fa-list-alt icon"></i> Planning</a>
         </li>
         <li>
-            <a href="{{route('ads.index', $nursery)}}"><i class="fas fa-ad icon"></i> Annonces</a>
+            <a href="{{route('nurseries.ads', $nursery)}}"><i class="fas fa-ad icon"></i> Annonces</a>
         </li>
         @endif
         <li>

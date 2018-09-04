@@ -16,13 +16,13 @@ class NetworkSeeder extends Seeder
 
         DB::table('networks')->insert([
             'name'      => 'Feroval',
-            'slug'      => SlugService::createSlug(Network::class, 'slug', 'Ajerco'),
+            'slug'      => SlugService::createSlug(Network::class, 'slug', 'Feroval'),
             'owner_id'  => 1,
             'color'     => '#2196F3',
         ]);
         DB::table('networks')->insert([
             'name'      => 'Palorma',
-            'slug'      => SlugService::createSlug(Network::class, 'slug', 'Ajoval'),
+            'slug'      => SlugService::createSlug(Network::class, 'slug', 'Palorma'),
             'owner_id'  => 1,
             'color'     => '#8BC34A',
         ]);

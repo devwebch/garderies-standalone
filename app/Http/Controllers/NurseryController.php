@@ -165,4 +165,14 @@ class NurseryController extends Controller
             'last_day_month'    => $last_day_month,
         ]);
     }
+
+    public function ads(Nursery $nursery)
+    {
+        $ads = $nursery->ads()->orderBy('created_at', 'desc')->get();
+
+        return view('nursery.ads', [
+            'nursery' => $nursery,
+            'ads'     => $ads
+        ]);
+    }
 }

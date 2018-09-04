@@ -67,7 +67,12 @@ class NetworkController extends Controller
      */
     public function show(Network $network)
     {
-        return view('network.show', ['network' => $network]);
+        $ads = $network->ads;
+
+        return view('network.show', [
+            'network'   => $network,
+            'ads'       => $ads
+        ]);
     }
 
     /**
@@ -111,5 +116,15 @@ class NetworkController extends Controller
     public function destroy(Network $network)
     {
         //
+    }
+
+    public function ads(Network $network)
+    {
+        $ads = $network->ads()->orderBy('created_at', 'desc')->get();
+
+        return view('network.ads', [
+            'network'   => $network,
+            'ads'       => $ads
+        ]);
     }
 }

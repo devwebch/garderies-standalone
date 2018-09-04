@@ -4,16 +4,14 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
-            Annonces
-            <div class="float-right actions d-print-none">
-                <a href="{{route('ads.create', $nursery)}}" class="btn btn-success btn-sm">Ajouter</a>
-            </div>
-        </div>
+        <div class="card-header">Annonces</div>
         <div class="card-body">
             @forelse($ads as $ad)
                 <div class="card ad mb-4">
                     <div class="card-body">
+                        <span class="badge badge-dark float-right">
+                            <a href="{{route('nurseries.show', $ad->nursery)}}" class="text-white">{{$ad->nursery->name}}</a>
+                        </span>
                         <h3><a href="{{route('ads.show', $ad)}}">{{$ad->title}}</a></h3>
                         <p class="text-muted">{{$ad->created_at->format('d.m.Y')}}</p>
                         <div class="content mb-4">
@@ -30,5 +28,5 @@
 @endsection
 
 @section('nav-lateral')
-    @include('nursery.nav')
+    @include('network.nav')
 @endsection

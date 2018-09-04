@@ -15,7 +15,9 @@ class AdController extends Controller
      */
     public function index(Nursery $nursery)
     {
-        return view('nursery.ads');
+        return view('nursery.ads', [
+            'nursery'   => $nursery,
+        ]);
     }
 
     /**
@@ -23,9 +25,11 @@ class AdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Nursery $nursery)
     {
-        //
+        return view('ad.create', [
+            'nursery'    => $nursery
+        ]);
     }
 
     /**
@@ -36,7 +40,15 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ad                 = new Ad();
+        $ad->title          = $request->title;
+        $ad->description    = $request->description;
+        $ad->nursery_id     = $request->nursery;
+        $ad->save();
+
+        $nursery = Nursery::find($request->nursery);
+
+        return redirect()->route('nurseries.ads', $nursery);
     }
 
     /**
@@ -47,7 +59,10 @@ class AdController extends Controller
      */
     public function show(Ad $ad)
     {
-        //
+        return view('ad.show',
+            [
+                'ad' => $ad
+            ]);
     }
 
     /**
@@ -81,6 +96,9 @@ class AdController extends Controller
      */
     public function destroy(Ad $ad)
     {
-        //
+        $nursery = $ad->nursery;
+        $ad->delete();
+
+        return redirect()->route('nurseries.ads', $nursery);
     }
 }

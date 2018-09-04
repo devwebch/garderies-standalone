@@ -14,10 +14,16 @@
               title: 'Garderies',
               titleClass: 'text-right',
               dataClass: 'text-right'
-            },  {
+            }, {
               name: 'users_count',
               sortField: 'users_count',
               title: 'Employés',
+              titleClass: 'text-right',
+              dataClass: 'text-right'
+            }, {
+              name: 'ads_count',
+              sortField: 'ads_count',
+              title: 'Annonces',
               titleClass: 'text-right',
               dataClass: 'text-right'
             }, {

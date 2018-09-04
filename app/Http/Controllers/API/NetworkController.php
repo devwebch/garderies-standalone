@@ -36,7 +36,7 @@ class NetworkController extends Controller
 
         $perPage = $request->has('per_page') ? (int) $request->per_page : null;
 
-        $data = $query->withCount('users')->withCount('nurseries')->paginate($perPage);
+        $data = $query->withCount('users')->withCount('nurseries')->withCount('ads')->paginate($perPage);
 
         return response()->json($data);
     }

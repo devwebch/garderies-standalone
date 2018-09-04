@@ -3,7 +3,6 @@
 @section('title', $network->name)
 
 @section('content')
-
     <network-show inline-template>
         <div class="card card-default mb-4">
             <div class="card-header">

@@ -23,7 +23,9 @@ Route::view('account', 'account');
 
 Route::resource('nurseries', 'NurseryController');
 Route::get('nurseries/{nursery}/planning', 'NurseryController@planning')->name('nurseries.planning');
-Route::resource('nurseries/{nursery}/ads', 'AdController');
+Route::get('nurseries/{nurseries}/ads', 'NurseryController@ads')->name('nurseries.ads');
+Route::get('nurseries/{nurseries}/ads/create', 'AdController@create')->name('ads.create');
+Route::resource('ads', 'AdController')->except(['index', 'create']);
 
 Route::resource('users', 'UserController');
 Route::get('users/{user}/availabilities', 'UserController@availabilities')->name('users.availabilities');
@@ -35,4 +37,5 @@ Route::resource('availabilities', 'AvailabilityController');
 Route::resource('bookings', 'BookingController');
 Route::resource('booking-requests', 'BookingRequestController');
 Route::resource('networks', 'NetworkController');
+Route::get('networks/{network}/ads', 'NetworkController@ads')->name('networks.ads');
 Route::resource('feedbacks', 'FeedbackController');

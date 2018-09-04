@@ -9,6 +9,11 @@
             title: 'Nom',
             width: '200'
         }, {
+            name: 'ads_count',
+            sortField: 'ads_count',
+            title: 'Annonces',
+            width: '150px'
+        },  {
             name: 'users_count',
             sortField: 'users_count',
             title: 'Employés',

@@ -36,4 +36,9 @@ class Network extends Model
     {
         return $this->hasMany('App\Nursery');
     }
+
+    public function ads()
+    {
+        return $this->hasManyThrough('App\Ad', 'App\Nursery');
+    }
 }
