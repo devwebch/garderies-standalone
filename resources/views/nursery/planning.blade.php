@@ -72,7 +72,7 @@
                                 <td>@{{booking.substitute.phone}}</td>
                             </tr>
                             <tr v-if="!bookings.length">
-                                <td colspan="7">Pas de remplacement</td>
+                                <td colspan="7" class="text-center">Pas de remplacement</td>
                             </tr>
                     </table>
                 </div>

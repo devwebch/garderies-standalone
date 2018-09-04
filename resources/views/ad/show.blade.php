@@ -8,6 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <h3>{{$ad->title}}</h3>
+                    <p class="text-muted">{{$ad->created_at->format('d.m.Y')}}</p>
                     {{$ad->description}}
                 </div>
             </div>
