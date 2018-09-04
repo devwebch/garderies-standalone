@@ -4,10 +4,10 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
+        <div class="card-header bg-dark text-white">
             Annonces
             <div class="float-right actions d-print-none">
-                <a href="{{route('ads.create', $nursery)}}" class="btn btn-success btn-sm">Ajouter</a>
+                <a href="{{route('ads.create', $nursery)}}" class="btn btn-success btn-sm">Ajouter une annonce</a>
             </div>
         </div>
         <div class="card-body">

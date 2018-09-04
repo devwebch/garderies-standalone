@@ -35,6 +35,7 @@ Vue.component('network-show', require('./components/NetworkShowComponent'));
 Vue.component('network-create', require('./components/NetworkCreateComponent'));
 Vue.component('network-edit', require('./components/NetworkEditComponent'));
 Vue.component('notifications', require('./components/NotificationsComponent'));
+Vue.component('ad-create', require('./components/AdCreateComponent'));
 
 Vue.component('vue-table', require('./components/VueTable'));
 
