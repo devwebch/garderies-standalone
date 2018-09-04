@@ -1,127 +1,127 @@
 <template>
     <div>
-        <div class="card card-default mb-4">
-            <div class="card-body">
-                <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
-                    <div class="row mb-4 mb-md-0">
-                        <div class="form-group col-md-3">
-                            <label for="day_start">Jour :</label>
-                            <flat-pickr
-                                    v-model="search.day_start"
-                                    :config="flatPickrConfigDays"
-                                    class="form-control"
-                                    placeholder="Sélectionner une date"
-                                    name="day_start">
-                            </flat-pickr>
-                        </div>
-                        <div class="form-group col-6 col-md-3">
-                            <label for="hour_start">Heure de début:</label>
-                            <flat-pickr
-                                    v-model="search.hour_start"
-                                    :config="flatPickrConfigHours"
-                                    class="form-control"
-                                    placeholder="Heure de départ"
-                                    name="hour_start">
-                            </flat-pickr>
-                        </div>
-                        <div class="form-group col-6 col-md-3">
-                            <label for="hour_end">Heure de fin :</label>
-                            <flat-pickr
-                                    v-model="search.hour_end"
-                                    :config="flatPickrConfigHours"
-                                    class="form-control"
-                                    placeholder="Heure de fin"
-                                    name="hour_end">
-                            </flat-pickr>
-                        </div>
-                        <div class="col" style="/*padding-top: 31px;*/">
-                            <label for="" class="d-none d-md-block">&nbsp;</label>
-                            <button class="btn btn-primary btn-block" type="submit">Rechercher</button>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form action="#" method="post" v-on:submit.prevent="searchSubstitute">
+                                <div class="form-group">
+                                    <label for="day_start">Jour :</label>
+                                    <flat-pickr
+                                            v-model="search.day_start"
+                                            :config="flatPickrConfigDays"
+                                            class="form-control"
+                                            placeholder="Sélectionner une date"
+                                            name="day_start">
+                                    </flat-pickr>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hour_start">Heure de début:</label>
+                                    <flat-pickr
+                                            v-model="search.hour_start"
+                                            :config="flatPickrConfigHours"
+                                            class="form-control"
+                                            placeholder="Heure de départ"
+                                            name="hour_start">
+                                    </flat-pickr>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hour_end">Heure de fin :</label>
+                                    <flat-pickr
+                                            v-model="search.hour_end"
+                                            :config="flatPickrConfigHours"
+                                            class="form-control"
+                                            placeholder="Heure de fin"
+                                            name="hour_end">
+                                    </flat-pickr>
+                                </div>
+                                <div class="mt-2 mb-4">
+                                    <label for="" class="d-none">&nbsp;</label>
+                                    <button class="btn btn-primary btn-block" type="submit">Rechercher</button>
+                                </div>
+                                <div class="form-group form-check m-0">
+                                    <input type="checkbox" class="form-check-input" id="extended_search" name="extended_search"  v-model="search.extended">
+                                    <label class="form-check-label" for="extended_search">Recherche étendue</label>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card card-default">
+                    <div class="card-header bg-dark text-white">
+                        Résultats de recherche
+                        <div class="float-md-right" v-if="selectedAvailabilities.length">
+                            <button class="btn btn-success btn-sm" v-on:click="contactPeopleValidation">Contacter les personnes sélectionnées</button>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group form-check m-0">
-                                <input type="checkbox" class="form-check-input" id="extended_search" name="extended_search"  v-model="search.extended">
-                                <label class="form-check-label" for="extended_search">Recherche étendue</label>
+                    <div class="card-body">
+
+                        <div class="loading-overlay" v-show="!loaded">
+                            <div class="sk-folding-cube">
+                                <div class="sk-cube1 sk-cube"></div>
+                                <div class="sk-cube2 sk-cube"></div>
+                                <div class="sk-cube4 sk-cube"></div>
+                                <div class="sk-cube3 sk-cube"></div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="card card-default">
-            <div class="card-header bg-dark text-white">
-                Résultats de recherche
-                <div class="float-md-right" v-if="selectedAvailabilities.length">
-                    <button class="btn btn-success btn-sm" v-on:click="contactPeopleValidation">Contacter les personnes sélectionnées</button>
-                </div>
-            </div>
-            <div class="card-body">
 
-                <div class="loading-overlay" v-show="!loaded">
-                    <div class="sk-folding-cube">
-                        <div class="sk-cube1 sk-cube"></div>
-                        <div class="sk-cube2 sk-cube"></div>
-                        <div class="sk-cube4 sk-cube"></div>
-                        <div class="sk-cube3 sk-cube"></div>
+                        <div v-show="availabilities.length">
+                            <table class="table table-borderless table-striped table-smf table-responsive-sm">
+                                <thead>
+                                <tr>
+                                    <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>
+                                    <th width="30">
+                                        <a href="#" v-on:click.prevent="filterByFavorite" class="text-warning">
+                                            <i :class="[favoriteOnly ? 'fas fa-star' : 'far fa-star']"></i>
+                                        </a>
+                                    </th>
+                                    <th>Remplaçant</th>
+                                    <th class="d-none d-lg-table-cell">Date</th>
+                                    <th><span data-toggle="tooltip" title="Horaire libre">Disponibilité</span></th>
+                                    <th class="d-none d-md-table-cell"><span data-toggle="tooltip" title="Réseau dans lequel le remplaçant est disponible">Réseaux</span></th>
+                                    <th class="d-none d-md-table-cell text-right"><span data-toggle="tooltip" title="Indice de correspondance">IC<span>*</span></span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="item in filteredResults">
+                                    <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
+                                    <td>
+                                        <i class="far fa-star" style="color: #ccc;" v-show="!item.favorite"></i>
+                                        <i class="fas fa-star text-warning" v-show="item.favorite"></i>
+                                    </td>
+                                    <td>
+                                        <a v-if="item.user" :href="item.user.link" target="_blank">{{item.user.name}}</a>
+                                        <span v-if="!item.user" class="text-muted">Aucun</span>
+                                    </td>
+                                    <td class="d-none d-lg-table-cell"><i class="far fa-calendar-alt d-none d-sm-inline mr-1"></i> {{item.start}}</td>
+                                    <td class="text-truncate">{{item.start_hour}} <i class="fas fa-arrow-right"></i>
+                                        {{item.end_hour}}
+                                    </td>
+                                    <td class="d-none d-md-table-cell">
+                                        <ul class="list-inline m-0">
+                                            <li v-for="network in item.networks" class="list-inline-item">
+                                                <span class="badge text-white" :style="'background-color: ' + network.color + ';'">{{network.name}}</span>
+                                            </li>
+                                        </ul>
+                                        <span v-if="!item.networks" class="text-muted">-</span>
+                                    </td>
+                                    <td class="d-none d-md-table-cell text-right">
+                                        <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
+                                        <span class="badge badge-success" v-if="item.matching=='complete'">Complet</span>
+                                        <span class="badge badge-warning" v-if="item.matching=='partial'">Partiel</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p class="text-muted">* Indice de Correspondance (partiel ou complet)</p>
+                        </div>
+                        <div class="alert alert-info mb-0" v-if="!availabilities.length">Aucune disponibilité ne correspond à votre recherche.</div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">
+                        <button class="btn btn-success" v-on:click="contactPeopleValidation">Contacter les personnes sélectionnées</button>
                     </div>
                 </div>
-
-                <div v-show="availabilities.length">
-                    <table class="table table-borderless table-striped table-smf table-responsive-sm">
-                        <thead>
-                        <tr>
-                            <th width="15"><input type="checkbox" v-on:click="selectAll" v-model="peopleSelected"></th>
-                            <th width="30">
-                                <a href="#" v-on:click.prevent="filterByFavorite" class="text-warning">
-                                    <i :class="[favoriteOnly ? 'fas fa-star' : 'far fa-star']"></i>
-                                </a>
-                            </th>
-                            <th>Remplaçant</th>
-                            <th class="d-none d-lg-table-cell">Date</th>
-                            <th><span data-toggle="tooltip" title="Horaire libre">Disponibilité</span></th>
-                            <th class="d-none d-md-table-cell"><span data-toggle="tooltip" title="Réseau dans lequel le remplaçant est disponible">Réseaux</span></th>
-                            <th class="d-none d-md-table-cell text-right"><span data-toggle="tooltip" title="Indice de correspondance">IC<span>*</span></span></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="item in filteredResults">
-                            <td><input type="checkbox" v-model="selectedAvailabilities" :value="item"></td>
-                            <td>
-                                <i class="far fa-star" style="color: #ccc;" v-show="!item.favorite"></i>
-                                <i class="fas fa-star text-warning" v-show="item.favorite"></i>
-                            </td>
-                            <td>
-                                <a v-if="item.user" :href="item.user.link" target="_blank">{{item.user.name}}</a>
-                                <span v-if="!item.user" class="text-muted">Aucun</span>
-                            </td>
-                            <td class="d-none d-lg-table-cell"><i class="fas fa-calendar d-none d-sm-inline"></i> {{item.start}}</td>
-                            <td class="text-truncate">{{item.start_hour}} <i class="fas fa-arrow-right"></i>
-                                {{item.end_hour}}
-                            </td>
-                            <td class="d-none d-md-table-cell">
-                                <ul class="list-inline m-0">
-                                    <li v-for="network in item.networks" class="list-inline-item">
-                                        <span class="badge text-white" :style="'background-color: ' + network.color + ';'">{{network.name}}</span>
-                                    </li>
-                                </ul>
-                                <span v-if="!item.networks" class="text-muted">-</span>
-                            </td>
-                            <td class="d-none d-md-table-cell text-right">
-                                <span class="badge badge-secondary" v-if="item.matching=='none'">{{item.matching}}</span>
-                                <span class="badge badge-success" v-if="item.matching=='complete'">Complet</span>
-                                <span class="badge badge-warning" v-if="item.matching=='partial'">Partiel</span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <p class="text-muted">* Indice de Correspondance (partiel ou complet)</p>
-                </div>
-                <div class="alert alert-info mb-0" v-if="!availabilities.length">Aucune disponibilité</div>
-            </div>
-            <div class="card-footer d-flex justify-content-end" v-if="selectedAvailabilities.length">
-                <button class="btn btn-success" v-on:click="contactPeopleValidation">Contacter les personnes sélectionnées</button>
             </div>
         </div>
 
