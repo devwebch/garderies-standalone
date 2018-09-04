@@ -44,4 +44,9 @@ class Nursery extends Model
     {
         return $this->belongsTo('App\Network');
     }
+
+    public function ads()
+    {
+        return $this->hasMany('App\Ad');
+    }
 }

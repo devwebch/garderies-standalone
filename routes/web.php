@@ -23,6 +23,7 @@ Route::view('account', 'account');
 
 Route::resource('nurseries', 'NurseryController');
 Route::get('nurseries/{nursery}/planning', 'NurseryController@planning')->name('nurseries.planning');
+Route::resource('nurseries/{nursery}/ads', 'AdController');
 
 Route::resource('users', 'UserController');
 Route::get('users/{user}/availabilities', 'UserController@availabilities')->name('users.availabilities');

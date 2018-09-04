@@ -29,7 +29,7 @@
     "bootstrap-select": "^1.13.2",
     "fullcalendar": "^3.9.0",
     "hamburgers": "^0.9.3",
-    "sweetalert2": "^7.26.12",
+    "sweetalert2": "^7.26.13",
     "vue-event-calendar": "^1.5.2",
     "vue-flatpickr-component": "^7.0.6",
     "vue-stars": "^1.0.0",
