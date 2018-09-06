@@ -26,6 +26,7 @@
     "vuetable-2": "^1.7.5"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^1.0.9",
     "bootstrap-select": "^1.13.2",
     "fullcalendar": "^3.9.0",
     "hamburgers": "^0.9.3",

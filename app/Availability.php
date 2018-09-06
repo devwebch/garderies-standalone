@@ -33,6 +33,11 @@ class Availability extends Model
         return $this->hasMany('App\BookingRequest');
     }
 
+    public function networks()
+    {
+        return $this->hasManyThrough('App\Network', 'App\User', 'id', 'id');
+    }
+
     public function bookings()
     {
         return $this->hasManyThrough(

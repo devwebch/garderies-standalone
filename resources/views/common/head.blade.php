@@ -13,4 +13,5 @@
     <meta name="msapplication-TileImage" content="{{asset('img/favicon-270x270.png')}}" />
 
     @yield('styles')
+    @yield('scripts-head')
 </head>

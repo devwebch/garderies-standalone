@@ -253,6 +253,7 @@ class AvailabilityController extends Controller
         // if the search perimeter is correctly defined, proceed
         if ($date_start && $date_end) {
 
+            // extend the hour search parameter to allow for user errors
             $date_start_extended    = $date_start->copy()->addHour(1);
             $date_end_extended      = $date_end->copy()->subHour(1);
             
@@ -262,33 +263,34 @@ class AvailabilityController extends Controller
                     ['start', '<=', $date_start_extended],
                     ['end', '>=', $date_end_extended],
                     ['status', '!=', Availability::STATUS_ARCHIVED],
-                    ['status', '!=', Availability::STATUS_BOOKED]// complete
+                    ['status', '!=', Availability::STATUS_BOOKED] // complete
                 ])
                 ->orderBy('start')
                 ->get();
             } else {
-                $collection = Availability::where([
+                $collection = Availability::with('networks')
+                ->where([
                     ['start', '<=', $date_start],
                     ['end', '>=', $date_end],
                     ['status', '!=', Availability::STATUS_ARCHIVED],
-                    ['status', '!=', Availability::STATUS_BOOKED]// complete
+                    ['status', '!=', Availability::STATUS_BOOKED] // complete
                 ])->orWhere([
                     ['start', '<=', $date_start],
                     ['end', '<', $date_end],
                     ['end', '>', $date_start],
                     ['status', '!=', Availability::STATUS_ARCHIVED],
-                    ['status', '!=', Availability::STATUS_BOOKED]// partial
+                    ['status', '!=', Availability::STATUS_BOOKED] // partial (not until the end)
                 ])->orWhere([
                     ['start', '>', $date_start],
                     ['end', '>=', $date_end],
                     ['start', '<', $date_end],
                     ['status', '!=', Availability::STATUS_ARCHIVED],
-                    ['status', '!=', Availability::STATUS_BOOKED]// partial
+                    ['status', '!=', Availability::STATUS_BOOKED] // partial (not since beginning)
                 ])->orWhere([
                     ['start', '>', $date_start],
                     ['end', '<', $date_end],
                     ['status', '!=', Availability::STATUS_ARCHIVED],
-                    ['status', '!=', Availability::STATUS_BOOKED]// partial
+                    ['status', '!=', Availability::STATUS_BOOKED] // partial (not since beginning nor end)
                 ])
                 ->orderBy('start')
                 ->get();

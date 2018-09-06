@@ -19,3 +19,10 @@
         }
     }
 </script>
+
+<style lang="scss">
+    .vue-swatches__container,
+    .vue-swatches__wrapper {
+        padding: 0 !important;
+    }
+</style>

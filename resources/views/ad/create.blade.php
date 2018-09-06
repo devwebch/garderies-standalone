@@ -18,7 +18,7 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Contenu :</label>
-                        <textarea type="text" class="form-control" name="description" rows="10"></textarea>
+                        <editor name="description" plugins="lists" :init="{menubar:false, toolbar:'italic bold alignleft aligncenter alignright bullist numlist removeformat', branding: false}"></editor>
                     </div>
 
                     <button class="btn btn-primary float-right" type="submit">Enregistrer</button>
@@ -30,4 +30,8 @@
 
 @section('nav-lateral')
     @include('network.nav')
+@endsection
+
+@section('scripts-head')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tinymce/4.8.2/tinymce.min.js"></script>
 @endsection

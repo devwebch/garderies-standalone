@@ -1,4 +1,6 @@
 <script>
+    import Editor from '@tinymce/tinymce-vue';
+
     let data = {};
 
     export default {
@@ -8,7 +10,10 @@
         },
         mounted() {
             console.log('Ad create component mounted.');
+
         },
-        components: {}
+        components: {
+            'editor': Editor
+        }
     }
 </script>

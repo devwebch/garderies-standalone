@@ -67,11 +67,13 @@ class NetworkController extends Controller
      */
     public function show(Network $network)
     {
-        $ads = $network->ads;
+        $ads            = $network->ads;
+        $availabilities = $network->availabilities;
 
         return view('network.show', [
-            'network'   => $network,
-            'ads'       => $ads
+            'network'           => $network,
+            'ads'               => $ads,
+            'availabilities'    => $availabilities
         ]);
     }
 
