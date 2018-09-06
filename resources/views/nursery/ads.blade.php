@@ -17,7 +17,7 @@
                         <h3><a href="{{route('ads.show', $ad)}}">{{$ad->title}}</a></h3>
                         <p class="text-muted">{{$ad->created_at->format('d.m.Y')}}</p>
                         <div class="content mb-4">
-                            {!! $ad->description !!}
+                            {{ strip_tags(str_limit($ad->description, 200, ' ...')) }}
                         </div>
                         <a href="{{route('ads.show', $ad)}}" class="btn btn-primary">Voir l'annonce</a>
                     </div>
