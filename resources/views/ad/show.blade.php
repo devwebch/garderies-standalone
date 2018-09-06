@@ -3,11 +3,16 @@
 @section('title', $ad->title)
 
 @section('content')
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h1>{{$ad->nursery->name}}</h1>
+        </div>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <h3>{{$ad->title}}</h3>
+                    <h2>{{$ad->title}}</h2>
                     <p class="text-muted">{{$ad->created_at->format('d.m.Y')}}</p>
                     {!! $ad->description !!}
                 </div>
